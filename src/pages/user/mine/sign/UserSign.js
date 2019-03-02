@@ -9,6 +9,8 @@ export default class extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: false,
+      submitting: false,
       access: '',
       secret: ''
     }
@@ -25,7 +27,20 @@ export default class extends Component {
   componentDidHide() {}
 
   callWechatSign() {
+    if (this.state.loading || this.state.submitting) {
+      return
+    }
+    this.setState({
+      submitting: true
+    })
     wechatLogin()
+      .then(() => {})
+      .catch(err => {
+        toast.info(err.message)
+        this.setState({
+          submitting: false
+        })
+      })
   }
 
   changeAccess (value) {
@@ -41,6 +56,9 @@ export default class extends Component {
   }
 
   onSubmit () {
+    if (this.state.loading || this.state.submitting) {
+      return
+    }
     const { access, secret } = this.state
     if (
       !access ||
@@ -56,12 +74,15 @@ export default class extends Component {
     ) {
       return toast.info('密码错误')
     }
+    this.setState({
+      loading: true
+    })
     accessLogin({ access, secret })
-      .then(user => {
-        console.log(user)
-      })
-      .catch(err => {
-        console.log(err)
+      .then(() => {})
+      .catch(() => {
+        this.setState({
+          loading: false
+        })
       })
   }
 
@@ -89,6 +110,7 @@ export default class extends Component {
             onChange={this.changeSecret.bind(this)}
           />
           <AtButton
+            loading={this.state.loading}
             type='primary'
             formType='submit'
           >账号登录</AtButton>

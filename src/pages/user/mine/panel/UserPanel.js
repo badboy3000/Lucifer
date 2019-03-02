@@ -24,6 +24,11 @@ export default class extends Component {
   componentDidHide () { }
 
   render () {
+    const { user } = this.state
+    if (!user) {
+      return
+    }
+
     return (
       <View className='user-panel'>
         <View className='intro'>
@@ -31,12 +36,12 @@ export default class extends Component {
             <AtAvatar
               circle
               size='large'
-              image={helper.resize(this.state.user.avatar, { width: 200 })}
+              image={helper.resize(user.avatar, { width: 200 })}
             />
           </View>
           <View className='text'>
-            <View className='nickname'>{this.state.user.nickname}</View>
-            <Text className='invite'>邀请码：{this.state.user.id}</Text>
+            <View className='nickname'>{user.nickname}</View>
+            <Text className='invite'>邀请码：{user.id}</Text>
           </View>
           <View className='arrow'>
             <AtIcon value='chevron-right' size='20' color='#657786' />
@@ -45,15 +50,15 @@ export default class extends Component {
         <View className='control'>
           <View className='metas'>
             <View className='meta'>
-              <View className='count'>{this.state.user.power}</View>
+              <View className='count'>{user.power}</View>
               <View className='name'>战斗力</View>
             </View>
             <View className='meta'>
-              <View className='count'>{this.state.user.banlance.coin_count}</View>
+              <View className='count'>{user.banlance.coin_count}</View>
               <View className='name'>团子</View>
             </View>
             <View className='meta'>
-              <View className='count'>{this.state.user.exp.level}</View>
+              <View className='count'>{user.exp.level}</View>
               <View className='name'>等级</View>
             </View>
           </View>

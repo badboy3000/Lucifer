@@ -2,9 +2,9 @@ import http from '~/utils/http'
 import cache from '~/utils/cache'
 import event from '~/utils/event'
 
-export default () => {
+export const wechatLogin = () => {
   return new Promise((resolve, reject) => {
-    step1_get_wx_code()
+    step_1_get_wx_code()
       .then(code => {
         step_2_get_token_or_user_by_code(code)
           .then(resp => {
@@ -38,7 +38,19 @@ export default () => {
   })
 }
 
-const step1_get_wx_code = () => {
+export const accessLogin = form => {
+  return new Promise((resolve, reject) => {
+    step_0_get_jwt_token_by_access(form)
+      .then(token => {
+        step_5_get_current_user(token)
+          .then(resolve)
+          .catch(reject)
+      })
+      .catch(reject)
+  })
+}
+
+const step_1_get_wx_code = () => {
   return new Promise((resolve, reject) => {
     wx.login({
       success(data) {
@@ -101,6 +113,15 @@ const step_5_get_current_user = token => {
         event.emit('user-signed')
         resolve(user)
       })
+      .catch(reject)
+  })
+}
+
+const step_0_get_jwt_token_by_access = form => {
+  return new Promise((resolve, reject) => {
+    http.post('door/login', form).then(token => {
+      resolve(token)
+    })
       .catch(reject)
   })
 }

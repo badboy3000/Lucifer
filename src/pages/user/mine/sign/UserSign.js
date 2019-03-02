@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
-import wechatLogin from '~/utils/login'
+import { wechatLogin, accessLogin } from '~/utils/login'
+import http from '~/utils/http'
 import './index.scss'
 
 export default class extends Component {
@@ -39,10 +40,17 @@ export default class extends Component {
     })
   }
 
-  onSubmit (event) {
-    console.log(event)
-    console.log(this.state.access)
-    console.log(this.state.secret)
+  onSubmit () {
+    accessLogin({
+      access: this.state.access,
+      secret: this.state.secret
+    })
+      .then(user => {
+        console.log(user)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render() {

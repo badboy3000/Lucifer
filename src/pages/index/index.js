@@ -22,7 +22,7 @@ export default class extends Component {
 
   render() {
     return (
-      <View className='index'>
+      <View>
         <Text>首页</Text>
         <AtButton type='primary' onClick={() => this.toIdolPage(22)}>
           按钮文案

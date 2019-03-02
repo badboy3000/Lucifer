@@ -22,24 +22,11 @@ export default class extends Component {
 
   callWechatSign() {
     wechatLogin()
-    /*
-    wx.getUserInfo({
-      withCredentials: true,
-      success(data) {
-        console.log('success')
-        console.log(data)
-      },
-      fail(err) {
-        console.log('fail')
-        console.log(err)
-      }
-    })
-    */
   }
 
   render() {
     return (
-      <View>
+      <View className='user-sign'>
         <Text>用户登录与注册</Text>
         <AtButton
           type='primary'

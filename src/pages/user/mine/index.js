@@ -1,9 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import cache from '~/utils/cache'
 import event from '~/utils/event'
-import './index.scss'
+import { AtButton } from 'taro-ui'
 import UserSign from './sign/UserSign'
+import UserPanel from './panel/UserPanel'
+import UserTable from './table/UserTable'
+import './index.scss'
 
 export default class extends Component {
   constructor(props) {
@@ -35,14 +38,26 @@ export default class extends Component {
     })
   }
 
+  userLogout() {
+    cache.remove('JWT-TOKEN')
+    cache.remove('USER')
+    this.refreshUser()
+  }
+
   render() {
     if (this.state.user === null) {
       return <UserSign />
     }
 
     return (
-      <View>
-        <Text>text</Text>
+      <View className='user-home'>
+        <UserPanel />
+        <View className='hr' />
+        <UserTable />
+        <View className='hr' />
+        <AtButton type='primary' onClick={this.userLogout}>
+          退出登录
+        </AtButton>
       </View>
     )
   }

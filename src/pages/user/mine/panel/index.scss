@@ -1,0 +1,41 @@
+@import "global.scss";
+
+.user-panel {
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  @extend %clearfix;
+
+  .avatar {
+    float: left;
+    margin-right: 28px;
+  }
+
+  .text {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .nickname {
+      font-size: 46px;
+      color: $color-text-normal;
+      font-weight: 500;
+      @extend %oneline;
+    }
+
+    .invite {
+      font-size: 26px;
+      color: $color-text-light;
+    }
+  }
+
+  .arrow {
+    float: right;
+    margin-left: 20px;
+  }
+}

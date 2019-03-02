@@ -33,14 +33,14 @@ class App extends Component {
     },
     tabBar: {
       color: '#888888',
-      selectedColor: '#f09199',
+      selectedColor: '#ff6881',
       backgroundColor: '#ffffff',
       borderStyle: 'white',
       position: 'bottom',
       list: [
         {
           pagePath: 'pages/index/index',
-          text: '首页'
+          text: '股市'
         },
         {
           pagePath: 'pages/deal/hall/index',
@@ -48,7 +48,7 @@ class App extends Component {
         },
         {
           pagePath: 'pages/user/mine/index',
-          text: '我的'
+          text: '我'
         }
       ]
     }

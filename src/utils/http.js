@@ -18,7 +18,7 @@ fly.interceptors.response.use(
   res => {
     if (res.request.url === 'door/refresh_token') {
       const token = res.headers.authorization[0].split(' ')[1]
-      cache.set('JWT-TOKEN', token)
+      cache.set('JWT_TOKEN', token)
     }
     return res.data.data
   },

@@ -1,13 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { AtForm, AtInput, AtButton } from 'taro-ui'
 import wechatLogin from '~/utils/login'
 import './index.scss'
 
 export default class extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      access: '',
+      secret: ''
+    }
   }
 
   componentWillMount() {}
@@ -24,10 +27,52 @@ export default class extends Component {
     wechatLogin()
   }
 
+  changeAccess (value) {
+    this.setState({
+      access: value
+    })
+  }
+
+  changeSecret (value) {
+    this.setState({
+      secret: value
+    })
+  }
+
+  onSubmit (event) {
+    console.log(event)
+    console.log(this.state.access)
+    console.log(this.state.secret)
+  }
+
   render() {
     return (
       <View className='user-sign'>
-        <Text>用户登录与注册</Text>
+        <AtForm onSubmit={this.onSubmit.bind(this)}>
+          <AtInput
+            name='access'
+            border={true}
+            title='手机'
+            type='phone'
+            placeholder='手机号码'
+            value={this.state.access}
+            onChange={this.changeAccess.bind(this)}
+          />
+          <AtInput
+            name='secret'
+            title='密码'
+            type='password'
+            placeholder='密码不能少于6位数'
+            clear={true}
+            border={true}
+            value={this.state.secret}
+            onChange={this.changeSecret.bind(this)}
+          />
+          <AtButton
+            type='primary'
+            formType='submit'
+          >账号登录</AtButton>
+        </AtForm>
         <AtButton
           type='primary'
           openType='getUserInfo'

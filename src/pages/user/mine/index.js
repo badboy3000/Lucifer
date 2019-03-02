@@ -39,7 +39,7 @@ export default class extends Component {
   }
 
   userLogout() {
-    cache.remove('JWT-TOKEN')
+    cache.remove('JWT_TOKEN')
     cache.remove('USER')
     this.refreshUser()
   }

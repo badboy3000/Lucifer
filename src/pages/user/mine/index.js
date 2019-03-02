@@ -54,7 +54,6 @@ export default class extends Component {
         <UserPanel />
         <View className='hr' />
         <UserTable />
-        <View className='hr' />
         <AtButton type='primary' onClick={this.userLogout}>
           退出登录
         </AtButton>

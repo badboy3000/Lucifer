@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
 import { wechatLogin, accessLogin } from '~/utils/login'
-import http from '~/utils/http'
+import toast from '~/utils/toast'
 import './index.scss'
 
 export default class extends Component {
@@ -41,10 +41,22 @@ export default class extends Component {
   }
 
   onSubmit () {
-    accessLogin({
-      access: this.state.access,
-      secret: this.state.secret
-    })
+    const { access, secret } = this.state
+    if (
+      !access ||
+      !access.length === 11 ||
+      !/^(0|86|17951)?(1)[0-9]{10}$/.test(access)
+    ) {
+      return toast.info('请输入正确的手机号')
+    }
+    if (
+      !secret ||
+      secret.length < 6 ||
+      secret.length > 16
+    ) {
+      return toast.info('密码错误')
+    }
+    accessLogin({ access, secret })
       .then(user => {
         console.log(user)
       })

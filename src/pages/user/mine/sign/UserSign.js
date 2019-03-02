@@ -116,6 +116,7 @@ export default class extends Component {
           >账号登录</AtButton>
         </AtForm>
         <AtButton
+          loading={this.state.submitting}
           type='primary'
           openType='getUserInfo'
           onClick={this.callWechatSign}

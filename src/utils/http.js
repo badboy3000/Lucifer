@@ -4,14 +4,11 @@ import toast from '~/utils/toast'
 import md5 from 'blueimp-md5'
 import env from '~/env'
 
-const isProd = process.env.NODE_ENV === 'production'
 const fly = new Fly()
 
 fly.interceptors.request.use(request => {
   const time = parseInt(Date.now() / 1000)
-  request.baseURL = isProd
-    ? 'https://api.calibur.tv/'
-    : 'http://localhost:3099/'
+  request.baseURL = 'https://api.calibur.tv/'
   request.headers['Accept'] = 'application/x.api.latest+json'
   request.headers['Authorization'] = `Bearer ${cache.get('JWT_TOKEN')}`
   request.headers['X-Auth-Time'] = time
@@ -48,7 +45,12 @@ fly.interceptors.response.use(
         resp.message = message[Object.keys(message)[0]][0]
       }
     }
-    toast.info(resp.message)
+    if (
+      err.request.url !== 'door/current_user' &&
+      err.request.url !== 'door/refresh_token'
+    ) {
+      toast.info(resp.message)
+    }
     return Promise.reject(resp)
   }
 )

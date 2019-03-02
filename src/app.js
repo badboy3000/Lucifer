@@ -29,7 +29,7 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '二次元股市',
       navigationBarTextStyle: 'black',
-      enablePullDownRefresh: true
+      enablePullDownRefresh: false
     },
     tabBar: {
       color: '#888888',
@@ -77,6 +77,7 @@ class App extends Component {
         cache.set('USER', data)
       })
       .catch(err => {
+        cache.remove('USER', data)
         if (err.code === 401) {
           if (isFirst) {
             this.refreshAuthToken()
@@ -93,7 +94,9 @@ class App extends Component {
       .then(() => {
         this.getCurrentUser(false)
       })
-      .catch(() => {})
+      .catch(() => {
+        cache.remove('JWT_TOKEN')
+      })
   }
 
   // 在 App 类中的 render() 函数没有实际作用

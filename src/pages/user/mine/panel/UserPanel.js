@@ -62,10 +62,12 @@ export default class extends Component {
               <View className='name'>等级</View>
             </View>
           </View>
-          <AtButton
-            circle
-            type='primary'
-          >签到</AtButton>
+          <View className="day-sign">
+            <AtButton
+              circle
+              type='primary'
+            >签到</AtButton>
+          </View>
         </View>
       </View>
     )

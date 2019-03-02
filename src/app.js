@@ -35,7 +35,7 @@ class App extends Component {
       color: '#888888',
       selectedColor: '#ff6881',
       backgroundColor: '#ffffff',
-      borderStyle: 'white',
+      borderStyle: 'black',
       position: 'bottom',
       list: [
         {

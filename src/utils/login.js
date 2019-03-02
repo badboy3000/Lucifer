@@ -1,5 +1,6 @@
 import http from '~/utils/http'
 import cache from '~/utils/cache'
+import event from '~/utils/event'
 
 export default () => {
   return new Promise((resolve, reject) => {
@@ -93,6 +94,7 @@ const step_5_get_current_user = token => {
     http.post('door/current_user')
       .then(user => {
         cache.set('USER', user)
+        event.emit('user-signed')
         resolve(user)
       })
       .catch(reject)

@@ -20,6 +20,7 @@ const config = {
         }]
       ],
       plugins: [
+        'lodash',
         'transform-decorators-legacy',
         'transform-class-properties',
         'transform-object-rest-spread'

@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import cache from '~/utils/cache'
+import event from '~/utils/event'
 import './index.scss'
 import UserSign from './sign/UserSign'
 
@@ -13,24 +14,27 @@ export default class extends Component {
   }
 
   componentWillMount () {
-    console.log('componentWillMount')
   }
 
   componentDidMount () {
-    console.log('user', this.state.user)
-    console.log('componentDidMount')
+    event.on('user-signed', () => this.refreshUser())
   }
 
   componentWillUnmount () {
-    console.log('componentWillUnmount')
+    event.off('user-signed')
   }
 
   componentDidShow () {
-    console.log('componentDidShow')
+    this.refreshUser()
   }
 
   componentDidHide () {
-    console.log('componentDidHide')
+  }
+
+  refreshUser() {
+    this.setState({
+      user: cache.get('USER', null)
+    })
   }
 
   render () {

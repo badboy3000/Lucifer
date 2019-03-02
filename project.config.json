@@ -4,12 +4,12 @@
 	"description": "calibur.tv wechat mini application",
 	"appid": "wxebf34643214e3eba",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
 		"newFeature": true,
-		"autoAudits": true,
+		"autoAudits": false,
 		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",

@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'Lucifer',
   date: '2019-3-2',
@@ -23,6 +25,9 @@ const config = {
         'transform-object-rest-spread'
       ]
     }
+  },
+  alias: {
+    '~': path.resolve(__dirname, '..', 'src/')
   },
   defineConstants: {
   },

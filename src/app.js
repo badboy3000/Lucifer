@@ -1,4 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
+import http from '~/utils/http'
+import cache from '~/utils/cache'
 import Index from './pages/index'
 import './app.scss'
 
@@ -9,7 +11,6 @@ import './app.scss'
 // }
 
 class App extends Component {
-
   config = {
     pages: [
       'pages/index/index',
@@ -24,7 +25,7 @@ class App extends Component {
       'pages/user/public/index'
     ],
     window: {
-      backgroundTextStyle: 'light',
+      backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '二次元股市',
       navigationBarTextStyle: 'black',
@@ -32,7 +33,7 @@ class App extends Component {
     },
     tabBar: {
       color: '#888888',
-      selectedColor: '#ffb7c5',
+      selectedColor: '#f09199',
       backgroundColor: '#ffffff',
       borderStyle: 'white',
       position: 'bottom',
@@ -53,13 +54,45 @@ class App extends Component {
     },
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    this.getCurrentUser()
+  }
 
   componentDidShow () {}
 
   componentDidHide () {}
 
   componentDidCatchError () {}
+
+  getCurrentUser(isFirst = true) {
+    if (isFirst) {
+      const token = cache.get('JWT_TOKEN')
+      if (!token) {
+        return
+      }
+    }
+    http.post('door/current_user')
+      .then(data => {
+        cache.set('USER', data)
+      })
+      .catch(err => {
+        if (err.code === 401) {
+          if (isFirst) {
+            this.refreshAuthToken()
+          } else {
+            cache.remove('JWT_TOKEN')
+          }
+        }
+      })
+  }
+
+  refreshAuthToken() {
+    http.post('door/refresh_token')
+      .then(() => {
+        this.getCurrentUser(false)
+      })
+      .catch(() => {})
+  }
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数

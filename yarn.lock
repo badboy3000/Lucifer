@@ -3079,6 +3079,13 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
+flyio@^0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/flyio/-/flyio-0.6.13.tgz#773011de5cc2dc9749e55629796fa810b8f4eb9f"
+  integrity sha512-ImRJexFrGMhfnwzFLQvpjHflQ2EX/buqYn2eLI5O1SqJjudFJ4CXnQWwC2FPKs0ls69OfxaiUgkUs926VGX53A==
+  dependencies:
+    request "^2.85.0"
+
 follow-redirects@^1.0.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
@@ -5886,7 +5893,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.83.0, request@^2.87.0, request@^2.88.0:
+request@^2.83.0, request@^2.85.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==

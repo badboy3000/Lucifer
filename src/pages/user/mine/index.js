@@ -1,19 +1,45 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import cache from '~/utils/cache'
 import './index.scss'
+import UserSign from './sign/UserSign'
 
 export default class extends Component {
-  componentWillMount () { }
+  constructor (props) {
+    super(props)
+    this.state = {
+      user: cache.get('USER', null)
+    }
+  }
 
-  componentDidMount () { }
+  componentWillMount () {
+    console.log('componentWillMount')
+  }
 
-  componentWillUnmount () { }
+  componentDidMount () {
+    console.log('user', this.state.user)
+    console.log('componentDidMount')
+  }
 
-  componentDidShow () { }
+  componentWillUnmount () {
+    console.log('componentWillUnmount')
+  }
 
-  componentDidHide () { }
+  componentDidShow () {
+    console.log('componentDidShow')
+  }
+
+  componentDidHide () {
+    console.log('componentDidHide')
+  }
 
   render () {
+    if (this.state.user === null) {
+      return (
+        <UserSign />
+      )
+    }
+
     return (
       <View>
         <Text>text</Text>

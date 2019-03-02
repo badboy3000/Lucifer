@@ -1,48 +1,48 @@
-const globalData = {};
+const globalData = {}
 
 export default new class {
   set(key, data) {
     try {
-      wx.setStorageSync(key, data);
+      wx.setStorageSync(key, data)
     } catch (e) {
-      wx.setStorage({ key, data });
+      wx.setStorage({ key, data })
     }
-    globalData[key] = data;
-  };
+    globalData[key] = data
+  }
 
   get(key, def = undefined) {
-    const result = globalData[key];
+    const result = globalData[key]
     if (result !== undefined) {
-      return result;
+      return result
     }
     try {
-      const value = wx.getStorageSync(key);
+      const value = wx.getStorageSync(key)
       if (value === '') {
-        return def;
+        return def
       }
-      return value;
+      return value
     } catch (e) {
-      return def;
+      return def
     }
-  };
+  }
 
   remove(key) {
     try {
-      wx.removeStorageSync(key);
+      wx.removeStorageSync(key)
     } catch (e) {
-      wx.removeStorage({ key });
+      wx.removeStorage({ key })
     }
-    delete globalData[key];
-  };
+    delete globalData[key]
+  }
 
   clear() {
     try {
-      wx.clearStorageSync();
+      wx.clearStorageSync()
     } catch (e) {
-      wx.clearStorage();
+      wx.clearStorage()
     }
     Object.keys(globalData).forEach(key => {
-      delete globalData[key];
-    });
-  };
+      delete globalData[key]
+    })
+  }
 }()

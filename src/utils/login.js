@@ -4,35 +4,36 @@ import event from '~/utils/event'
 
 export default () => {
   return new Promise((resolve, reject) => {
-    step1_get_wx_code().then(code => {
-      step_2_get_token_or_user_by_code(code).then(resp => {
-        if (resp.type === 'token') {
-          step_5_get_current_user(resp.data)
-            .then(resolve)
-            .catch(reject)
-        }
-        else
-        {
-          step_3_get_secret_data_from_wechat().then(user => {
-            step_4_get_user({
-              user: user.userInfo,
-              signature: user.signature,
-              iv: user.iv,
-              encrypted_data: user.encryptedData,
-              session_key: resp.data
-            })
-              .then(token => {
-                step_5_get_current_user(token)
-                  .then(resolve)
-                  .catch(reject)
-              })
-              .catch(reject)
+    step1_get_wx_code()
+      .then(code => {
+        step_2_get_token_or_user_by_code(code)
+          .then(resp => {
+            if (resp.type === 'token') {
+              step_5_get_current_user(resp.data)
+                .then(resolve)
+                .catch(reject)
+            } else {
+              step_3_get_secret_data_from_wechat()
+                .then(user => {
+                  step_4_get_user({
+                    user: user.userInfo,
+                    signature: user.signature,
+                    iv: user.iv,
+                    encrypted_data: user.encryptedData,
+                    session_key: resp.data
+                  })
+                    .then(token => {
+                      step_5_get_current_user(token)
+                        .then(resolve)
+                        .catch(reject)
+                    })
+                    .catch(reject)
+                })
+                .catch(reject)
+            }
           })
-            .catch(reject)
-        }
+          .catch(reject)
       })
-        .catch(reject)
-    })
       .catch(reject)
   })
 }
@@ -56,7 +57,8 @@ const step1_get_wx_code = () => {
 
 const step_2_get_token_or_user_by_code = code => {
   return new Promise((resolve, reject) => {
-    http.post('door/wechat_mini_app_get_token', { code, id: 1 })
+    http
+      .post('door/wechat_mini_app_get_token', { code, id: 1 })
       .then(key => {
         resolve(key)
       })
@@ -80,7 +82,8 @@ const step_3_get_secret_data_from_wechat = () => {
 
 const step_4_get_user = form => {
   return new Promise((resolve, reject) => {
-    http.post('door/wechat_mini_app_login', form)
+    http
+      .post('door/wechat_mini_app_login', form)
       .then(data => {
         resolve(data)
       })
@@ -91,7 +94,8 @@ const step_4_get_user = form => {
 const step_5_get_current_user = token => {
   cache.set('JWT_TOKEN', token)
   return new Promise((resolve, reject) => {
-    http.post('door/current_user')
+    http
+      .post('door/current_user')
       .then(user => {
         cache.set('USER', user)
         event.emit('user-signed')

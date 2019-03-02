@@ -5,20 +5,20 @@ import wechatLogin from '~/utils/login'
 import './index.scss'
 
 export default class extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   callWechatSign() {
     wechatLogin()
@@ -37,7 +37,7 @@ export default class extends Component {
     */
   }
 
-  render () {
+  render() {
     return (
       <View>
         <Text>用户登录与注册</Text>
@@ -45,9 +45,10 @@ export default class extends Component {
           type='primary'
           openType='getUserInfo'
           onClick={this.callWechatSign}
-        >微信登录</AtButton>
+        >
+          微信登录
+        </AtButton>
       </View>
     )
   }
 }
-

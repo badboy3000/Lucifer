@@ -4,29 +4,30 @@ import { AtButton } from 'taro-ui'
 import './index.scss'
 
 export default class extends Component {
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  toIdolPage (idolId) {
+  toIdolPage(idolId) {
     Taro.navigateTo({
       url: `/pages/idol/show/index?id=${idolId}`
     })
   }
 
-  render () {
+  render() {
     return (
       <View className='index'>
         <Text>首页</Text>
-        <AtButton type='primary' onClick={() => this.toIdolPage(22)}>按钮文案</AtButton>
+        <AtButton type='primary' onClick={() => this.toIdolPage(22)}>
+          按钮文案
+        </AtButton>
       </View>
     )
   }
 }
-

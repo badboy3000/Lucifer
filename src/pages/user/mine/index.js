@@ -6,30 +6,28 @@ import './index.scss'
 import UserSign from './sign/UserSign'
 
 export default class extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       user: cache.get('USER', null)
     }
   }
 
-  componentWillMount () {
-  }
+  componentWillMount() {}
 
-  componentDidMount () {
+  componentDidMount() {
     event.on('user-signed', () => this.refreshUser())
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     event.off('user-signed')
   }
 
-  componentDidShow () {
+  componentDidShow() {
     this.refreshUser()
   }
 
-  componentDidHide () {
-  }
+  componentDidHide() {}
 
   refreshUser() {
     this.setState({
@@ -37,11 +35,9 @@ export default class extends Component {
     })
   }
 
-  render () {
+  render() {
     if (this.state.user === null) {
-      return (
-        <UserSign />
-      )
+      return <UserSign />
     }
 
     return (
@@ -51,4 +47,3 @@ export default class extends Component {
     )
   }
 }
-

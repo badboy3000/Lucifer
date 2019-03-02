@@ -5,7 +5,9 @@ const isProd = process.env.NODE_ENV === 'production'
 const fly = new Fly()
 
 fly.interceptors.request.use(request => {
-  request.baseURL = isProd ? 'https://api.calibur.tv/' : 'http://localhost:3099/'
+  request.baseURL = isProd
+    ? 'https://api.calibur.tv/'
+    : 'http://localhost:3099/'
   request.headers['Accept'] = 'application/x.api.latest+json'
   request.headers['Authorization'] = `Bearer ${cache.get('JWT_TOKEN')}`
   request.timeout = 10000

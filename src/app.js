@@ -29,7 +29,7 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: '二次元股市',
       navigationBarTextStyle: 'black',
-      enablePullDownRefresh: true,
+      enablePullDownRefresh: true
     },
     tabBar: {
       color: '#888888',
@@ -51,18 +51,18 @@ class App extends Component {
           text: '我的'
         }
       ]
-    },
+    }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.getCurrentUser()
   }
 
-  componentDidShow () {}
+  componentDidShow() {}
 
-  componentDidHide () {}
+  componentDidHide() {}
 
-  componentDidCatchError () {}
+  componentDidCatchError() {}
 
   getCurrentUser(isFirst = true) {
     if (isFirst) {
@@ -71,7 +71,8 @@ class App extends Component {
         return
       }
     }
-    http.post('door/current_user')
+    http
+      .post('door/current_user')
       .then(data => {
         cache.set('USER', data)
       })
@@ -87,7 +88,8 @@ class App extends Component {
   }
 
   refreshAuthToken() {
-    http.post('door/refresh_token')
+    http
+      .post('door/refresh_token')
       .then(() => {
         this.getCurrentUser(false)
       })
@@ -96,10 +98,8 @@ class App extends Component {
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
-    return (
-      <Index />
-    )
+  render() {
+    return <Index />
   }
 }
 

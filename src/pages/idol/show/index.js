@@ -3,19 +3,19 @@ import { View, Text } from '@tarojs/components'
 import './index.scss'
 
 export default class extends Component {
-  componentWillMount () {
+  componentWillMount() {
     console.log(this.$router.params)
   }
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
+  render() {
     return (
       <View>
         <Text>text</Text>
@@ -23,4 +23,3 @@ export default class extends Component {
     )
   }
 }
-

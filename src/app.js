@@ -9,6 +9,8 @@ import './app.scss'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
+// TODO：预加载：https://nervjs.github.io/taro/docs/best-practice.html#%E9%A2%84%E5%8A%A0%E8%BD%BD
+// TODO：最佳实践：https://nervjs.github.io/taro/docs/best-practice.html
 
 class App extends Component {
   config = {

@@ -66,7 +66,7 @@ class App extends Component {
 
   getCurrentUser(isFirst = true) {
     if (isFirst) {
-      const token = cache.get('JWT_TOKEN')
+      const token = cache.get('JWT-TOKEN')
       if (!token) {
         return
       }
@@ -77,12 +77,12 @@ class App extends Component {
         cache.set('USER', data)
       })
       .catch(err => {
-        cache.remove('USER', data)
+        cache.remove('USER')
         if (err.code === 401) {
           if (isFirst) {
             this.refreshAuthToken()
           } else {
-            cache.remove('JWT_TOKEN')
+            cache.remove('JWT-TOKEN')
           }
         }
       })
@@ -95,7 +95,7 @@ class App extends Component {
         this.getCurrentUser(false)
       })
       .catch(() => {
-        cache.remove('JWT_TOKEN')
+        cache.remove('JWT-TOKEN')
       })
   }
 

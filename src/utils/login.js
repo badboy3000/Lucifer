@@ -104,13 +104,13 @@ const step_4_get_user = form => {
 }
 
 const step_5_get_current_user = token => {
-  cache.set('JWT_TOKEN', token)
+  cache.set('JWT-TOKEN', token)
   return new Promise((resolve, reject) => {
     http
       .post('door/current_user')
       .then(user => {
         cache.set('USER', user)
-        event.emit('user-signed')
+        event.emit('update-user')
         resolve(user)
       })
       .catch(reject)

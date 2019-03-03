@@ -1,15 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import cache from '~/utils/cache'
 import helper from '~/utils/helper'
 import { AtAvatar, AtIcon, AtButton } from 'taro-ui'
+import http from '~/utils/http'
+import state from '~/utils/state'
 import './index.scss'
 
 export default class extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: cache.get('USER', null)
+      signing: false
     }
   }
 
@@ -23,8 +24,31 @@ export default class extends Component {
 
   componentDidHide () { }
 
+  daySignAction() {
+    if (this.props.user.daySign || this.state.signing) {
+      return
+    }
+    this.setState({
+      signing: true
+    })
+    http.post('user/daySign')
+      .then(res => {
+        this.setState({
+          signing: false
+        })
+        state.updateUserExp(res, {
+          daySign: true
+        })
+      })
+      .catch(() => {
+        this.setState({
+          signing: false
+        })
+      })
+  }
+
   render () {
-    const { user } = this.state
+    const { user } = this.props
     if (!user) {
       return
     }
@@ -64,9 +88,11 @@ export default class extends Component {
           </View>
           <View className="day-sign">
             <AtButton
+              loading={this.state.signing}
               circle
-              type='primary'
-            >签到</AtButton>
+              type={this.props.user.daySign ? 'secondary' : 'primary'}
+              onClick={this.daySignAction}
+            >{this.props.user.daySign ? '已签到' : '签到'}</AtButton>
           </View>
         </View>
       </View>

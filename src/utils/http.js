@@ -5,12 +5,13 @@ import md5 from 'blueimp-md5'
 import env from '~/env'
 
 const fly = new Fly()
+const isProd = process.env.NODE_ENV === 'production'
 
 fly.interceptors.request.use(request => {
   const time = parseInt(Date.now() / 1000)
-  request.baseURL = 'https://api.calibur.tv/'
+  request.baseURL = isProd ? 'https://api.calibur.tv/' : 'http://localhost:3099/'
   request.headers['Accept'] = 'application/x.api.latest+json'
-  request.headers['Authorization'] = `Bearer ${cache.get('JWT_TOKEN')}`
+  request.headers['Authorization'] = `Bearer ${cache.get('JWT-TOKEN')}`
   request.headers['X-Auth-Time'] = time
   request.headers['X-Auth-Value'] = md5(`${time}${env.API_TOKEN}`)
   request.timeout = 10000
@@ -21,7 +22,7 @@ fly.interceptors.response.use(
   res => {
     if (res.request.url === 'door/refresh_token') {
       const token = res.headers.authorization[0].split(' ')[1]
-      cache.set('JWT_TOKEN', token)
+      cache.set('JWT-TOKEN', token)
     }
     return res.data.data
   },

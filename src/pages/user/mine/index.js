@@ -19,11 +19,11 @@ export default class extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    event.on('user-signed', () => this.refreshUser())
+    event.on('update-user', () => this.refreshUser())
   }
 
   componentWillUnmount() {
-    event.off('user-signed')
+    event.off('update-user')
   }
 
   componentDidShow() {
@@ -39,7 +39,7 @@ export default class extends Component {
   }
 
   userLogout() {
-    cache.remove('JWT_TOKEN')
+    cache.remove('JWT-TOKEN')
     cache.remove('USER')
     this.refreshUser()
   }
@@ -51,9 +51,9 @@ export default class extends Component {
 
     return (
       <View className='user-home'>
-        <UserPanel />
+        <UserPanel user={this.state.user} />
         <View className='hr' />
-        <UserTable />
+        <UserTable user={this.state.user} />
         <View className='logout'>
           <AtButton type='primary' onClick={this.userLogout}>
             退出登录

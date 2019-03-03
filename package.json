@@ -7,6 +7,7 @@
     "build": "npm run build:weapp",
     "dev": "cross-env NODE_ENV=production npm run local",
     "local": "npm run dev:weapp",
+    "analyze": "npm run build:h5",
     "build:weapp": "taro build --type weapp",
     "build:swan": "taro build --type swan",
     "build:alipay": "taro build --type alipay",
@@ -36,7 +37,6 @@
     "blueimp-md5": "^2.10.0",
     "cross-env": "^5.2.0",
     "flyio": "^0.6.13",
-    "lodash": "^4.17.11",
     "nerv-devtools": "^1.3.9",
     "nervjs": "^1.3.9",
     "taro-ui": "^2.0.1"
@@ -58,9 +58,8 @@
     "eslint": "^5.15.0",
     "eslint-config-taro": "1.2.15",
     "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-lodash": "^5.1.0",
     "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-taro": "1.2.15",
-    "lodash-webpack-plugin": "^0.11.5"
+    "webpack-bundle-analyzer": "^3.1.0"
   }
 }

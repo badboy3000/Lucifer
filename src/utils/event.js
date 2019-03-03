@@ -1,5 +1,3 @@
-import { includes } from 'lodash'
-
 export default new class {
   constructor() {
     this.all = {}
@@ -9,9 +7,7 @@ export default new class {
     if (!this.all[type]) {
       this.all[type] = []
     }
-    if (!includes(this.all[type], handler)) {
-      this.all[type].push(handler)
-    }
+    this.all[type].push(handler)
   }
 
   off(type, handler) {

@@ -98,6 +98,20 @@ const config = {
           }
         }
       }
+    },
+    webpackChain (chain, webpack) {
+      chain.merge({
+        plugin: {
+          install: {
+            plugin: require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
+            args: [{
+              analyzerMode: 'static',
+              defaultSizes: 'gzip',
+              analyzerPort: 8888
+            }]
+          }
+        }
+      })
     }
   }
 }

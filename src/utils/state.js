@@ -1,7 +1,6 @@
 import cache from '~/utils/cache'
 import event from '~/utils/event'
 import toast from '~/utils/toast'
-import { merge } from 'lodash'
 
 export default new class {
   updateUserInfo(obj) {
@@ -9,7 +8,10 @@ export default new class {
     if (!user) {
       return
     }
-    cache.set('USER', merge(user, obj))
+    Object.keys(obj).forEach(key => {
+      user[key] = obj[key]
+    })
+    cache.set('USER', user)
     event.emit('update-user')
   }
 

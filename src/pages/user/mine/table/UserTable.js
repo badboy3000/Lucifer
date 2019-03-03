@@ -67,16 +67,22 @@ export default class extends Component {
               value: 'help'
             }}
           />
-          <AtListItem
-            title='意见反馈'
-            arrow='right'
-            hasBorder={false}
-            iconInfo={{
-              size: 20,
-              color: '#657786',
-              value: 'phone'
-            }}
-          />
+          <button
+            open-type='feedback'
+            class='feedback'
+            hover-class='none'
+          >
+            <AtListItem
+              title='意见反馈'
+              arrow='right'
+              hasBorder={false}
+              iconInfo={{
+                size: 20,
+                color: '#657786',
+                value: 'phone'
+              }}
+            />
+          </button>
         </AtList>
       </View>
     )

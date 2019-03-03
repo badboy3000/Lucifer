@@ -101,6 +101,11 @@ const config = {
     },
     webpackChain (chain, webpack) {
       chain.merge({
+        resolve: {
+          alias: {
+            'global.scss': path.resolve(__dirname, '..', 'src/style/global.scss')
+          }
+        },
         plugin: {
           install: {
             plugin: require('webpack-bundle-analyzer').BundleAnalyzerPlugin,

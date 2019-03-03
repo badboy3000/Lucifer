@@ -6,6 +6,10 @@ import IdolItem from '~/pages/idol/item/index'
 import './index.scss'
 
 export default class extends Component {
+  config = {
+    enablePullDownRefresh: true
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -38,6 +42,10 @@ export default class extends Component {
 
   componentDidMount() {
     this.loadData(1)
+  }
+
+  onPullDownRefresh() {
+    this.loadData(this.state.current, true)
   }
 
   onReachBottom() {

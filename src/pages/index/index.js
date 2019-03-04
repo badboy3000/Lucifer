@@ -18,23 +18,23 @@ export default class extends Component {
         loading: false,
         nothing: false,
         noMore: false,
-        total: 0,
-        list: []
+        total: 0
       },
       activity: {
         loading: false,
         nothing: false,
         noMore: false,
-        total: 0,
-        list: []
+        total: 0
       },
       star_count: {
         loading: false,
         nothing: false,
         noMore: false,
-        total: 0,
-        list: []
-      }
+        total: 0
+      },
+      list_0: [],
+      list_1: [],
+      list_2: []
     }
   }
 
@@ -62,15 +62,7 @@ export default class extends Component {
     this.setState({
       current: index
     })
-    let sort = ''
-    if (index === 0) {
-      sort = 'market_price'
-    } else if (index === 1) {
-      sort = 'activity'
-    } else {
-      sort = 'star_count'
-    }
-    if (this.state[sort].list.length) {
+    if (this.state[`list_${index}`].length) {
       return
     }
     this.loadData(index)
@@ -86,6 +78,7 @@ export default class extends Component {
       sort = 'star_count'
     }
     const data = this.state[sort]
+    const field = `list_${index}`
     if (
       (
         data.loading ||
@@ -101,9 +94,11 @@ export default class extends Component {
           loading: true,
           nothing: false,
           noMore: false,
-          total: data.total,
-          data: []
+          total: data.total
         }
+      })
+      this.setState({
+        [field]: []
       })
     } else {
       this.setState({
@@ -117,16 +112,18 @@ export default class extends Component {
       sort,
       take: 10,
       state: sort === 'star_count' ? 0 : 1,
-      seenIds: refresh ? '' : data.list.map(_ => _.id).join(',')
+      seenIds: refresh ? '' : this.state[field].map(_ => _.id).join(',')
     })
       .then(res => {
+        this.setState({
+          [field]: this.state[field].concat(res.list)
+        })
         this.setState({
           [sort]: {
             loading: false,
             nothing: false,
             noMore: res.noMore,
-            total: res.total,
-            list: data.list.concat(res.list)
+            total: res.total
           }
         })
       })
@@ -141,23 +138,21 @@ export default class extends Component {
 
   render () {
     const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }]
-    const data_1 = this.state.market_price
-    const data_2 = this.state.activity
-    const data_3 = this.state.star_count
-    const idolList_1 = data_1.list.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_2 = data_2.list.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_3 = data_3.list.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
+    const { list_0, list_1, list_2 } = this.state
+    const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
+    const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
+    const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
     return (
       <View>
         <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
           <AtTabsPane current={this.state.current} index={0} >
-            {idolList_1}
+            {idolList_0}
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            {idolList_2}
+            {idolList_1}
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            {idolList_3}
+            {idolList_2}
           </AtTabsPane>
         </AtTabs>
       </View>

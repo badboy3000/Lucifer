@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import cache from '~/utils/cache'
 import event from '~/utils/event'
+import http from '~/utils/http'
 import { AtButton } from 'taro-ui'
 import UserSign from './sign/UserSign'
 import UserPanel from './panel/UserPanel'
@@ -39,6 +40,7 @@ export default class extends Component {
   }
 
   userLogout() {
+    http.post('door/logout')
     cache.remove('JWT-TOKEN')
     cache.remove('USER')
     this.refreshUser()

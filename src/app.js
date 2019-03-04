@@ -24,6 +24,8 @@ class App extends Component {
       'pages/idol/show/index',
       'pages/user/mine/index',
       'pages/user/handbook/index',
+      'pages/user/invite/index',
+      'pages/user/transaction/index',
       'pages/user/public/index'
     ],
     window: {

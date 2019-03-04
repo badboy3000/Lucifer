@@ -16,7 +16,7 @@ export default class extends Component {
   render() {
     return (
       <View>
-        <Text>handbook</Text>
+        <Text>transaction</Text>
       </View>
     )
   }

@@ -20,9 +20,13 @@ export default class extends Component {
 
   render() {
     return (
-      <View>
-        <Text>idol item</Text>
-        <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >标签页一的内容</View>
+      <View className='idol-item'>
+        <navigator
+          url={`/pages/idol/show/index?id=${this.props.idol.id}`}
+          hover-class='none'
+        >
+          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >{this.props.idol.name}</View>
+        </navigator>
       </View>
     )
   }

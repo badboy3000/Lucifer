@@ -58,13 +58,7 @@ export default class extends Component {
 
   componentDidHide() {}
 
-  toIdolPage(idolId) {
-    Taro.navigateTo({
-      url: `/pages/idol/show/index?id=${idolId}`
-    })
-  }
-
-  handleClick (index) {
+  tabSwitch (index) {
     this.setState({
       current: index
     })
@@ -155,10 +149,7 @@ export default class extends Component {
     const idolList_3 = data_3.list.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
     return (
       <View>
-        <AtButton type='primary' onClick={() => this.toIdolPage(22)}>
-          按钮文案
-        </AtButton>
-        <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick.bind(this)}>
+        <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
           <AtTabsPane current={this.state.current} index={0} >
             {idolList_1}
           </AtTabsPane>

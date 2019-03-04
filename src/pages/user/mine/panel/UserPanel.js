@@ -55,22 +55,27 @@ export default class extends Component {
 
     return (
       <View className='user-panel'>
-        <View className='intro'>
-          <View className='avatar'>
-            <AtAvatar
-              circle
-              size='large'
-              image={helper.resize(user.avatar, { width: 200 })}
-            />
+        <navigator
+          url={`/pages/user/public/index?zone=${this.props.user.zone}`}
+          hover-class='none'
+        >
+          <View className='intro'>
+            <View className='avatar'>
+              <AtAvatar
+                circle
+                size='large'
+                image={helper.resize(user.avatar, { width: 200 })}
+              />
+            </View>
+            <View className='text'>
+              <View className='nickname'>{user.nickname}</View>
+              <Text className='invite'>邀请码：{user.id}</Text>
+            </View>
+            <View className='arrow'>
+              <AtIcon value='chevron-right' size='20' color='#657786' />
+            </View>
           </View>
-          <View className='text'>
-            <View className='nickname'>{user.nickname}</View>
-            <Text className='invite'>邀请码：{user.id}</Text>
-          </View>
-          <View className='arrow'>
-            <AtIcon value='chevron-right' size='20' color='#657786' />
-          </View>
-        </View>
+        </navigator>
         <View className='control'>
           <View className='metas'>
             <View className='meta'>

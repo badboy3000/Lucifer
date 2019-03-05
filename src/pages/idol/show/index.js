@@ -2,7 +2,8 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtList, AtListItem } from 'taro-ui'
 import http from '~/utils/http'
-import IdolInfo from './info/index'
+import IdolInfo from './info/IdolInfo'
+import IdolPanel from './panel/IdolPanel'
 import './index.scss'
 
 export default class extends Component {
@@ -12,7 +13,7 @@ export default class extends Component {
       idol: null,
       bangumi: null,
       share_data: null,
-      current: 0
+      current: 1
     }
   }
 
@@ -54,34 +55,45 @@ export default class extends Component {
 
     return (
       <View>
+        <IdolPanel idol={idol}/>
         <AtTabs
           current={this.state.current}
           scroll
           tabList={[
-            { title: '股市信息' },
-            { title: '标签页2' },
-            { title: '标签页3' },
-            { title: '标签页4' },
-            { title: '标签页5' },
-            { title: '标签页6' }
+            { title: '产品区' },
+            { title: '数据表' },
+            { title: '留言板' },
+            { title: '股势图' },
+            { title: '董事会' },
+            { title: '大事记' },
+            { title: '采购表' },
+            { title: '变更处' }
           ]}
-          onClick={this.tabSwitch}>
+          swipeable={false}
+          onClick={this.tabSwitch}
+        >
           <AtTabsPane current={this.state.current} index={0}>
-            <IdolInfo idol={idol} />
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
             <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
           </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={1}>
+            <IdolInfo idol={idol} />
+          </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页四的内容</View>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={4}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页五的内容</View>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页四的内容</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={5}>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页五的内容</View>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={6}>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={7}>
             <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>
           </AtTabsPane>
         </AtTabs>

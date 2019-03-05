@@ -35,7 +35,12 @@ export default class extends Component {
     const tabList = [{ title: '成交面板' }, { title: '交易大厅' }, { title: '我的交易' }]
     return (
       <View>
-        <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
+        <AtTabs
+          current={this.state.current}
+          tabList={tabList}
+          onClick={this.tabSwitch}
+          swipeable={false}
+        >
           <AtTabsPane current={this.state.current} index={0} >
             成交面板
           </AtTabsPane>

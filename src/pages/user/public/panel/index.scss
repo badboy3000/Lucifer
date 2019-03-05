@@ -42,13 +42,33 @@
         float: left;
       }
 
-      .nickname {
-        font-size: 44px;
-        font-weight: 500;
-        line-height: 94px;
+      .nickname-wrap {
         margin-left: 180px;
-        color: $color-text-normal;
-        @extend %oneline;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        .nickname {
+          font-size: 44px;
+          font-weight: 500;
+          line-height: 94px;
+          margin-right: 12px;
+          color: $color-text-normal;
+        }
+
+        .level {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          background-color: $color-yellow;
+          color: #fff;
+          font-size: 22px;
+          height: 36px;
+          padding: 0 16px;
+          border-radius: 18px;
+        }
       }
     }
 
@@ -58,28 +78,40 @@
 
     .intro {
       margin-top: 16px;
-      margin-bottom: 6px;
+      margin-bottom: 16px;
       font-size: 26px;
       color: $color-text-light;
     }
 
     .metas {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
       .meta {
         margin-right: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
 
         .count {
           font-size: 30px;
           margin-right: 8px;
-          line-height: 30px;
           color: #484853;
         }
 
         .name {
           font-size: 26px;
-          line-height: 30px;
           color: $color-text-light;
         }
       }
     }
+  }
+
+  .hr {
+    height: 20px;
+    background-color: $color-avatar-border;
   }
 }

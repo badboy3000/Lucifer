@@ -24,11 +24,32 @@
       justify-content: center;
       align-items: flex-start;
 
-      .nickname {
-        font-size: 46px;
-        color: $color-text-normal;
-        font-weight: 500;
-        @extend %oneline;
+      .nickname-wrap {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        .nickname {
+          font-size: 46px;
+          color: $color-text-normal;
+          font-weight: 500;
+          margin-right: 12px;
+          @extend %oneline;
+        }
+
+        .level {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          background-color: $color-yellow;
+          color: #fff;
+          font-size: 22px;
+          height: 36px;
+          padding: 0 16px;
+          border-radius: 18px;
+        }
       }
 
       .invite {

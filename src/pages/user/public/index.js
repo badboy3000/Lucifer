@@ -40,7 +40,6 @@ export default class extends Component {
     return (
       <View className='public-user-home'>
         <UserPanel user={user}/>
-        <View className='hr' />
       </View>
     )
   }

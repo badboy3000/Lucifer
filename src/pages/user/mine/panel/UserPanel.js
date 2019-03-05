@@ -68,7 +68,14 @@ export default class extends Component {
               />
             </View>
             <View className='text'>
-              <View className='nickname'>{user.nickname}</View>
+              <View className='nickname-wrap'>
+                <Text className='nickname'>
+                  {user.nickname}
+                </Text>
+                <Text className="level">
+                  LV{user.exp.level}
+                </Text>
+              </View>
               <Text className='invite'>邀请码：{user.id}</Text>
             </View>
             <View className='arrow'>

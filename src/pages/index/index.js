@@ -126,6 +126,9 @@ export default class extends Component {
             total: res.total
           }
         })
+        if (refresh) {
+          wx.stopPullDownRefresh()
+        }
       })
       .catch(() => {
         this.setState({
@@ -133,6 +136,9 @@ export default class extends Component {
             loading: false
           })
         })
+        if (refresh) {
+          wx.stopPullDownRefresh()
+        }
       })
   }
 
@@ -147,7 +153,12 @@ export default class extends Component {
     const list_2_state = this.state.star_count
     return (
       <View className='idol-list'>
-        <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
+        <AtTabs
+          current={this.state.current}
+          tabList={tabList}
+          onClick={this.tabSwitch}
+          swipeable={false}
+        >
           <AtTabsPane current={this.state.current} index={0} >
             {idolList_0}
             <AtLoadMore status={list_0_state.loading ? 'loading' : list_0_state.noMore ? 'noMore' : 'more'}/>

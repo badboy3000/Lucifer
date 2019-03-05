@@ -58,9 +58,14 @@ export default class extends Component {
               mode='aspectFill'
               class='avatar'
             />
-            <Text className='nickname'>
-              {user.nickname}
-            </Text>
+            <View className='nickname-wrap'>
+              <Text className='nickname'>
+                {user.nickname}
+              </Text>
+              <Text className="level">
+                LV{user.level}
+              </Text>
+            </View>
           </View>
           <View className='badges'>
             {badges}
@@ -69,20 +74,21 @@ export default class extends Component {
             {user.signature}
           </View>
           <View className='metas'>
-            <Text className='meta'>
-              <Text className='count'>{user.power}</Text>
-              <Text className='name'>战斗力</Text>
-            </Text>
-            <Text className='meta'>
-              <Text className='count'>{user.banlance.coin_count}</Text>
-              <Text className='name'>团子</Text>
-            </Text>
-            <Text className='meta'>
-              <Text className='count'>{user.banlance.light_count}</Text>
-              <Text className='name'>光玉</Text>
-            </Text>
+            <View className='meta'>
+              <View className='count'>{user.power}</View>
+              <View className='name'>战斗力</View>
+            </View>
+            <View className='meta'>
+              <View className='count'>{user.banlance.coin_count}</View>
+              <View className='name'>团子</View>
+            </View>
+            <View className='meta'>
+              <View className='count'>{user.banlance.light_count}</View>
+              <View className='name'>光玉</View>
+            </View>
           </View>
         </View>
+        <View className='hr' />
       </View>
     )
   }

@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtButton } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import IdolItem from '~/pages/idol/item/index'
 import './index.scss'
@@ -142,17 +142,23 @@ export default class extends Component {
     const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
+    const list_0_state = this.state.market_price
+    const list_1_state = this.state.activity
+    const list_2_state = this.state.star_count
     return (
       <View className='idol-list'>
         <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
           <AtTabsPane current={this.state.current} index={0} >
             {idolList_0}
+            <AtLoadMore status={list_0_state.loading ? 'loading' : list_0_state.noMore ? 'noMore' : 'more'}/>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             {idolList_1}
+            <AtLoadMore status={list_1_state.loading ? 'loading' : list_1_state.noMore ? 'noMore' : 'more'}/>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
             {idolList_2}
+            <AtLoadMore status={list_2_state.loading ? 'loading' : list_2_state.noMore ? 'noMore' : 'more'}/>
           </AtTabsPane>
         </AtTabs>
       </View>

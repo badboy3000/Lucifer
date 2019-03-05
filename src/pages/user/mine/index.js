@@ -47,15 +47,16 @@ export default class extends Component {
   }
 
   render() {
-    if (this.state.user === null) {
+    const { user } = this.state
+    if (user === null) {
       return <UserSign />
     }
 
     return (
       <View className='user-home'>
-        <UserPanel user={this.state.user} />
+        <UserPanel user={user} />
         <View className='hr' />
-        <UserTable user={this.state.user} />
+        <UserTable user={user} />
         <View className='logout'>
           <AtButton type='primary' onClick={this.userLogout}>
             退出登录

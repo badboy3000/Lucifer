@@ -56,7 +56,7 @@ export default class extends Component {
     return (
       <View className='user-panel'>
         <navigator
-          url={`/pages/user/public/index?zone=${this.props.user.zone}`}
+          url={`/pages/user/public/index?zone=${user.zone}`}
           hover-class='none'
         >
           <View className='intro'>
@@ -95,9 +95,9 @@ export default class extends Component {
             <AtButton
               loading={this.state.signing}
               circle
-              type={this.props.user.daySign ? 'secondary' : 'primary'}
+              type={user.daySign ? 'secondary' : 'primary'}
               onClick={this.daySignAction}
-            >{this.props.user.daySign ? '已签到' : '签到'}</AtButton>
+            >{user.daySign ? '已签到' : '签到'}</AtButton>
           </View>
         </View>
       </View>

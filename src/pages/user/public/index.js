@@ -1,13 +1,23 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import http from '~/utils/http'
+import UserPanel from './panel/UserPanel'
 import './index.scss'
 
 export default class extends Component {
-  componentWillMount() {
-    console.log(this.$router.params)
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: null,
+      share_data: null
+    };
   }
 
-  componentDidMount() {}
+  componentWillMount() {}
+
+  componentDidMount() {
+    this.getUser()
+  }
 
   componentWillUnmount() {}
 
@@ -15,10 +25,22 @@ export default class extends Component {
 
   componentDidHide() {}
 
+  getUser() {
+    http.get(`user/${this.$router.params.zone}/show`)
+      .then(user => {
+        this.setState({
+          user,
+          share_data: user.share_data
+        })
+      })
+  }
+
   render() {
+    const { user } = this.state
     return (
-      <View>
-        <Text>text</Text>
+      <View className='public-user-home'>
+        <UserPanel user={user}/>
+        <View className='hr' />
       </View>
     )
   }

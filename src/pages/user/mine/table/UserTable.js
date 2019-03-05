@@ -38,7 +38,7 @@ export default class extends Component {
             />
           </navigator>
           <navigator
-            url='/pages/user/invite/index'
+            url={`/pages/user/invite/index?id=${this.props.user.id}`}
             hover-class='none'
           >
             <AtListItem

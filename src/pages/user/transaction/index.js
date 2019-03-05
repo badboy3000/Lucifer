@@ -38,7 +38,7 @@ export default class extends Component {
 
   getData() {
     const { state } = this
-    if (state.loading) {
+    if (state.loading || state.noMore) {
       return
     }
     this.setState({

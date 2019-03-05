@@ -139,11 +139,11 @@ export default class extends Component {
   render () {
     const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }]
     const { list_0, list_1, list_2 } = this.state
-    const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} taroKey={String(idol.id)} idol={idol}/>)
+    const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
+    const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
+    const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
     return (
-      <View>
+      <View className='idol-list'>
         <AtTabs current={this.state.current} tabList={tabList} onClick={this.tabSwitch}>
           <AtTabsPane current={this.state.current} index={0} >
             {idolList_0}

@@ -4,6 +4,8 @@ import { AtTabs, AtTabsPane, AtList, AtListItem } from 'taro-ui'
 import http from '~/utils/http'
 import IdolInfo from './info/IdolInfo'
 import IdolPanel from './panel/IdolPanel'
+import IdolOwner from './owner/IdolOwner'
+import event from '~/utils/event'
 import './index.scss'
 
 export default class extends Component {
@@ -45,6 +47,7 @@ export default class extends Component {
     this.setState({
       current: index
     })
+    event.emit(`idol-${this.$router.params.id}-tab-switch-${index}`)
   }
 
   render() {
@@ -82,13 +85,13 @@ export default class extends Component {
             <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={4}>
             <View style='font-size:18px;text-align:center;height:100px;'>标签页四的内容</View>
           </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={4}>
+            <IdolOwner idol={idol}/>
+          </AtTabsPane>
           <AtTabsPane current={this.state.current} index={5}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页五的内容</View>
+            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={6}>
             <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>

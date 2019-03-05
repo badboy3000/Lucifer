@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "Lucifer",
 	"description": "calibur.tv wechat mini application",
-	"appid": "wxebf34643214e3eba",
+	"appid": "wx456b13e2d94efba4",
 	"setting": {
 		"urlCheck": false,
 		"es6": false,

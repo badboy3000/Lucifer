@@ -1,0 +1,15 @@
+@import "global.scss";
+
+.sale-idol-btn-wrap {
+  .sale-btn {
+    background-color: $color-gray;
+    color: #fff;
+    border-radius: 10px;
+    width: 128px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 24px;
+    margin: 0 10px;
+    border-width: 0;
+  }
+}

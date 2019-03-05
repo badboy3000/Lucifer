@@ -64,7 +64,7 @@ export default class extends Component {
           scroll
           tabList={[
             { title: '产品区' },
-            { title: '数据表' },
+            { title: '信息表' },
             { title: '留言板' },
             { title: '股势图' },
             { title: '董事会' },

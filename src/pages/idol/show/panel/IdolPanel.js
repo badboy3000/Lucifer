@@ -3,6 +3,8 @@ import { View, Text } from '@tarojs/components'
 import { AtAvatar, AtButton } from 'taro-ui'
 import helper from '~/utils/helper'
 import './index.scss'
+import StarIdolBtn from '../star_btn/StarIdolBtn'
+import SaleIdolBtn from '../sale_btn/SaleIdolBtn'
 
 export default class extends Component {
   constructor (props) {
@@ -42,16 +44,8 @@ export default class extends Component {
             />
             <View className='name'>{idol.name}</View>
             <View className="controls">
-              <AtButton
-                type='primary'
-                circle
-                size='small'
-              >入股</AtButton>
-              <AtButton
-                type='secondary'
-                circle
-                size='small'
-              >出售</AtButton>
+              <StarIdolBtn idol={idol}/>
+              <SaleIdolBtn idol={idol}/>
             </View>
           </View>
         </View>

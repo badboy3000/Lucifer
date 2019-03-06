@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import UserPanel from './panel/UserPanel'
+import UserContent from './content/UserContent'
 import './index.scss'
 
 export default class extends Component {
@@ -40,6 +41,7 @@ export default class extends Component {
     return (
       <View className='public-user-home'>
         <UserPanel user={user}/>
+        <UserContent user={user}/>
       </View>
     )
   }

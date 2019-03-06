@@ -20,8 +20,8 @@ export default class extends Component {
   render() {
     return (
       <View>
-        <Text>text</Text>
         <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
+        <Text>text</Text>
       </View>
     )
   }

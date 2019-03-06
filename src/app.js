@@ -16,8 +16,6 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/deal/create/index',
-      'pages/deal/show/index',
       'pages/idol/create/index',
       'pages/idol/edit/index',
       'pages/idol/show/index',

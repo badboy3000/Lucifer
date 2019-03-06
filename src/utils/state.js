@@ -41,4 +41,15 @@ export default new class {
     })
     toast.info(message)
   }
+
+  updateUserPocket(amount) {
+    const user = cache.get('USER')
+    if (!user) {
+      return
+    }
+    user.pocket = user.pocket + amount
+    user.banlance.coin_count = user.banlance.coin_count + amount
+    cache.set('USER', user)
+    event.emit('update-user')
+  }
 }()

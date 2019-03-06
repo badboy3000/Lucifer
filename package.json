@@ -24,7 +24,7 @@
     "pretty": "prettier-eslint --write \"**/*.{js,.scss}\""
   },
   "author": "",
-  "license": "MIT",
+  "license": "GPL-2.0",
   "dependencies": {
     "@tarojs/components": "1.2.15",
     "@tarojs/router": "1.2.15",

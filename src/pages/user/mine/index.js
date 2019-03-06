@@ -20,7 +20,7 @@ export default class extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    event.on('update-user', () => this.refreshUser())
+    event.on('update-user', this.refreshUser)
   }
 
   componentWillUnmount() {

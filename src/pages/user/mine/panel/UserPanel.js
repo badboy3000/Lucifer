@@ -39,6 +39,7 @@ export default class extends Component {
         state.updateUserExp(res, {
           daySign: true
         })
+        state.updateUserPocket(1)
       })
       .catch(() => {
         this.setState({
@@ -90,12 +91,12 @@ export default class extends Component {
               <View className='name'>战斗力</View>
             </View>
             <View className='meta'>
-              <View className='count'>{user.banlance.coin_count}</View>
+              <View className='count'>{parseFloat(user.banlance.coin_count).toFixed(2)}</View>
               <View className='name'>团子</View>
             </View>
             <View className='meta'>
-              <View className='count'>{user.exp.level}</View>
-              <View className='name'>等级</View>
+              <View className='count'>{parseFloat(user.banlance.light_count).toFixed(2)}</View>
+              <View className='name'>光玉</View>
             </View>
           </View>
           <View className="day-sign">

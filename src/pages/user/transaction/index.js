@@ -70,12 +70,13 @@ export default class extends Component {
   }
 
   computedRecord(record) {
-    const { type, user, model, amount } = record
+    const { type, user, model, amount, created_at } = record
+    const day = created_at.split(' ')[0]
     switch (type) {
       case 0:
         return {
           title: '每日签到',
-          desc: '签到获得团子奖励'
+          desc: `签到获得团子奖励·${day}`
         }
       case 1:
         return {

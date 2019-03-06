@@ -23,7 +23,7 @@ export default class extends Component {
   componentDidHide () { }
 
   render () {
-    const { idol } = this.props
+    const { idol, onUpdateStar } = this.props
     return (
       <View className='idol-panel'>
         <View className='background'>
@@ -44,7 +44,7 @@ export default class extends Component {
             />
             <View className='name'>{idol.name}</View>
             <View className="controls">
-              <StarIdolBtn idol={idol}/>
+              <StarIdolBtn idol={idol} onUpdateStar={onUpdateStar}/>
               <SaleIdolBtn idol={idol}/>
             </View>
           </View>

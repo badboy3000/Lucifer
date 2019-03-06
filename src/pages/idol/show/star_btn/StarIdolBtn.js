@@ -13,7 +13,7 @@ export default class extends Component {
     this.state = {
       open: false,
       user: cache.get('USER', null),
-      count: 0,
+      count: -1,
       submitting: false
     }
   }
@@ -54,7 +54,7 @@ export default class extends Component {
 
   submitForm() {
     const { count, submitting } = this.state
-    if (!count) {
+    if (count <= 0) {
       return toast.info('请选择入股份额')
     }
     if (submitting) {
@@ -73,6 +73,7 @@ export default class extends Component {
           open: false
         })
         state.updateUserPocket(-this.props.idol.stock_price * count)
+        this.props.onUpdateStar(count)
       })
       .catch(() => {
         this.setState({
@@ -92,7 +93,9 @@ export default class extends Component {
     const pocketCanBuy = pocket ? pocket / price : '0.00'
     const maxCount = maxCanBuy === -1 ? pocketCanBuy : Math.min(pocketCanBuy, maxCanBuy)
     const minCount = Math.min(idol.company_state ? 0.01 : 1, maxCount)
-    const needPay = count ? parseFloat(price * count).toFixed(2) : '0.00'
+    const needPay = count === -1
+      ? parseFloat(minCount * price).toFixed(2)
+      : count ? parseFloat(price * count).toFixed(2) : '0.00'
     return (
       <View className='star-idol-btn-wrap'>
         <Button
@@ -141,7 +144,7 @@ export default class extends Component {
             type='primary'
             circle
             onClick={this.submitForm}
-          >确认下单</AtButton>
+          >确认入股</AtButton>
         </AtFloatLayout>
       </View>
     )

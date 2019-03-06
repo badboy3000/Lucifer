@@ -50,15 +50,22 @@ export default class extends Component {
     event.emit(`idol-${this.$router.params.id}-tab-switch-${index}`)
   }
 
+  onUpdateUserHasStar(count) {
+    this.setState({
+      idol: Object.assign(this.state.idol, {
+        has_star: parseFloat(+this.state.idol.has_star + +count).toFixed(2)
+      })
+    })
+  }
+
   render() {
     const { idol } = this.state
     if (!idol) {
       return
     }
-
     return (
       <View>
-        <IdolPanel idol={idol}/>
+        <IdolPanel idol={idol} onUpdateStar={this.onUpdateUserHasStar}/>
         <AtTabs
           current={this.state.current}
           scroll

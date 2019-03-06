@@ -13,7 +13,7 @@ export default class extends Component {
     this.state = {
       open: false,
       user: cache.get('USER', null),
-      count: -1,
+      count: props.idol ? props.idol.company_state ? 0.01 : 1 : 0,
       submitting: false
     }
   }
@@ -54,7 +54,7 @@ export default class extends Component {
 
   submitForm() {
     const { count, submitting } = this.state
-    if (count <= 0) {
+    if (count === 0) {
       return toast.info('请选择入股份额')
     }
     if (submitting) {
@@ -72,7 +72,7 @@ export default class extends Component {
           submitting: false,
           open: false
         })
-        state.updateUserPocket(-this.props.idol.stock_price * count)
+        state.updateUserPocket(-this.computedNeedPay())
         this.props.onUpdateStar(count)
       })
       .catch(() => {
@@ -82,20 +82,31 @@ export default class extends Component {
       })
   }
 
-  render () {
+  computedPocket() {
+    const { user } = this.state
+    return user ? +user.pocket : 0
+  }
+
+  computedMaxCount() {
     const { idol } = this.props
-    const { user, count, submitting } = this.state
-    const pocket = user ? +user.pocket : 0
-    const price = idol.stock_price
     const maxCanBuy = (!idol.max_stock_count || idol.max_stock_count === '0.00')
       ? -1
       : idol.max_stock_count - idol.star_count
-    const pocketCanBuy = pocket ? pocket / price : '0.00'
-    const maxCount = maxCanBuy === -1 ? pocketCanBuy : Math.min(pocketCanBuy, maxCanBuy)
-    const minCount = Math.min(idol.company_state ? 0.01 : 1, maxCount)
-    const needPay = count === -1
-      ? parseFloat(minCount * price).toFixed(2)
-      : count ? parseFloat(price * count).toFixed(2) : '0.00'
+    const pocketCanBuy = this.computedPocket() ? this.computedPocket() / idol.stock_price : '0.00'
+    return maxCanBuy === -1 ? pocketCanBuy : Math.min(pocketCanBuy, maxCanBuy)
+  }
+
+  computedMinCount() {
+    return Math.min(this.props.idol.company_state ? 0.01 : 1, this.computedMaxCount())
+  }
+
+  computedNeedPay() {
+    return this.state.count ? parseFloat(this.props.idol.stock_price * this.state.count).toFixed(2) : '0.00'
+  }
+
+  render () {
+    const { idol } = this.props
+    const { count, submitting } = this.state
     return (
       <View className='star-idol-btn-wrap'>
         <Button
@@ -110,30 +121,30 @@ export default class extends Component {
           <AtList hasBorder={false}>
             <AtListItem
               title='当前股价'
-              extraText={`￥${price}/股`}
+              extraText={`￥${idol.stock_price}/股`}
               note='上市后大股东可变更股价'
             />
             <AtListItem
               title='最多可购买份额'
-              extraText={`${parseFloat(maxCount).toFixed(2)}股`}
+              extraText={`${parseFloat(this.computedMaxCount()).toFixed(2)}股`}
               note='与当前发行情况以及钱包余额有关'
             />
             <AtListItem
               title='最低可购买份额'
-              extraText={`${parseFloat(minCount).toFixed(2)}股`}
+              extraText={`${parseFloat(this.computedMinCount()).toFixed(2)}股`}
               note={idol.company_state ? '上市公司一次可最低购买0.01股' : '未上市公司最低购买为1.00股'}
             />
             <AtListItem
               title='钱包余额'
-              note={`待支付：￥${needPay}`}
-              extraText={`￥${pocket}`}
+              note={`待支付：￥${this.computedNeedPay()}`}
+              extraText={`￥${parseFloat(this.computedPocket()).toFixed(2)}`}
             />
           </AtList>
           <View className='buy-counter'>
             <AtInputNumber
               type='digit'
-              min={minCount}
-              max={maxCount}
+              min={this.computedMinCount()}
+              max={this.computedMaxCount()}
               step={0.01}
               value={count}
               onChange={this.handleChangeBuyCount}

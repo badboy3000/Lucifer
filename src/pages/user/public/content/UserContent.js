@@ -1,6 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
+import UserIdol from '../idol/UserIdol'
+import event from '~/utils/event'
 import './index.scss'
 
 export default class extends Component {
@@ -13,7 +15,9 @@ export default class extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    event.emit('user-tab-0-switch')
+  }
 
   componentWillUnmount () { }
 
@@ -21,20 +25,28 @@ export default class extends Component {
 
   componentDidHide () { }
 
-  handleClick (value) {
+  handleClick (index) {
     this.setState({
-      current: value
+      current: index
     })
+    event.emit(`user-tab-${index}-switch`)
   }
 
   render () {
+    const { user } = this.props
+    const { current } = this.state
     const tabList = [{ title: '偶像' }, { title: '交易' }]
     return (
-      <AtTabs current={this.state.current} tabList={tabList} onClick={this.handleClick}>
-        <AtTabsPane current={this.state.current} index={0} >
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;' >标签页一的内容</View>
+      <AtTabs
+        current={current}
+        tabList={tabList}
+        onClick={this.handleClick}
+        swipeable={false}
+      >
+        <AtTabsPane current={current} index={0} >
+          <UserIdol user={user}/>
         </AtTabsPane>
-        <AtTabsPane current={this.state.current} index={1}>
+        <AtTabsPane current={current} index={1}>
           <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
         </AtTabsPane>
       </AtTabs>

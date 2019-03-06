@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
+import event from '~/utils/event'
 import UserPanel from './panel/UserPanel'
 import UserContent from './content/UserContent'
 import './index.scss'
@@ -26,6 +27,10 @@ export default class extends Component {
 
   componentDidHide() {}
 
+  onReachBottom() {
+    event.emit('on-reach-bottom')
+  }
+
   getUser() {
     http.get(`user/${this.$router.params.zone}/show`)
       .then(user => {
@@ -38,6 +43,9 @@ export default class extends Component {
 
   render() {
     const { user } = this.state
+    if (!user) {
+      return
+    }
     return (
       <View className='public-user-home'>
         <UserPanel user={user}/>

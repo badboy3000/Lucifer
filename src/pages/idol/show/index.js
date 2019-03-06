@@ -31,6 +31,10 @@ export default class extends Component {
 
   componentDidShow() {}
 
+  onReachBottom() {
+    event.emit('on-reach-bottom')
+  }
+
   componentDidHide() {}
 
   getIdolInfo() {

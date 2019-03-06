@@ -19,9 +19,7 @@ export default class extends Component {
     }
   }
 
-  componentWillMount() {
-    console.log(this.$router.params)
-  }
+  componentWillMount() { }
 
   componentDidMount() {
     this.getIdolInfo()

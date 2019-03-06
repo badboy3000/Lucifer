@@ -14,7 +14,11 @@ export default new class {
   off(type, handler) {
     console.log('[event bus off]', type)
     if (this.all[type]) {
-      this.all[type].splice(this.all[type].indexOf(handler) >>> 0, 1)
+      if (handler) {
+        this.all[type].splice(this.all[type].indexOf(handler) >>> 0, 1)
+      } else {
+        this.all[type] = []
+      }
     }
   }
 
@@ -23,11 +27,5 @@ export default new class {
     ;(this.all[type] || []).map(handler => {
       handler(...args)
     })
-  }
-
-  // 清除之前绑定的所有事件
-  clear(type) {
-    console.log('[event bus clear]', type || 'ALL EVENTS')
-    type ? (this.all[type] = []) : (this.all = {})
   }
 }()

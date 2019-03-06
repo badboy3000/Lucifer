@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, AtLoadMore } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
+import { AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import event from '~/utils/event'
 import IdolItem from '~/pages/idol/item/index'
@@ -18,20 +19,16 @@ export default class extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    event.on('user-tab-0-switch', () => {
-      if (this.state.list.length || this.state.noMore) {
+    event.on('user-tab-0-switch', force => {
+      if ((this.state.list.length || this.state.noMore) && !force) {
         return
       }
-      this.getUserIdols()
-    })
-    event.on('on-reach-bottom', () => {
       this.getUserIdols()
     })
   }
 
   componentWillUnmount () {
     event.off('user-tab-0-switch')
-    event.off('on-reach-bottom')
   }
 
   componentDidShow () { }
@@ -39,8 +36,8 @@ export default class extends Component {
   componentDidHide () { }
 
   getUserIdols() {
-    const { loading, list } = this.state
-    if (loading) {
+    const { loading, noMore, list } = this.state
+    if (loading || noMore) {
       return
     }
     this.setState({
@@ -70,12 +67,14 @@ export default class extends Component {
   }
 
   render () {
+    const { list, loading, noMore } = this.state
     return (
       <View>
-        {this.state.list.map(idol => <IdolItem key={String(idol.id)} sort='user' taroKey={String(idol.id)} idol={idol}/>)}
-        <AtLoadMore status={this.state.loading ? 'loading' : this.state.noMore ? 'noMore' : 'more'}/>
+        <View>
+          {list.map(idol => <IdolItem key={String(idol.id)} sort='user' taroKey={String(idol.id)} idol={idol}/>)}
+        </View>
+        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
       </View>
     )
   }
 }
-

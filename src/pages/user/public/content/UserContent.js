@@ -17,9 +17,14 @@ export default class extends Component {
 
   componentDidMount () {
     event.emit('user-tab-0-switch')
+    event.on('on-reach-bottom', () => {
+      event.emit(`user-tab-${this.state.current}-switch`, true)
+    })
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount () {
+    event.off('on-reach-bottom')
+  }
 
   componentDidShow () { }
 
@@ -29,7 +34,7 @@ export default class extends Component {
     this.setState({
       current: index
     })
-    event.emit(`user-tab-${index}-switch`)
+    event.emit(`user-tab-${index}-switch`, false)
   }
 
   render () {

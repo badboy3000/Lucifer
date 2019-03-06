@@ -70,10 +70,10 @@ export default class extends Component {
         <navigator
           url={`/pages/user/public/index?zone=${user.zone}`}
           hover-class='none'
+          key={String(user.id)}
+          taroKey={String(user.id)}
         >
           <AtListItem
-            key={String(user.id)}
-            taroKey={String(user.id)}
             arrow='right'
             thumb={helper.resize(user.avatar, { width: 120 })}
             note={user.created_at}

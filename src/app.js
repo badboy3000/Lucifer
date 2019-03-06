@@ -16,7 +16,6 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/deal/hall/index',
       'pages/deal/create/index',
       'pages/deal/show/index',
       'pages/idol/create/index',
@@ -45,10 +44,6 @@ class App extends Component {
         {
           pagePath: 'pages/index/index',
           text: '股市'
-        },
-        {
-          pagePath: 'pages/deal/hall/index',
-          text: '交易所'
         },
         {
           pagePath: 'pages/user/mine/index',

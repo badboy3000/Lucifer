@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtLoadMore, AtNoticebar } from 'taro-ui'
 import http from '~/utils/http'
 import IdolItem from '~/pages/idol/item/index'
+import DealItem from '~/pages/deal/item/index'
 import './index.scss'
 
 export default class extends Component {
@@ -34,22 +35,37 @@ export default class extends Component {
       },
       list_0: [],
       list_1: [],
-      list_2: []
+      list_2: [],
+      pub_deal_loading: false,
+      pub_deal_noMore: false,
+      pub_deal_nothing: false,
+      pub_deal_total: 0,
+      pub_deal_list: []
     }
   }
 
   componentWillMount() {}
 
   componentDidMount() {
-    this.loadData(1)
+    this.getIdols(1)
   }
 
   onPullDownRefresh() {
-    this.loadData(this.state.current, true)
+    const index = this.state.current
+    if (index === 3) {
+      this.getDeals(true)
+    } else {
+      this.getIdols(index, true)
+    }
   }
 
   onReachBottom() {
-    this.loadData(this.state.current)
+    const index = this.state.current
+    if (index === 3) {
+      this.getDeals()
+    } else {
+      this.getIdols(index)
+    }
   }
 
   componentWillUnmount() {}
@@ -62,13 +78,19 @@ export default class extends Component {
     this.setState({
       current: index
     })
+    if (index === 3) {
+      if (!this.state.pub_deal_list.length) {
+        this.getDeals()
+      }
+      return
+    }
     if (this.state[`list_${index}`].length) {
       return
     }
-    this.loadData(index)
+    this.getIdols(index)
   }
 
-  loadData(index, refresh = false) {
+  getIdols(index, refresh = false) {
     let sort = ''
     if (index === 0) {
       sort = 'market_price'
@@ -80,11 +102,9 @@ export default class extends Component {
     const data = this.state[sort]
     const field = `list_${index}`
     if (
-      (
-        data.loading ||
-        data.nothing ||
-        data.noMore
-      ) && !refresh
+      data.loading ||
+      data.nothing ||
+      (data.noMore && !refresh)
     ) {
       return
     }
@@ -142,17 +162,67 @@ export default class extends Component {
       })
   }
 
+  getDeals(refresh = false) {
+    const { state } = this
+    if (
+      state.pub_deal_loading ||
+      state.pub_deal_nothing ||
+      (!refresh && state.pub_deal_noMore)
+    ) {
+      return
+    }
+    if (refresh) {
+      this.setState({
+        pub_deal_loading: true,
+        pub_deal_noMore: false,
+        pub_deal_nothing: false,
+        pub_deal_list: []
+      })
+    } else {
+      this.setState({
+        pub_deal_loading: true
+      })
+    }
+    http.get('cartoon_role/deal_list', {
+      seenIds: refresh ? '' : state.pub_deal_list.map(_ => _.id).join(','),
+      take: 10
+    })
+      .then(data => {
+        this.setState({
+          pub_deal_list: state.pub_deal_list.concat(data.list),
+          pub_deal_noMore: data.noMore,
+          pub_deal_total: data.total,
+          pub_deal_loading: false
+        })
+        if (refresh) {
+          wx.stopPullDownRefresh()
+        }
+      })
+      .catch(() => {
+        this.setState({
+          pub_deal_loading: false
+        })
+        if (refresh) {
+          wx.stopPullDownRefresh()
+        }
+      })
+  }
+
   render () {
-    const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }]
-    const { list_0, list_1, list_2 } = this.state
+    const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }, { title: '交易所' }]
+    const { list_0, list_1, list_2, pub_deal_list } = this.state
     const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
+    const DealList = pub_deal_list.map(deal => <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal}/>)
     const list_0_state = this.state.market_price
     const list_1_state = this.state.activity
     const list_2_state = this.state.star_count
     return (
       <View className='idol-list'>
+        <AtNoticebar icon='volume-plus' marquee>
+          这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏
+        </AtNoticebar>
         <AtTabs
           current={this.state.current}
           tabList={tabList}
@@ -170,6 +240,10 @@ export default class extends Component {
           <AtTabsPane current={this.state.current} index={2}>
             {idolList_2}
             <AtLoadMore status={list_2_state.loading ? 'loading' : list_2_state.noMore ? 'noMore' : 'more'}/>
+          </AtTabsPane>
+          <AtTabsPane current={this.state.current} index={3}>
+            {DealList}
+            <AtLoadMore status={this.state.pub_deal_loading ? 'loading' : this.state.pub_deal_noMore ? 'noMore' : 'more'}/>
           </AtTabsPane>
         </AtTabs>
       </View>

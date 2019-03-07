@@ -98,13 +98,13 @@ export default class extends Component {
   }
 
   render () {
-    const { page_loading, page_error, deal, idol, user, current, list, noMore, loading } = this.state
-    if (page_loading) {
+    if (this.state.page_loading) {
       return
     }
-    if (page_error) {
+    if (this.state.page_error) {
       return
     }
+    const { deal, idol, user, current, list, noMore, loading } = this.state
     const tabList = [{ title: '交易详情' }, { title: '成交记录' }]
     const records = list.map(deal => {
       return (

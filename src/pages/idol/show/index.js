@@ -71,13 +71,13 @@ export default class extends Component {
   }
 
   render() {
-    const { idol, page_loading, page_error } = this.state
-    if (page_loading) {
+    if (this.state.page_loading) {
       return
     }
-    if (page_error) {
+    if (this.state.page_error) {
       return
     }
+    const { idol } = this.state
     return (
       <View>
         <IdolPanel idol={idol} onUpdateStar={this.onUpdateUserHasStar}/>

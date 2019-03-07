@@ -51,13 +51,13 @@ export default class extends Component {
   }
 
   render() {
-    const { user, page_loading, page_error } = this.state
-    if (!page_loading) {
+    if (this.state.page_loading) {
       return
     }
-    if (!page_error) {
+    if (this.state.page_error) {
       return
     }
+    const { user } = this.state
     return (
       <View className='public-user-home'>
         <UserPanel user={user}/>

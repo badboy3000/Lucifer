@@ -4,3 +4,7 @@ $color-brand-light: #ff8ea1;
 $color-brand-dark: #cc5367;
 
 @import "~taro-ui/dist/style/index.scss";
+
+.at-list__item--thumb .item-thumb__info {
+  border-radius: 50%;
+}

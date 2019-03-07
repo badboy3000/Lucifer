@@ -1,8 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { AtForm, AtInput, AtButton } from 'taro-ui'
+import { View, Text, Button } from '@tarojs/components'
+import { AtForm, AtInput, AtButton, AtDivider } from 'taro-ui'
 import { wechatLogin, accessLogin } from '~/utils/login'
 import toast from '~/utils/toast'
+import loginBg from '~/images/login_bg.png'
+import wechatIcon from '~/images/login_wechat_icon.png'
 import './index.scss'
 
 export default class extends Component {
@@ -33,13 +35,19 @@ export default class extends Component {
     this.setState({
       submitting: true
     })
+    toast.loading('登录中')
     wechatLogin()
-      .then(() => {})
-      .catch(err => {
-        toast.info(err.message)
+      .then(() => {
         this.setState({
           submitting: false
         })
+        toast.stop()
+      })
+      .catch(() => {
+        this.setState({
+          submitting: false
+        })
+        toast.stop()
       })
   }
 
@@ -89,40 +97,62 @@ export default class extends Component {
   render() {
     return (
       <View className='user-sign'>
-        <AtForm onSubmit={this.onSubmit.bind(this)}>
-          <AtInput
-            name='access'
-            border={true}
-            title='手机'
-            type='phone'
-            placeholder='手机号码'
-            value={this.state.access}
-            onChange={this.changeAccess.bind(this)}
+        <View class='form-wrap'>
+          <View className='bg'>
+            <image
+              src={loginBg}
+              mode='aspectFit'
+            />
+          </View>
+          <View className="sign-form">
+            <AtForm onSubmit={this.onSubmit}>
+              <AtInput
+                name='access'
+                border={true}
+                title='手机'
+                type='phone'
+                placeholder='手机号码'
+                value={this.state.access}
+                onChange={this.changeAccess}
+              />
+              <AtInput
+                name='secret'
+                title='密码'
+                type='password'
+                placeholder='密码不能少于6位数'
+                clear={true}
+                border={true}
+                value={this.state.secret}
+                onChange={this.changeSecret}
+              />
+              <View className="btn">
+                <AtButton
+                  loading={this.state.loading}
+                  circle
+                  type='primary'
+                  formType='submit'
+                >登录</AtButton>
+              </View>
+            </AtForm>
+          </View>
+        </View>
+        <View className='others'>
+          <AtDivider
+            content='其它登录方式'
+            fontColor='#657786'
+            lineColor='#ccd6dd'
           />
-          <AtInput
-            name='secret'
-            title='密码'
-            type='password'
-            placeholder='密码不能少于6位数'
-            clear={true}
-            border={true}
-            value={this.state.secret}
-            onChange={this.changeSecret.bind(this)}
-          />
-          <AtButton
-            loading={this.state.loading}
-            type='primary'
-            formType='submit'
-          >账号登录</AtButton>
-        </AtForm>
-        <AtButton
-          loading={this.state.submitting}
-          type='primary'
-          openType='getUserInfo'
-          onClick={this.callWechatSign}
-        >
-          微信登录
-        </AtButton>
+          <Button
+            open-type='getUserInfo'
+            className='wechat-btn'
+            onClick={this.callWechatSign}
+          >
+            <image
+              src={wechatIcon}
+              mode='scaleToFill'
+            />
+          </Button>
+        </View>
       </View>
     )
   }

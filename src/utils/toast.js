@@ -1,6 +1,6 @@
 export default new class {
   info(tips) {
-    this.hide()
+    this.stop()
     wx.showToast({
       title: tips,
       icon: 'none',
@@ -9,7 +9,7 @@ export default new class {
   }
 
   success(tips) {
-    this.hide()
+    this.stop()
     wx.showToast({
       title: tips,
       icon: 'success',
@@ -18,13 +18,13 @@ export default new class {
   }
 
   loading(tips = '加载中…') {
-    this.hide()
+    this.stop()
     wx.showLoading({
       title: tips
     })
   }
 
-  hide() {
+  stop() {
     wx.hideLoading()
     wx.hideToast()
   }

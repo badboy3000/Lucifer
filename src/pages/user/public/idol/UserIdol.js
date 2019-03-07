@@ -4,6 +4,7 @@ import { AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import event from '~/utils/event'
 import IdolItem from '~/components/IdolItem'
+import PageState from '~/components/PageState'
 
 export default class extends Component {
   constructor (props) {
@@ -12,6 +13,7 @@ export default class extends Component {
       list: [],
       loading: false,
       noMore: false,
+      nothing: false,
       total: 0
     }
   }
@@ -54,6 +56,7 @@ export default class extends Component {
       .then(data => {
         this.setState({
           loading: false,
+          nothing: data.total === 0,
           total: data.total,
           noMore: data.noMore,
           list: list.concat(data.list)
@@ -67,7 +70,10 @@ export default class extends Component {
   }
 
   render () {
-    const { list, loading, noMore } = this.state
+    const { list, loading, noMore, nothing } = this.state
+    if (nothing) {
+      return (<PageState/>)
+    }
     return (
       <View>
         <View>

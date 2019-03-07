@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtGrid, AtList, AtListItem, AtLoadMore } from "taro-ui"
 import http from '~/utils/http'
+import PageState from '~/components/PageState'
 import './index.scss'
 
 export default class extends Component {
@@ -13,6 +14,7 @@ export default class extends Component {
       list: [],
       noMore: false,
       loading: false,
+      nothing: false,
       balance: {
         get: '',
         set: ''
@@ -52,7 +54,8 @@ export default class extends Component {
         if (!state.page) {
           this.setState({
             balance: data.balance,
-            total: data.total
+            total: data.total,
+            nothing: data.total === 0
           })
         }
         this.setState({
@@ -207,7 +210,7 @@ export default class extends Component {
   }
 
   render() {
-    const { balance, list, loading, noMore } = this.state
+    const { balance, list, loading, noMore, nothing } = this.state
     const records = list.map(record => {
       const data = this.computedRecord(record)
       const key = Math.random().toString(36).slice(2, -1)
@@ -222,6 +225,7 @@ export default class extends Component {
         />
       )
     })
+
     return (
       <View className='transaction'>
         <View className='balance'>
@@ -232,8 +236,14 @@ export default class extends Component {
             收入：￥{balance.set}
           </View>
         </View>
-        <AtList>{records}</AtList>
-        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+        {
+          nothing ? <PageState/> : (
+            <View>
+              <AtList>{records}</AtList>
+              <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+            </View>
+          )
+        }
       </View>
     )
   }

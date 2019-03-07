@@ -5,7 +5,7 @@ import http from '~/utils/http'
 import IdolInfo from './info/IdolInfo'
 import IdolPanel from './panel/IdolPanel'
 import IdolOwner from './owner/IdolOwner'
-import PageLoading from '~/components/PageLoading'
+import PageState from '~/components/PageState'
 import event from '~/utils/event'
 import './index.scss'
 
@@ -77,10 +77,10 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return (<PageLoading/>)
+      return (<PageState type='loading'/>)
     }
     if (this.state.page_error) {
-      return
+      return (<PageState type='error'/>)
     }
     const { idol } = this.state
     return (

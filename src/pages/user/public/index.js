@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import event from '~/utils/event'
-import PageLoading from '~/components/PageLoading'
+import PageState from '~/components/PageState'
 import UserPanel from './panel/UserPanel'
 import UserContent from './content/UserContent'
 import './index.scss'
@@ -57,10 +57,10 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return (<PageLoading/>)
+      return (<PageState type='loading'/>)
     }
     if (this.state.page_error) {
-      return
+      return (<PageState type='error'/>)
     }
     const { user } = this.state
     return (

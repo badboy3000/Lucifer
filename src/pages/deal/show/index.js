@@ -6,7 +6,7 @@ import cache from '~/utils/cache'
 import toast from '~/utils/toast'
 import state from '~/utils/state'
 import helper from '~/utils/helper'
-import PageLoading from '~/components/PageLoading'
+import PageState from '~/components/PageState'
 import './index.scss'
 
 export default class extends Component {
@@ -201,12 +201,12 @@ export default class extends Component {
 
   render () {
     if (this.state.page_loading) {
-      return (<PageLoading/>)
+      return (<PageState type='loading'/>)
     }
     if (this.state.page_error) {
-      return
+      return (<PageState type='error'/>)
     }
-    const { deal, idol, user, current, list, noMore, loading, is_mine, openDeleteModal, openBuyDrawer, current_user, buy_count } = this.state
+    const { deal, idol, user, current, list, noMore, loading, nothing, is_mine, openDeleteModal, openBuyDrawer, current_user, buy_count } = this.state
     const tabList = [{ title: '交易详情' }, { title: '成交记录' }]
     const records = list.map(deal => {
       return (
@@ -392,8 +392,14 @@ export default class extends Component {
             </AtList>
           </AtTabsPane>
           <AtTabsPane current={current} index={1}>
-            <AtList hasBorder={false}>{records}</AtList>
-            <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+            {
+              nothing ? <PageState/> : (
+                <View>
+                  <AtList hasBorder={false}>{records}</AtList>
+                  <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+                </View>
+              )
+            }
           </AtTabsPane>
         </AtTabs>
       </View>

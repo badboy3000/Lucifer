@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem, AtLoadMore } from "taro-ui"
 import http from '~/utils/http'
 import helper from '~/utils/helper'
+import PageState from '~/components/PageState'
 import './index.scss'
 
 export default class extends Component {
@@ -14,6 +15,7 @@ export default class extends Component {
       page: 0,
       loading: false,
       noMore: false,
+      nothing: false,
       list: []
     };
   }
@@ -53,6 +55,7 @@ export default class extends Component {
           noMore: data.noMore,
           total: data.total,
           page: page + 1,
+          nothing: data.total === 0,
           loading: false
         })
       })
@@ -64,7 +67,7 @@ export default class extends Component {
   }
 
   render() {
-    const { list, loading, noMore } = this.state
+    const { list, loading, noMore, nothing } = this.state
     const records = list.map(user => {
       return (
         <navigator
@@ -82,11 +85,18 @@ export default class extends Component {
         </navigator>
       )
     })
+
     return (
       <View className='invite-user'>
         <Text>invite code</Text>
-        <AtList>{records}</AtList>
-        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+        {
+          nothing ? <PageState/> : (
+            <View>
+              <AtList>{records}</AtList>
+              <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+            </View>
+          )
+        }
       </View>
     )
   }

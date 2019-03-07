@@ -1,5 +1,19 @@
-.page-loading {
+@import "global.scss";
+
+.page-preload {
   height: 100vh;
+
+  image {
+    margin-bottom: 30px;
+  }
+}
+
+.page-nothing {
+  color: $color-text-light;
+}
+
+.page-nothing,
+.page-preload {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,6 +23,5 @@
   image {
     width: 400px;
     height: 400px;
-    margin-bottom: 30px;
   }
 }

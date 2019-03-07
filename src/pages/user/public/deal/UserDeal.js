@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import event from '~/utils/event'
 import DealItem from '~/components/DealItem'
+import PageState from '~/components/PageState'
 import { AtLoadMore } from 'taro-ui'
 import './index.scss'
 
@@ -13,6 +14,7 @@ export default class extends Component {
       list: [],
       loading: false,
       noMore: false,
+      nothing: false,
       total: 0,
       page: 0
     }
@@ -53,6 +55,7 @@ export default class extends Component {
       .then(data => {
         this.setState({
           loading: false,
+          nothing: data.total === 0,
           total: data.total,
           noMore: data.noMore,
           list: list.concat(data.list)
@@ -66,7 +69,10 @@ export default class extends Component {
   }
 
   render () {
-    const { list, loading, noMore } = this.state
+    const { list, loading, noMore, nothing } = this.state
+    if (nothing) {
+      return (<PageState/>)
+    }
     const DealList = list.map(deal => <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal}/>)
     return (
       <View>

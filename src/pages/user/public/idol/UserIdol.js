@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import event from '~/utils/event'
-import IdolItem from '~/pages/idol/item/index'
+import IdolItem from '~/components/IdolItem'
 
 export default class extends Component {
   constructor (props) {

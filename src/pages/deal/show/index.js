@@ -275,7 +275,7 @@ export default class extends Component {
                 type={is_mine ? 'secondary' : 'primary'}
                 size='small'
                 onClick={this.handleDealClick}
-              >{is_mine ? '终止交易' : '立即交易'}</AtButton>
+              >{is_mine ? '终止交易' : '马上交易'}</AtButton>
             </View>
           </View>
         </View>

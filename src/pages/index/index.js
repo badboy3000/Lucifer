@@ -1,9 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtLoadMore, AtNoticebar } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
-import IdolItem from '~/pages/idol/item/index'
-import DealItem from '~/pages/deal/item/index'
+import IdolItem from '~/components/IdolItem/index'
+import DealItem from '~/components/DealItem/index'
 import './index.scss'
 
 export default class extends Component {
@@ -220,9 +220,6 @@ export default class extends Component {
     const list_2_state = this.state.star_count
     return (
       <View className='idol-list'>
-        <AtNoticebar icon='volume-plus' marquee>
-          这是 NoticeBar 通告栏，这是 NoticeBar 通告栏，这是 NoticeBar 通告栏
-        </AtNoticebar>
         <AtTabs
           current={this.state.current}
           tabList={tabList}

@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import event from '~/utils/event'
-import DealItem from '~/pages/deal/item/index'
+import DealItem from '~/components/DealItem'
 import { AtLoadMore } from 'taro-ui'
 import './index.scss'
 

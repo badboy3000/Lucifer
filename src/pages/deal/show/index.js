@@ -11,6 +11,7 @@ export default class extends Component {
     super(props)
     this.state = {
       page_loading: true,
+      page_error: false,
       deal: null,
       user: null,
       idol: null,
@@ -53,6 +54,12 @@ export default class extends Component {
           page_loading: false
         })
       })
+      .catch(() => {
+        this.setState({
+          page_loading: false,
+          page_error: true
+        })
+      })
   }
 
   switchTab(index) {
@@ -91,10 +98,13 @@ export default class extends Component {
   }
 
   render () {
-    if (this.state.page_loading) {
+    const { page_loading, page_error, deal, idol, user, current, list, noMore, loading } = this.state
+    if (page_loading) {
       return
     }
-    const { deal, idol, user, current, list, noMore, loading } = this.state
+    if (page_error) {
+      return
+    }
     const tabList = [{ title: '交易详情' }, { title: '成交记录' }]
     const records = list.map(deal => {
       return (

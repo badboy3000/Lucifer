@@ -12,6 +12,8 @@ export default class extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      page_loading: true,
+      page_error: false,
       idol: null,
       bangumi: null,
       share_data: null,
@@ -36,13 +38,21 @@ export default class extends Component {
   componentDidHide() {}
 
   getIdolInfo() {
-    http.get(`cartoon_role/${this.$router.params.id}/stock_show`).then(data => {
-      this.setState({
-        idol: data.role,
-        bangumi: data.bangumi,
-        share_data: data.share_data
+    http.get(`cartoon_role/${this.$router.params.id}/stock_show`)
+      .then(data => {
+        this.setState({
+          idol: data.role,
+          bangumi: data.bangumi,
+          share_data: data.share_data,
+          page_loading: false
+        })
       })
-    })
+      .catch(() => {
+        this.setState({
+          page_loading: false,
+          page_error: true
+        })
+      })
   }
 
   tabSwitch(index) {
@@ -61,8 +71,11 @@ export default class extends Component {
   }
 
   render() {
-    const { idol } = this.state
-    if (!idol) {
+    const { idol, page_loading, page_error } = this.state
+    if (page_loading) {
+      return
+    }
+    if (page_error) {
       return
     }
     return (

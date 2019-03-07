@@ -10,6 +10,8 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      page_loading: true,
+      page_error: false,
       user: null,
       share_data: null
     };
@@ -36,14 +38,24 @@ export default class extends Component {
       .then(user => {
         this.setState({
           user,
-          share_data: user.share_data
+          share_data: user.share_data,
+          page_loading: false
+        })
+      })
+      .catch(() => {
+        this.setState({
+          page_loading: false,
+          page_error: true
         })
       })
   }
 
   render() {
-    const { user } = this.state
-    if (!user) {
+    const { user, page_loading, page_error } = this.state
+    if (!page_loading) {
+      return
+    }
+    if (!page_error) {
       return
     }
     return (

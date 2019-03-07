@@ -1,8 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtTabs, AtTabsPane, AtButton } from "taro-ui"
+import { AtList, AtListItem, AtTabs, AtTabsPane, AtButton, AtModal, AtFloatLayout, AtInputNumber } from "taro-ui"
 import http from '~/utils/http'
 import cache from '~/utils/cache'
+import toast from '~/utils/toast'
+import state from '~/utils/state'
 import helper from '~/utils/helper'
 import './index.scss'
 
@@ -21,7 +23,12 @@ export default class extends Component {
       list: [],
       loading: false,
       noMore: false,
-      nothing: false
+      nothing: false,
+      submitting: false,
+      openDeleteModal: false,
+      openBuyDrawer: false,
+      current_user: cache.get('USER', null),
+      buy_count: 0
     }
   }
 
@@ -46,12 +53,15 @@ export default class extends Component {
   getDealInfo() {
     http.get(`cartoon_role/${this.$router.params.id}/deal_show`)
       .then(data => {
-        const user = cache.get('USER', {})
         this.setState({
           ...data,
-          is_mine: user.id === data.user.id,
+          is_mine: this.state.current_user.id === data.user.id,
           nothing: data.deal.product_count === data.deal.last_count,
           page_loading: false
+        }, () => {
+          this.setState({
+            buy_count: this.computedMinCanBuy()
+          })
         })
       })
       .catch(() => {
@@ -60,6 +70,16 @@ export default class extends Component {
           page_error: true
         })
       })
+  }
+
+  computedMaxCanBuy() {
+    const { current_user, deal } = this.state
+    const pocket = current_user ? +current_user.pocket : 0
+    return Math.min(deal.product_price, pocket ? parseFloat(pocket / deal.product_price).toFixed(2) : 0)
+  }
+
+  computedMinCanBuy() {
+    return Math.min(parseFloat(0.01 / this.state.deal.product_price).toFixed(2), this.computedMaxCanBuy())
   }
 
   switchTab(index) {
@@ -97,6 +117,82 @@ export default class extends Component {
       })
   }
 
+  handleDealClick() {
+    if (!this.state.current_user) {
+      return toast.info('请先登录')
+    }
+    if (this.state.is_mine) {
+      this.setState({
+        openDeleteModal: true
+      })
+    } else {
+      this.setState({
+        openBuyDrawer: true
+      })
+    }
+  }
+
+  submitDeleteDeal() {
+    if (this.state.submitting) {
+      return
+    }
+    this.setState({
+      submitting: true
+    })
+    http.post('cartoon_role/delete_deal', {
+      id: this.state.deal.id
+    })
+      .then(() => {
+        toast.info('删除成功')
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1500)
+      })
+      .catch(() => {
+        this.setState({
+          submitting: false
+        })
+      })
+  }
+
+  submitCreateDeal() {
+    if (this.state.submitting) {
+      return
+    }
+    this.setState({
+      submitting: true
+    })
+    const { deal, buy_count } = this.state
+    const price = parseFloat(this.state.buy_count * deal.product_price).toFixed(2)
+    http.post('cartoon_role/make_deal', {
+      deal_id: deal.id,
+      buy_count: buy_count,
+      pay_price: price
+    })
+      .then(() => {
+        toast.info('交易成功')
+        this.setState({
+          submitting: false,
+          openBuyDrawer: false,
+          deal: Object.assign(deal, {
+            last_count: parseFloat(deal.last_count - buy_count).toFixed(2)
+          })
+        })
+        state.updateUserPocket(-price)
+      })
+      .catch(() => {
+        this.setState({
+          submitting: false
+        })
+      })
+  }
+
+  handleChangeBuyCount(value) {
+    this.setState({
+      buy_count: value
+    })
+  }
+
   render () {
     if (this.state.page_loading) {
       return
@@ -104,7 +200,7 @@ export default class extends Component {
     if (this.state.page_error) {
       return
     }
-    const { deal, idol, user, current, list, noMore, loading } = this.state
+    const { deal, idol, user, current, list, noMore, loading, is_mine, openDeleteModal, openBuyDrawer, current_user, buy_count } = this.state
     const tabList = [{ title: '交易详情' }, { title: '成交记录' }]
     const records = list.map(deal => {
       return (
@@ -123,6 +219,7 @@ export default class extends Component {
         </navigator>
       )
     })
+    const pocket = current_user ? +current_user.pocket : 0
     return (
       <View className='deal-show'>
         <View className='idol-panel'>
@@ -171,11 +268,13 @@ export default class extends Component {
                 </View>
               </View>
               <AtButton
+                loading={submitting}
                 circle
                 className='buy-btn'
-                type='primary'
+                type={is_mine ? 'secondary' : 'primary'}
                 size='small'
-              >立即交易</AtButton>
+                onClick={this.handleDealClick}
+              >{is_mine ? '终止交易' : '立即交易'}</AtButton>
             </View>
           </View>
         </View>
@@ -190,6 +289,62 @@ export default class extends Component {
             thumb={helper.resize(user.avatar, { width: 120 })}
           />
         </navigator>
+        <AtModal
+          isOpened={openDeleteModal}
+          title='终止交易'
+          cancelText='取消'
+          confirmText='确认'
+          onCancel={
+            () => {this.setState({
+              openDeleteModal: false
+            })}
+          }
+          onConfirm={ this.submitDeleteDeal }
+          content='确认要终止交易吗？如果需要调整价格和销量，可前往偶像页面设置即可更新该交易。'
+        />
+        <AtFloatLayout
+          isOpened={openBuyDrawer}
+          title={`购买「${idol.name}」的股份`}
+          onClose={
+            () => {this.setState({
+              openBuyDrawer: false
+            })}
+          }
+        >
+          <AtList hasBorder={false}>
+            <AtListItem
+              title='钱包余额'
+              extraText={`￥${parseFloat(pocket).toFixed(2)}`}
+              note={`￥${deal.product_price}/股，购买后余额:￥${parseFloat(pocket - buy_count * deal.product_price).toFixed(2)}`}
+            />
+            <AtListItem
+              title='最多购买'
+              extraText={`${parseFloat(this.computedMaxCanBuy()).toFixed(2)}股`}
+              note='与钱包余额以及出售份额有关'
+            />
+            <AtListItem
+              title='最少购买'
+              extraText={`${parseFloat(this.computedMinCanBuy()).toFixed(2)}股`}
+              note='单次交易的金额不能低于￥0.01'
+            />
+            <View className='buy-counter'>
+              <AtInputNumber
+                type='digit'
+                min={this.computedMinCanBuy()}
+                max={this.computedMaxCanBuy()}
+                value={buy_count}
+                step={0.01}
+                onChange={this.handleChangeBuyCount}
+              />
+            </View>
+            <AtButton
+              loading={submitting}
+              type='primary'
+              circle
+              onClick={this.submitCreateDeal}
+            >达成交易</AtButton>
+          </AtList>
+        </AtFloatLayout>
         <View className="hr"/>
         <AtTabs
           current={current}
@@ -215,7 +370,7 @@ export default class extends Component {
               />
               <AtListItem
                 title='交易状态'
-                extraText={deal.product_count - deal.last_count === 0 ? '还未成交' : '有成交额'}
+                extraText={parseFloat(deal.product_count - deal.last_count).toFixed(2) === '0.00' ? '还未成交' : '有成交额'}
                 note={`成交量：￥${parseFloat(deal.product_count - deal.last_count).toFixed(2)}`}
               />
             </AtList>

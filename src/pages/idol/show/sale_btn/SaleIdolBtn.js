@@ -34,12 +34,6 @@ export default class extends Component {
 
   componentDidHide () { }
 
-  handleClose() {
-    this.setState({
-      open: false
-    })
-  }
-
   openDialog() {
     if (this.state.guest) {
       return toast.info('请先登录')
@@ -140,7 +134,11 @@ export default class extends Component {
         <AtFloatLayout
           isOpened={open}
           title={`出售「${idol.name}」的股份`}
-          onClose={this.handleClose}
+          onClose={
+            () => {this.setState({
+              open: false
+            })}
+          }
         >
           <AtList hasBorder={false}>
             <AtListItem

@@ -47,8 +47,9 @@ export default new class {
     if (!user) {
       return
     }
-    user.pocket = user.pocket + amount
-    user.balance.coin_count = user.balance.coin_count + amount
+    const value = Number(amount)
+    user.pocket = +user.pocket + value
+    user.balance.coin_count = +user.balance.coin_count + value
     cache.set('USER', user)
     event.emit('update-user')
   }

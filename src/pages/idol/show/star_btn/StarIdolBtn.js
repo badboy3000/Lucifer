@@ -28,12 +28,6 @@ export default class extends Component {
 
   componentDidHide () { }
 
-  handleClose() {
-    this.setState({
-      open: false
-    })
-  }
-
   openDialog() {
     if (this.props.idol.is_locked) {
       return toast.info('已经卖完了')
@@ -106,7 +100,7 @@ export default class extends Component {
 
   render () {
     const { idol } = this.props
-    const { count, submitting } = this.state
+    const { count, submitting, open } = this.state
     return (
       <View className='star-idol-btn-wrap'>
         <Button
@@ -114,9 +108,13 @@ export default class extends Component {
           onClick={this.openDialog}
         >{ idol.is_locked ? '停牌' : '入股' }</Button>
         <AtFloatLayout
-          isOpened={this.state.open}
+          isOpened={open}
           title={`入股：${idol.name}`}
-          onClose={this.handleClose}
+          onClose={
+            () => {this.setState({
+              open: false
+            })}
+          }
         >
           <AtList hasBorder={false}>
             <AtListItem

@@ -5,6 +5,7 @@ import http from '~/utils/http'
 import IdolInfo from './info/IdolInfo'
 import IdolPanel from './panel/IdolPanel'
 import IdolOwner from './owner/IdolOwner'
+import PageLoading from '~/components/PageLoading'
 import event from '~/utils/event'
 import './index.scss'
 
@@ -42,7 +43,7 @@ export default class extends Component {
   componentDidHide() {}
 
   getIdolInfo() {
-    http.get(`cartoon_role/${this.$router.params.id}/stock_show`)
+    http.fetch(`cartoon_role/${this.$router.params.id}/stock_show`)
       .then(data => {
         this.setState({
           idol: data.role,
@@ -76,7 +77,7 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return
+      return (<PageLoading/>)
     }
     if (this.state.page_error) {
       return

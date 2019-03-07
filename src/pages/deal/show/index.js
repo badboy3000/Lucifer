@@ -6,6 +6,7 @@ import cache from '~/utils/cache'
 import toast from '~/utils/toast'
 import state from '~/utils/state'
 import helper from '~/utils/helper'
+import PageLoading from '~/components/PageLoading'
 import './index.scss'
 
 export default class extends Component {
@@ -55,7 +56,7 @@ export default class extends Component {
   }
 
   getDealInfo() {
-    http.get(`cartoon_role/${this.$router.params.id}/deal_show`)
+    http.fetch(`cartoon_role/${this.$router.params.id}/deal_show`)
       .then(data => {
         const user = cache.get('USER', {})
         this.setState({
@@ -200,7 +201,7 @@ export default class extends Component {
 
   render () {
     if (this.state.page_loading) {
-      return
+      return (<PageLoading/>)
     }
     if (this.state.page_error) {
       return

@@ -56,4 +56,18 @@ fly.interceptors.response.use(
   }
 )
 
+fly.fetch = url => {
+  const timeout = () => new Promise(resolve => setTimeout(resolve, 2000))
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      fly.get(url),
+      timeout()
+    ])
+      .then(data => {
+        resolve(data[0])
+      })
+      .catch(reject)
+  })
+}
+
 export default fly

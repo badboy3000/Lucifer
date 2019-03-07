@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import event from '~/utils/event'
+import PageLoading from '~/components/PageLoading'
 import UserPanel from './panel/UserPanel'
 import UserContent from './content/UserContent'
 import './index.scss'
@@ -38,7 +39,7 @@ export default class extends Component {
   }
 
   getUser() {
-    http.get(`user/${this.$router.params.zone}/show`)
+    http.fetch(`user/${this.$router.params.zone}/show`)
       .then(user => {
         this.setState({
           user,
@@ -56,7 +57,7 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return
+      return (<PageLoading/>)
     }
     if (this.state.page_error) {
       return

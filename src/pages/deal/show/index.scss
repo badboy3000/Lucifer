@@ -1,0 +1,89 @@
+@import "global.scss";
+
+.deal-show {
+  .idol-panel {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+
+    .bg {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      left: -10%;
+      top: -10%;
+      @include filter-blur(40);
+      z-index: 0;
+    }
+
+    .shim {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,1);
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      padding-left: 30px;
+      padding-right: 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding-top: 50px;
+
+      .avatar {
+        width: 200px;
+        height: 200px;
+        margin-right: 40px;
+        border-radius: 50%;
+      }
+
+      .intro {
+        flex-grow: 1;
+
+        .metas {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 15px;
+
+          .meta {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+
+            .name {
+              font-size: 22px;
+              color: #fff;
+            }
+
+            .count {
+              font-size: 30px;
+              font-weight: 500;
+              color: #fff;
+            }
+          }
+        }
+
+        .buy-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .hr {
+    height: 20px;
+    background-color: $color-avatar-border;
+  }
+}

@@ -1,3 +1,5 @@
+import { format } from 'timeago.js'
+
 export default new class {
   resize(url, options = {}){
     if (!url) {
@@ -52,5 +54,9 @@ export default new class {
     )}:${`0${date.getMinutes()}`.substr(-2)}:${`0${date.getSeconds()}`.substr(
       -2
     )}`
+  }
+
+  ago(time) {
+    return format(time, 'zh_CN')
   }
 }()

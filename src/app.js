@@ -19,6 +19,7 @@ class App extends Component {
       'pages/idol/create/index',
       'pages/idol/edit/index',
       'pages/idol/show/index',
+      'pages/deal/show/index',
       'pages/user/mine/index',
       'pages/user/handbook/index',
       'pages/user/invite/index',

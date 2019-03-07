@@ -19,7 +19,8 @@ export default class extends Component {
         idol_id: props.idol ? props.idol.id : 0,
         product_count: 0,
         product_price: 0
-      }
+      },
+      has_star: 0
     }
   }
 
@@ -104,15 +105,18 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.get(`cartoon_role/${this.props.idol.id}/get_deal`)
-      .then(deal => {
+    http.get(`cartoon_role/${this.props.idol.id}/get_idol_deal`)
+      .then(({ deal, has_star }) => {
         if (deal) {
+          deal['product_count'] = deal['last_count']
           this.setState({
             deal,
+            has_star,
             loading: false
           })
         } else {
           this.setState({
+            has_star,
             loading: false
           })
         }
@@ -126,7 +130,7 @@ export default class extends Component {
 
   render () {
     const { idol } = this.props
-    const { deal, open } = this.state
+    const { deal, open, has_star } = this.state
     return (
       <View className='sale-idol-btn-wrap'>
         <Button
@@ -174,7 +178,7 @@ export default class extends Component {
             <AtInputNumber
               type='digit'
               min={0.01}
-              max={+idol.has_star}
+              max={has_star}
               step={0.01}
               value={deal.product_count}
               onChange={this.handleChangeCount}

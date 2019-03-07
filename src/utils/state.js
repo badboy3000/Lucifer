@@ -48,7 +48,7 @@ export default new class {
       return
     }
     user.pocket = user.pocket + amount
-    user.banlance.coin_count = user.banlance.coin_count + amount
+    user.balance.coin_count = user.balance.coin_count + amount
     cache.set('USER', user)
     event.emit('update-user')
   }

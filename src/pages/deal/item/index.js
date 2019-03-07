@@ -19,10 +19,13 @@ export default class extends Component {
 
   render() {
     return (
-      <View>
+      <navigator
+        url={`/pages/deal/show/index?id=${this.props.deal.id}`}
+        hover-class='none'
+      >
         <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
         <Text>text</Text>
-      </View>
+      </navigator>
     )
   }
 }

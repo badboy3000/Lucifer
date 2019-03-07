@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import UserIdol from '../idol/UserIdol'
+import UserDeal from '../deal/UserDeal'
 import event from '~/utils/event'
 import './index.scss'
 
@@ -52,7 +53,7 @@ export default class extends Component {
           <UserIdol user={user}/>
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
-          <View style='padding: 100px 50px;background-color: #FAFBFC;text-align: center;'>标签页二的内容</View>
+          <UserDeal user={user}/>
         </AtTabsPane>
       </AtTabs>
     )

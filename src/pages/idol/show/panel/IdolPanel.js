@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtAvatar, AtButton } from 'taro-ui'
+import { AtAvatar, AtButton, AtNavBar } from 'taro-ui'
 import helper from '~/utils/helper'
 import './index.scss'
 import StarIdolBtn from '../star_btn/StarIdolBtn'
@@ -36,13 +36,21 @@ export default class extends Component {
             class='blur-bg'
           />
           <View className="shim"/>
+          <AtNavBar
+            color='#fff'
+            leftIconType='chevron-left'
+            leftText={idol.name}
+            border={false}
+            onClickLeftIcon={() => {
+              wx.navigateBack()
+            }}
+          />
           <View className='background-content'>
-            <AtAvatar
-              circle
-              image={helper.resize(idol.avatar, { width: 200 })}
-              size='large'
+            <image
+              src={helper.resize(idol.avatar, { width: 200 })}
+              mode='aspectFill'
+              class='avatar'
             />
-            <View className='name'>{idol.name}</View>
             <View className="controls">
               <StarIdolBtn idol={idol} onUpdateStar={onUpdateStar}/>
               <SaleIdolBtn idol={idol}/>

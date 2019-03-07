@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTag } from 'taro-ui'
+import { AtTag, AtNavBar } from 'taro-ui'
 import helper from '~/utils/helper'
 import './index.scss'
 
@@ -46,6 +46,14 @@ export default class extends Component {
               mode: 2
             })}
             mode='aspectFill'
+          />
+          <AtNavBar
+            color='#fff'
+            leftIconType='chevron-left'
+            border={false}
+            onClickLeftIcon={() => {
+              wx.navigateBack()
+            }}
           />
         </View>
         <View className='profile'>

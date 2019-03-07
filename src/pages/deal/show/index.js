@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtTabs, AtTabsPane, AtButton, AtModal, AtFloatLayout, AtInputNumber } from "taro-ui"
+import { AtList, AtListItem, AtTabs, AtTabsPane, AtButton, AtModal, AtFloatLayout, AtInputNumber, AtNavBar } from "taro-ui"
 import http from '~/utils/http'
 import cache from '~/utils/cache'
 import toast from '~/utils/toast'
@@ -234,6 +234,15 @@ export default class extends Component {
             class='bg'
           />
           <View className="shim"/>
+          <AtNavBar
+            color='#fff'
+            leftIconType='chevron-left'
+            leftText={idol.name}
+            border={false}
+            onClickLeftIcon={() => {
+              wx.navigateBack()
+            }}
+          />
           <View className="content">
             <navigator
               url={`/pages/idol/show/index?id=${idol.id}`}
@@ -355,6 +364,7 @@ export default class extends Component {
           current={current}
           tabList={tabList}
           onClick={this.switchTab}
+          swipeable={false}
         >
           <AtTabsPane current={current} index={0} >
             <AtList hasBorder={false}>

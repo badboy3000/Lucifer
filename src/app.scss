@@ -12,3 +12,30 @@ $color-brand-dark: #cc5367;
 .at-load-more .at-button {
   border-width: 0;
 }
+
+.at-nav-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: transparent;
+  padding-top: 38px;
+  z-index: 99;
+
+  .at-nav-bar__left-view {
+    .at-icon {
+      font-size: 65px;
+    }
+
+    &:active {
+      background-color: transparent;
+    }
+  }
+
+  .at-nav-bar__left-view {
+    flex-grow: 4;
+  }
+
+  .at-nav-bar__title {
+    display: none;
+  }
+}

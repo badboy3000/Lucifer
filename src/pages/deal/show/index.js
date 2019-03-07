@@ -53,9 +53,10 @@ export default class extends Component {
   getDealInfo() {
     http.get(`cartoon_role/${this.$router.params.id}/deal_show`)
       .then(data => {
+        const user = cache.get('USER', {})
         this.setState({
           ...data,
-          is_mine: this.state.current_user.id === data.user.id,
+          is_mine: user.id === data.user.id,
           nothing: data.deal.product_count === data.deal.last_count,
           page_loading: false
         }, () => {

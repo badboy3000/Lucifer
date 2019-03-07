@@ -94,7 +94,6 @@ export default class extends Component {
             { title: '采购表' },
             { title: '变更处' }
           ]}
-          swipeable={false}
           onClick={this.tabSwitch}
         >
           <AtTabsPane current={this.state.current} index={0}>

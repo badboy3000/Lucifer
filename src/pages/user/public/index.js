@@ -7,6 +7,10 @@ import UserContent from './content/UserContent'
 import './index.scss'
 
 export default class extends Component {
+  config = {
+    navigationStyle: 'custom'
+  }
+
   constructor(props) {
     super(props);
     this.state = {

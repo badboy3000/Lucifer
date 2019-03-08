@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtLoadMore } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtLoadMore, Swiper, SwiperItem, AtIcon } from 'taro-ui'
 import http from '~/utils/http'
+import helper from '~/utils/helper'
 import IdolItem from '~/components/IdolItem/index'
 import DealItem from '~/components/DealItem/index'
 import './index.scss'
@@ -46,7 +47,8 @@ export default class extends Component {
         money_count: 0,
         deal_count: 0,
         exchang_money_count: 0
-      }
+      },
+      recent: []
     }
   }
 
@@ -55,6 +57,7 @@ export default class extends Component {
   componentDidMount() {
     this.getIdols(1)
     this.getStockMeta()
+    this.getRecentData()
   }
 
   onPullDownRefresh() {
@@ -65,6 +68,7 @@ export default class extends Component {
       this.getIdols(index, true)
     }
     this.getStockMeta()
+    this.getRecentData()
   }
 
   onReachBottom() {
@@ -224,9 +228,27 @@ export default class extends Component {
       .catch(() => {})
   }
 
+  getRecentData() {
+    Promise.all([
+      http.get('cartoon_role/recent_buy'),
+      http.get('cartoon_role/recent_deal')
+    ])
+      .then(data => {
+        const buys = data[0].list.map(_ => Object.assign(_, {
+          type: 'buy'
+        }))
+        const deal = data[1].list.map(_ => Object.assign(_, {
+          type: 'deal'
+        }))
+        const recent = deal.concat(buys).sort((prev, next) => next.time - prev.time)
+        this.setState({ recent })
+      })
+      .catch(() => {})
+  }
+
   render () {
     const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }, { title: '交易所' }]
-    const { list_0, list_1, list_2, pub_deal_list, meta } = this.state
+    const { list_0, list_1, list_2, pub_deal_list, meta, recent } = this.state
     const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
@@ -234,6 +256,38 @@ export default class extends Component {
     const list_0_state = this.state.market_price
     const list_1_state = this.state.activity
     const list_2_state = this.state.star_count
+
+    const notice = recent.length && recent.map(item => {
+      const key = Math.random().toString(36).slice(2, -1)
+      return (
+        <SwiperItem
+          key={key}
+          taroKey={key}
+          className='swiper-item'
+        >
+          {
+            item.type === 'buy'
+              ? <View className='notice-item'>
+                  <image
+                    src={helper.resize(item.user && item.user.avatar, { width: 60 })}
+                    mode='aspectFit'
+                  />
+                  <Text class='content'>{item.user.nickname}入股了「{item.idol.name}」</Text>
+                  <Text>{helper.ago(item.time * 1000)}</Text>
+                </View>
+              : <View className='notice-item'>
+                  <image
+                    src={helper.resize(item.buyer && item.buyer.avatar, { width: 60 })}
+                    mode='aspectFit'
+                  />
+                  <Text class='content'>{item.buyer.nickname}购买了{item.dealer.nickname}的「{item.idol.name}」股</Text>
+                  <Text>{helper.ago(item.time * 1000)}</Text>
+                </View>
+          }
+        </SwiperItem>
+      )
+    })
+
     return (
       <View className='idol-list'>
         <View className="intro">
@@ -247,6 +301,24 @@ export default class extends Component {
             <View className='li'>成交笔数：{ meta.deal_count }</View>
             <View className='li'>总成交额：￥{ parseFloat(meta.exchang_money_count).toFixed(2) }</View>
           </View>
+        </View>
+        <View className='notice'>
+          <View className="icon">
+            <AtIcon
+              value='bell'
+              size='18'
+              color='#ff6881'
+            />
+          </View>
+          <Swiper
+            className='swiper'
+            vertical
+            circular
+            autoplay
+            skipHiddenItemLayout
+          >
+            {notice}
+          </Swiper>
         </View>
         <AtTabs
           current={this.state.current}

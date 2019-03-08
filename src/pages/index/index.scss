@@ -24,4 +24,45 @@
       }
     }
   }
+
+  .notice {
+    height: 60px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    .icon {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .swiper {
+      overflow: hidden;
+      height: 60px;
+      flex-grow: 1;
+    }
+
+    .swiper-item {
+      line-height: 60px;
+    }
+
+    .notice-item {
+      font-size: 24px;
+      color: $color-text-gray;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .content {
+        flex-grow: 1;
+      }
+    }
+  }
 }

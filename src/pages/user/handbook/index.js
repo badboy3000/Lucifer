@@ -4,6 +4,10 @@ import { AtAccordion, AtList, AtListItem } from 'taro-ui'
 import './index.scss'
 
 export default class extends Component {
+  config = {
+    navigationBarTitleText: '帮助手册'
+  }
+
   constructor (props) {
     super(props)
     this.state = {

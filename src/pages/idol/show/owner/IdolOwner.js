@@ -137,14 +137,14 @@ export default class extends Component {
         </View>
         {
           current === 0
-        ? <AtList>
+        ? <AtList hasBorder={false}>
             {list_0}
             <AtLoadMore
               status={list_0_loading ? 'loading' : list_0_noMore ? 'noMore' : 'more'}
               onClick={this.loadMore}
             />
           </AtList>
-        : <AtList>
+        : <AtList hasBorder={false}>
             {list_1}
             <AtLoadMore
               status={list_1_loading ? 'loading' : list_1_noMore ? 'noMore' : 'more'}

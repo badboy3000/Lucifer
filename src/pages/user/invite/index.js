@@ -7,6 +7,10 @@ import PageState from '~/components/PageState'
 import './index.scss'
 
 export default class extends Component {
+  config = {
+    navigationBarTitleText: '我的邀请码'
+  }
+
   constructor(props) {
     super(props);
     this.state = {

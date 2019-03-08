@@ -27,7 +27,7 @@ export default class extends Component {
   componentWillMount () { }
 
   componentDidMount () {
-    event.on(`idol-${this.props.idol.id}-tab-switch-4`, () => {
+    event.on(`idol-${this.props.idol.id}-tab-switch-3`, () => {
       if (this.state.list_0_data.length || this.state.list_0_noMore) {
         return
       }
@@ -36,7 +36,7 @@ export default class extends Component {
   }
 
   componentWillUnmount () {
-    event.off(`idol-${this.props.idol.id}-tab-switch-4`)
+    event.off(`idol-${this.props.idol.id}-tab-switch-3`)
   }
 
   componentDidShow () { }

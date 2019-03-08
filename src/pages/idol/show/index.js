@@ -5,6 +5,8 @@ import http from '~/utils/http'
 import IdolInfo from './info/IdolInfo'
 import IdolPanel from './panel/IdolPanel'
 import IdolOwner from './owner/IdolOwner'
+import IdolProduct from './product/IdolProduct'
+import IdolComment from './comment/IdolComment'
 import PageState from '~/components/PageState'
 import event from '~/utils/event'
 import './index.scss'
@@ -93,38 +95,22 @@ export default class extends Component {
             { title: '产品区' },
             { title: '信息表' },
             { title: '留言板' },
-            { title: '股势图' },
-            { title: '董事会' },
-            { title: '大事记' },
-            { title: '采购表' },
-            { title: '变更处' }
+            { title: '董事会' }
           ]}
           swipeable={false}
           onClick={this.tabSwitch}
         >
           <AtTabsPane current={this.state.current} index={0}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
+            <IdolProduct/>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <IdolInfo idol={idol} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页二的内容</View>
+            <IdolComment/>
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页四的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={4}>
             <IdolOwner idol={idol}/>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={5}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页三的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={6}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={7}>
-            <View style='font-size:18px;text-align:center;height:100px;'>标签页六的内容</View>
           </AtTabsPane>
         </AtTabs>
       </View>

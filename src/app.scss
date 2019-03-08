@@ -2,7 +2,7 @@
 $color-brand: #ff6881;
 $color-brand-light: #ff8ea1;
 $color-brand-dark: #cc5367;
-
+@import "global.scss";
 @import "~taro-ui/dist/style/index.scss";
 
 .at-list__item--thumb .item-thumb__info {
@@ -37,5 +37,32 @@ $color-brand-dark: #cc5367;
 
   .at-nav-bar__title {
     display: none;
+  }
+}
+
+.at-form {
+  &:before,
+  &:after {
+    content: none;
+  }
+}
+
+.at-tabs--scroll {
+  .at-tabs__item {
+    padding: 20px 25px;
+    font-size: 30px;
+    color: $color-text-light;
+
+    &--active {
+      color: $color-text-normal;
+    }
+
+    &-underline {
+      width: 48px;
+      height: 8px;
+      border-radius: 4px;
+      margin-left: -24px;
+      left: 50%;
+    }
   }
 }

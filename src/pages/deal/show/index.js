@@ -366,6 +366,7 @@ export default class extends Component {
           tabList={tabList}
           onClick={this.switchTab}
           swipeable={false}
+          scroll
         >
           <AtTabsPane current={current} index={0} >
             <AtList hasBorder={false}>

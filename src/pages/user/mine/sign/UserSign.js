@@ -108,7 +108,6 @@ export default class extends Component {
             <AtForm onSubmit={this.onSubmit}>
               <AtInput
                 name='access'
-                border={true}
                 title='手机'
                 type='phone'
                 placeholder='手机号码'
@@ -121,7 +120,6 @@ export default class extends Component {
                 type='password'
                 placeholder='密码不能少于6位数'
                 clear={true}
-                border={true}
                 value={this.state.secret}
                 onChange={this.changeSecret}
               />

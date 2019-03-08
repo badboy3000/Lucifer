@@ -48,6 +48,7 @@ export default class extends Component {
         tabList={tabList}
         onClick={this.handleClick}
         swipeable={false}
+        scroll
       >
         <AtTabsPane current={current} index={0} >
           <UserIdol user={user}/>

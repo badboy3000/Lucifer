@@ -20,8 +20,8 @@ export default class extends Component {
       loading: false,
       nothing: false,
       balance: {
-        get: '',
-        set: ''
+        get: '0.00',
+        set: '0.00'
       }
     }
   }

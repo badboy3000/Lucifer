@@ -6,7 +6,7 @@ import './index.scss'
 import StarIdolBtn from '../star_btn/StarIdolBtn'
 import SaleIdolBtn from '../sale_btn/SaleIdolBtn'
 
-export default class extends Component {
+export default class IdolPanel extends Component {
   constructor (props) {
     super(props)
     this.state = {}
@@ -62,3 +62,6 @@ export default class extends Component {
   }
 }
 
+IdolPanel.defaultProps = {
+  idol: {}
+}

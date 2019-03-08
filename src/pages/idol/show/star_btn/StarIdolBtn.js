@@ -7,7 +7,7 @@ import state from '~/utils/state'
 import http from '~/utils/http'
 import './index.scss'
 
-export default class extends Component {
+export default class StarIdolBtn extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -158,4 +158,8 @@ export default class extends Component {
       </View>
     )
   }
+}
+
+StarIdolBtn.defaultProps = {
+  idol: {}
 }

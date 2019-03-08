@@ -9,8 +9,6 @@ import './app.scss'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
-// TODO：预加载：https://nervjs.github.io/taro/docs/best-practice.html#%E9%A2%84%E5%8A%A0%E8%BD%BD
-// TODO：最佳实践：https://nervjs.github.io/taro/docs/best-practice.html
 
 class App extends Component {
   config = {
@@ -34,7 +32,7 @@ class App extends Component {
       enablePullDownRefresh: false
     },
     tabBar: {
-      color: '#888888',
+      color: '#CCD6DD',
       selectedColor: '#ff6881',
       backgroundColor: '#ffffff',
       borderStyle: 'white',
@@ -42,11 +40,15 @@ class App extends Component {
       list: [
         {
           pagePath: 'pages/index/index',
-          text: '股市'
+          text: '股市',
+          iconPath: 'images/icon_home_default.png',
+          selectedIconPath: 'images/icon_home_active.png'
         },
         {
           pagePath: 'pages/user/mine/index',
-          text: '我'
+          text: '我',
+          iconPath: 'images/icon_mine_default.png',
+          selectedIconPath: 'images/icon_mine_active.png'
         }
       ]
     }

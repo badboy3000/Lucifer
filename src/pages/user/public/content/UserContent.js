@@ -6,7 +6,7 @@ import UserDeal from '../deal/UserDeal'
 import event from '~/utils/event'
 import './index.scss'
 
-export default class extends Component {
+export default class UserContent extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -61,3 +61,6 @@ export default class extends Component {
   }
 }
 
+UserContent.defaultProps = {
+  user: null
+}

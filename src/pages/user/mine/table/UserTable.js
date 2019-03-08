@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtList, AtListItem } from 'taro-ui'
 import './index.scss'
 
-export default class extends Component {
+export default class UserTable extends Component {
   constructor (props) {
     super(props)
   }
@@ -90,3 +90,6 @@ export default class extends Component {
   }
 }
 
+UserTable.defaultProps = {
+  user: {}
+}

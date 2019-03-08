@@ -5,7 +5,7 @@ import Loading from '~/images/loading.gif'
 import nothing from '~/images/page_nothing.png'
 import error from '~/images/page_error.png'
 
-export default class extends Component {
+export default class PageState extends Component {
   constructor(props) {
     super(props);
   }
@@ -32,3 +32,6 @@ export default class extends Component {
   }
 }
 
+PageState.defaultProps = {
+  type: 'nothing'
+}

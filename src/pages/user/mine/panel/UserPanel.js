@@ -6,7 +6,7 @@ import http from '~/utils/http'
 import state from '~/utils/state'
 import './index.scss'
 
-export default class extends Component {
+export default class UserPanel extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -113,3 +113,8 @@ export default class extends Component {
   }
 }
 
+UserPanel.defaultProps = {
+  user: {
+    balance: {}
+  }
+}

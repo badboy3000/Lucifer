@@ -4,7 +4,7 @@ import { AtTag, AtNavBar } from 'taro-ui'
 import helper from '~/utils/helper'
 import './index.scss'
 
-export default class extends Component {
+export default class UserPanel extends Component {
   constructor (props) {
     super(props)
     this.state = {}
@@ -102,3 +102,9 @@ export default class extends Component {
   }
 }
 
+UserPanel.defaultProps = {
+  user: {
+    badge: [],
+    banlance: {}
+  }
+}

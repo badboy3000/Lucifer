@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 import helper from '~/utils/helper'
 import './index.scss'
 
-export default class extends Component {
+export default class IdolItem extends Component {
   constructor (props) {
     super(props)
     this.state = {}
@@ -86,4 +86,12 @@ export default class extends Component {
       </navigator>
     )
   }
+}
+
+IdolItem.defaultProps = {
+  idol: {
+    ipo_at: '',
+    created_at: ''
+  },
+  sort: ''
 }

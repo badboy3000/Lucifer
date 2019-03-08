@@ -6,7 +6,7 @@ import helper from '~/utils/helper'
 import { AtSegmentedControl, AtList, AtListItem, AtLoadMore } from 'taro-ui'
 import './index.scss'
 
-export default class extends Component {
+export default class IdolOwner extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -157,3 +157,6 @@ export default class extends Component {
   }
 }
 
+IdolOwner.defaultProps = {
+  idol: {}
+}

@@ -3,7 +3,7 @@ import { View, Text } from '@tarojs/components'
 import helper from '~/utils/helper'
 import './index.scss'
 
-export default class extends Component {
+export default class DealItem extends Component {
   constructor (props) {
     super(props)
   }
@@ -59,5 +59,13 @@ export default class extends Component {
         </View>
       </navigator>
     )
+  }
+}
+
+DealItem.defaultProps = {
+  deal: {
+    user: {},
+    idol: {},
+    created_at: ''
   }
 }

@@ -1,13 +1,19 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
-import { AtFloatLayout, AtList, AtListItem, AtInputNumber, AtButton } from "taro-ui"
+import {
+  AtFloatLayout,
+  AtList,
+  AtListItem,
+  AtInputNumber,
+  AtButton
+} from 'taro-ui'
 import toast from '~/utils/toast'
 import cache from '~/utils/cache'
 import http from '~/utils/http'
 import './index.scss'
 
 export default class SaleIdolBtn extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       loading: false,
@@ -24,15 +30,15 @@ export default class SaleIdolBtn extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   openDialog() {
     if (this.state.guest) {
@@ -68,7 +74,9 @@ export default class SaleIdolBtn extends Component {
 
   submitForm() {
     const { deal, submitting } = this.state
-    if (+parseFloat(deal.product_count * deal.product_price).toFixed(2) < 0.01) {
+    if (
+      +parseFloat(deal.product_count * deal.product_price).toFixed(2) < 0.01
+    ) {
       return toast.info('收益不能低于0.01')
     }
     if (submitting) {
@@ -77,7 +85,8 @@ export default class SaleIdolBtn extends Component {
     this.setState({
       submitting: true
     })
-    http.post('cartoon_role/create_deal', deal)
+    http
+      .post('cartoon_role/create_deal', deal)
       .then(() => {
         this.setState({
           submitting: false,
@@ -99,7 +108,8 @@ export default class SaleIdolBtn extends Component {
     this.setState({
       loading: true
     })
-    http.get(`cartoon_role/${this.props.idol.id}/get_idol_deal`)
+    http
+      .get(`cartoon_role/${this.props.idol.id}/get_idol_deal`)
       .then(({ deal, has_star }) => {
         if (deal) {
           deal['product_count'] = deal['last_count']
@@ -122,23 +132,22 @@ export default class SaleIdolBtn extends Component {
       })
   }
 
-  render () {
+  render() {
     const { idol } = this.props
     const { deal, open, has_star } = this.state
     return (
       <View className='sale-idol-btn-wrap'>
-        <Button
-          className='sale-btn'
-          onClick={this.openDialog}
-        >出售</Button>
+        <Button className='sale-btn' onClick={this.openDialog}>
+          出售
+        </Button>
         <AtFloatLayout
           isOpened={open}
           title={`出售「${idol.name}」的股份`}
-          onClose={
-            () => {this.setState({
+          onClose={() => {
+            this.setState({
               open: false
-            })}
-          }
+            })
+          }}
         >
           <AtList hasBorder={false}>
             <AtListItem
@@ -149,30 +158,38 @@ export default class SaleIdolBtn extends Component {
             <AtListItem
               title='价格建议'
               extraText={idol.is_locked ? '可高于挂牌价' : '应低于挂牌价'}
-              note={idol.is_locked ? '当前股票已停牌，可高价出售' : '当前股票挂牌中，建议低价出售'}
+              note={
+                idol.is_locked
+                  ? '当前股票已停牌，可高价出售'
+                  : '当前股票挂牌中，建议低价出售'
+              }
             />
             <AtListItem
               title='持有股份'
               extraText={`${idol.has_star}股`}
-              note={`占比：${parseFloat(idol.has_star / idol.market_price * 100).toFixed(2)}%`}
+              note={`占比：${parseFloat(
+                (idol.has_star / idol.market_price) * 100
+              ).toFixed(2)}%`}
             />
             <AtListItem
               title='预计收益'
               extraText='不能低于0.01'
-              note={`￥${parseFloat(deal.product_price * deal.product_count).toFixed(2)}`}
+              note={`￥${parseFloat(
+                deal.product_price * deal.product_count
+              ).toFixed(2)}`}
             />
           </AtList>
           <View className='buy-counter'>
-            <View className="title">出售价格：</View>
+            <View className='title'>出售价格：</View>
             <AtInputNumber
               type='digit'
               min={0.01}
-              max={10.00}
+              max={10.0}
               step={0.01}
               value={deal.product_price}
               onChange={this.handleChangePrice}
             />
-            <View className="title">出售份额：</View>
+            <View className='title'>出售份额：</View>
             <AtInputNumber
               type='digit'
               min={0.01}
@@ -187,7 +204,9 @@ export default class SaleIdolBtn extends Component {
             type='primary'
             circle
             onClick={this.submitForm}
-          >确认出售</AtButton>
+          >
+            确认出售
+          </AtButton>
         </AtFloatLayout>
       </View>
     )

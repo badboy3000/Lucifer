@@ -5,41 +5,40 @@ import helper from '~/utils/helper'
 import './index.scss'
 
 export default class UserPanel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
+  render() {
     const { user } = this.props
     if (!user) {
       return
     }
     const badges = user.badge.map(badge => {
-      const key = Math.random().toString(36).slice(2, -1)
+      const key = Math.random()
+        .toString(36)
+        .slice(2, -1)
       return (
-        <AtTag
-          key={key}
-          taroKey={key}
-          size='small'
-          circle
-        >{badge.name}</AtTag>
+        <AtTag key={key} taroKey={key} size='small' circle>
+          {badge.name}
+        </AtTag>
       )
     })
     return (
       <View class='public-user-panel'>
         <View className='background'>
-          <View className='shim'/>
+          <View className='shim' />
           <image
             src={helper.resize(user.banner, {
               height: 300,
@@ -67,31 +66,30 @@ export default class UserPanel extends Component {
               class='avatar'
             />
             <View className='nickname-wrap'>
-              <Text className='nickname'>
-                {user.nickname}
-              </Text>
-              <Text className="level">
-                LV{user.level}
+              <Text className='nickname'>{user.nickname}</Text>
+              <Text className='level'>
+                LV
+                {user.level}
               </Text>
             </View>
           </View>
-          <View className='badges'>
-            {badges}
-          </View>
-          <View className="intro">
-            {user.signature}
-          </View>
+          <View className='badges'>{badges}</View>
+          <View className='intro'>{user.signature}</View>
           <View className='metas'>
             <View className='meta'>
               <View className='count'>{user.power}</View>
               <View className='name'>战斗力</View>
             </View>
             <View className='meta'>
-              <View className='count'>{parseFloat(user.banlance.coin_count).toFixed(2)}</View>
+              <View className='count'>
+                {parseFloat(user.banlance.coin_count).toFixed(2)}
+              </View>
               <View className='name'>团子</View>
             </View>
             <View className='meta'>
-              <View className='count'>{parseFloat(user.banlance.light_count).toFixed(2)}</View>
+              <View className='count'>
+                {parseFloat(user.banlance.light_count).toFixed(2)}
+              </View>
               <View className='name'>光玉</View>
             </View>
           </View>

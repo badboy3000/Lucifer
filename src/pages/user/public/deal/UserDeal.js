@@ -8,7 +8,7 @@ import { AtLoadMore } from 'taro-ui'
 import './index.scss'
 
 export default class extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       list: [],
@@ -20,9 +20,9 @@ export default class extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () {
+  componentDidMount() {
     event.on('user-tab-1-switch', force => {
       if ((this.state.list.length || this.state.noMore) && !force) {
         return
@@ -31,13 +31,13 @@ export default class extends Component {
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     event.off('user-tab-1-switch')
   }
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   getUserDeals() {
     const { loading, noMore, list, page } = this.state
@@ -47,11 +47,12 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.get('cartoon_role/get_user_deal_list', {
-      page,
-      take: 10,
-      user_id: this.props.user.id,
-    })
+    http
+      .get('cartoon_role/get_user_deal_list', {
+        page,
+        take: 10,
+        user_id: this.props.user.id
+      })
       .then(data => {
         this.setState({
           loading: false,
@@ -68,20 +69,19 @@ export default class extends Component {
       })
   }
 
-  render () {
+  render() {
     const { list, loading, noMore, nothing } = this.state
     if (nothing) {
-      return (<PageState/>)
+      return <PageState />
     }
-    const DealList = list.map(deal => <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal}/>)
+    const DealList = list.map(deal => (
+      <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal} />
+    ))
     return (
       <View>
-        <View>
-          {DealList}
-        </View>
-        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+        <View>{DealList}</View>
+        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'} />
       </View>
     )
   }
 }
-

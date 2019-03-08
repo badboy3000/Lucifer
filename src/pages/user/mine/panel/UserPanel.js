@@ -7,22 +7,22 @@ import state from '~/utils/state'
 import './index.scss'
 
 export default class UserPanel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       signing: false
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   daySignAction() {
     if (this.props.user.daySign || this.state.signing) {
@@ -31,7 +31,8 @@ export default class UserPanel extends Component {
     this.setState({
       signing: true
     })
-    http.post('user/daySign')
+    http
+      .post('user/daySign')
       .then(res => {
         this.setState({
           signing: false
@@ -48,7 +49,7 @@ export default class UserPanel extends Component {
       })
   }
 
-  render () {
+  render() {
     const { user } = this.props
     if (!user) {
       return
@@ -70,14 +71,16 @@ export default class UserPanel extends Component {
             </View>
             <View className='text'>
               <View className='nickname-wrap'>
-                <Text className='nickname'>
-                  {user.nickname}
-                </Text>
-                <Text className="level">
-                  LV{user.exp.level}
+                <Text className='nickname'>{user.nickname}</Text>
+                <Text className='level'>
+                  LV
+                  {user.exp.level}
                 </Text>
               </View>
-              <Text className='invite'>邀请码：{user.id}</Text>
+              <Text className='invite'>
+                邀请码：
+                {user.id}
+              </Text>
             </View>
             <View className='arrow'>
               <AtIcon value='chevron-right' size='20' color='#657786' />
@@ -91,21 +94,27 @@ export default class UserPanel extends Component {
               <View className='name'>战斗力</View>
             </View>
             <View className='meta'>
-              <View className='count'>{parseFloat(user.balance.coin_count).toFixed(2)}</View>
+              <View className='count'>
+                {parseFloat(user.balance.coin_count).toFixed(2)}
+              </View>
               <View className='name'>团子</View>
             </View>
             <View className='meta'>
-              <View className='count'>{parseFloat(user.balance.light_count).toFixed(2)}</View>
+              <View className='count'>
+                {parseFloat(user.balance.light_count).toFixed(2)}
+              </View>
               <View className='name'>光玉</View>
             </View>
           </View>
-          <View className="day-sign">
+          <View className='day-sign'>
             <AtButton
               loading={this.state.signing}
               circle
               type={user.daySign ? 'secondary' : 'primary'}
               onClick={this.daySignAction}
-            >{user.daySign ? '已签到' : '签到'}</AtButton>
+            >
+              {user.daySign ? '已签到' : '签到'}
+            </AtButton>
           </View>
         </View>
       </View>

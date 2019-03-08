@@ -7,38 +7,38 @@ import event from '~/utils/event'
 import './index.scss'
 
 export default class UserContent extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       current: 0
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () {
+  componentDidMount() {
     event.emit('user-tab-0-switch')
     event.on('on-reach-bottom', () => {
       event.emit(`user-tab-${this.state.current}-switch`, true)
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     event.off('on-reach-bottom')
   }
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  handleClick (index) {
+  handleClick(index) {
     this.setState({
       current: index
     })
     event.emit(`user-tab-${index}-switch`, false)
   }
 
-  render () {
+  render() {
     const { user } = this.props
     const { current } = this.state
     const tabList = [{ title: '偶像' }, { title: '交易' }]
@@ -50,11 +50,11 @@ export default class UserContent extends Component {
         swipeable={false}
         scroll
       >
-        <AtTabsPane current={current} index={0} >
-          <UserIdol user={user}/>
+        <AtTabsPane current={current} index={0}>
+          <UserIdol user={user} />
         </AtTabsPane>
         <AtTabsPane current={current} index={1}>
-          <UserDeal user={user}/>
+          <UserDeal user={user} />
         </AtTabsPane>
       </AtTabs>
     )

@@ -1,6 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
-import { AtFloatLayout, AtList, AtListItem, AtInputNumber, AtButton } from "taro-ui"
+import {
+  AtFloatLayout,
+  AtList,
+  AtListItem,
+  AtInputNumber,
+  AtButton
+} from 'taro-ui'
 import toast from '~/utils/toast'
 import cache from '~/utils/cache'
 import state from '~/utils/state'
@@ -8,25 +14,25 @@ import http from '~/utils/http'
 import './index.scss'
 
 export default class StarIdolBtn extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       open: false,
       user: cache.get('USER', null),
-      count: props.idol ? props.idol.company_state ? 0.01 : 1 : 0,
+      count: props.idol ? (props.idol.company_state ? 0.01 : 1) : 0,
       submitting: false
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   openDialog() {
     if (this.props.idol.is_locked) {
@@ -57,9 +63,10 @@ export default class StarIdolBtn extends Component {
     this.setState({
       submitting: true
     })
-    http.post(`cartoon_role/${this.props.idol.id}/buy_stock`, {
-      amount: count
-    })
+    http
+      .post(`cartoon_role/${this.props.idol.id}/buy_stock`, {
+        amount: count
+      })
       .then(() => {
         toast.info('入股成功')
         this.setState({
@@ -83,22 +90,30 @@ export default class StarIdolBtn extends Component {
 
   computedMaxCount() {
     const { idol } = this.props
-    const maxCanBuy = (!idol.max_stock_count || idol.max_stock_count === '0.00')
-      ? -1
-      : idol.max_stock_count - idol.star_count
-    const pocketCanBuy = this.computedPocket() ? this.computedPocket() / idol.stock_price : '0.00'
+    const maxCanBuy =
+      !idol.max_stock_count || idol.max_stock_count === '0.00'
+        ? -1
+        : idol.max_stock_count - idol.star_count
+    const pocketCanBuy = this.computedPocket()
+      ? this.computedPocket() / idol.stock_price
+      : '0.00'
     return maxCanBuy === -1 ? pocketCanBuy : Math.min(pocketCanBuy, maxCanBuy)
   }
 
   computedMinCount() {
-    return Math.min(this.props.idol.company_state ? 0.01 : 1, this.computedMaxCount())
+    return Math.min(
+      this.props.idol.company_state ? 0.01 : 1,
+      this.computedMaxCount()
+    )
   }
 
   computedNeedPay() {
-    return this.state.count ? parseFloat(this.props.idol.stock_price * this.state.count).toFixed(2) : '0.00'
+    return this.state.count
+      ? parseFloat(this.props.idol.stock_price * this.state.count).toFixed(2)
+      : '0.00'
   }
 
-  render () {
+  render() {
     const { idol } = this.props
     const { count, submitting, open } = this.state
     return (
@@ -106,15 +121,17 @@ export default class StarIdolBtn extends Component {
         <Button
           className={idol.is_locked ? 'star-btn locked' : 'star-btn'}
           onClick={this.openDialog}
-        >{ idol.is_locked ? '停牌' : '入股' }</Button>
+        >
+          {idol.is_locked ? '停牌' : '入股'}
+        </Button>
         <AtFloatLayout
           isOpened={open}
           title={`入股：${idol.name}`}
-          onClose={
-            () => {this.setState({
+          onClose={() => {
+            this.setState({
               open: false
-            })}
-          }
+            })
+          }}
         >
           <AtList hasBorder={false}>
             <AtListItem
@@ -130,7 +147,11 @@ export default class StarIdolBtn extends Component {
             <AtListItem
               title='最低可购买份额'
               extraText={`${parseFloat(this.computedMinCount()).toFixed(2)}股`}
-              note={idol.company_state ? '上市公司一次可最低购买0.01股' : '未上市公司最低购买为1.00股'}
+              note={
+                idol.company_state
+                  ? '上市公司一次可最低购买0.01股'
+                  : '未上市公司最低购买为1.00股'
+              }
             />
             <AtListItem
               title='钱包余额'
@@ -153,7 +174,9 @@ export default class StarIdolBtn extends Component {
             type='primary'
             circle
             onClick={this.submitForm}
-          >确认入股</AtButton>
+          >
+            确认入股
+          </AtButton>
         </AtFloatLayout>
       </View>
     )

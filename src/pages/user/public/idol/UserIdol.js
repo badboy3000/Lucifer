@@ -7,7 +7,7 @@ import IdolItem from '~/components/IdolItem'
 import PageState from '~/components/PageState'
 
 export default class extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       list: [],
@@ -18,9 +18,9 @@ export default class extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () {
+  componentDidMount() {
     event.on('user-tab-0-switch', force => {
       if ((this.state.list.length || this.state.noMore) && !force) {
         return
@@ -29,13 +29,13 @@ export default class extends Component {
     })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     event.off('user-tab-0-switch')
   }
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
   getUserIdols() {
     const { loading, noMore, list } = this.state
@@ -45,14 +45,15 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.post('cartoon_role/list/idols', {
-      type: 'user',
-      sort: 'activity',
-      state: 1,
-      take: 10,
-      id: this.props.user.id,
-      seenIds: list.map(_ => _.id).join(',')
-    })
+    http
+      .post('cartoon_role/list/idols', {
+        type: 'user',
+        sort: 'activity',
+        state: 1,
+        take: 10,
+        id: this.props.user.id,
+        seenIds: list.map(_ => _.id).join(',')
+      })
       .then(data => {
         this.setState({
           loading: false,
@@ -69,17 +70,24 @@ export default class extends Component {
       })
   }
 
-  render () {
+  render() {
     const { list, loading, noMore, nothing } = this.state
     if (nothing) {
-      return (<PageState/>)
+      return <PageState />
     }
     return (
       <View>
         <View>
-          {list.map(idol => <IdolItem key={String(idol.id)} sort='user' taroKey={String(idol.id)} idol={idol}/>)}
+          {list.map(idol => (
+            <IdolItem
+              key={String(idol.id)}
+              sort='user'
+              taroKey={String(idol.id)}
+              idol={idol}
+            />
+          ))}
         </View>
-        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
+        <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'} />
       </View>
     )
   }

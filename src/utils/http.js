@@ -9,7 +9,9 @@ const isProd = process.env.NODE_ENV === 'production'
 
 fly.interceptors.request.use(request => {
   const time = parseInt(Date.now() / 1000)
-  request.baseURL = isProd ? 'https://api.calibur.tv/' : 'http://localhost:3099/'
+  request.baseURL = isProd
+    ? 'https://api.calibur.tv/'
+    : 'http://localhost:3099/'
   request.headers['Accept'] = 'application/x.api.latest+json'
   request.headers['Authorization'] = `Bearer ${cache.get('JWT-TOKEN')}`
   request.headers['X-Auth-Time'] = time
@@ -59,10 +61,7 @@ fly.interceptors.response.use(
 fly.fetch = url => {
   const timeout = () => new Promise(resolve => setTimeout(resolve, 2000))
   return new Promise((resolve, reject) => {
-    Promise.all([
-      fly.get(url),
-      timeout()
-    ])
+    Promise.all([fly.get(url), timeout()])
       .then(data => {
         resolve(data[0])
       })

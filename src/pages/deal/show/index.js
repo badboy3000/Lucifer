@@ -1,6 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtTabs, AtTabsPane, AtButton, AtModal, AtFloatLayout, AtInputNumber, AtNavBar } from "taro-ui"
+import {
+  AtList,
+  AtListItem,
+  AtTabs,
+  AtTabsPane,
+  AtButton,
+  AtModal,
+  AtFloatLayout,
+  AtInputNumber,
+  AtNavBar
+} from 'taro-ui'
 import http from '~/utils/http'
 import cache from '~/utils/cache'
 import toast from '~/utils/toast'
@@ -14,7 +24,7 @@ export default class extends Component {
     navigationStyle: 'custom'
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       page_loading: true,
@@ -37,38 +47,42 @@ export default class extends Component {
     }
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () {
+  componentDidMount() {
     this.getDealInfo()
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  onReachBottom () {
+  onReachBottom() {
     if (this.state.current === 1) {
       this.getDealExchanges()
     }
   }
 
   getDealInfo() {
-    http.fetch(`cartoon_role/${this.$router.params.id}/deal_show`)
+    http
+      .fetch(`cartoon_role/${this.$router.params.id}/deal_show`)
       .then(data => {
         const user = cache.get('USER', {})
-        this.setState({
-          ...data,
-          is_mine: user.id === data.user.id,
-          nothing: data.deal.product_count === data.deal.last_count,
-          page_loading: false
-        }, () => {
-          this.setState({
-            buy_count: this.computedMinCanBuy()
-          })
-        })
+        this.setState(
+          {
+            ...data,
+            is_mine: user.id === data.user.id,
+            nothing: data.deal.product_count === data.deal.last_count,
+            page_loading: false
+          },
+          () => {
+            this.setState({
+              buy_count: this.computedMinCanBuy()
+            })
+          }
+        )
       })
       .catch(() => {
         this.setState({
@@ -81,11 +95,17 @@ export default class extends Component {
   computedMaxCanBuy() {
     const { current_user, deal } = this.state
     const pocket = current_user ? +current_user.pocket : 0
-    return Math.min(deal.product_price, pocket ? parseFloat(pocket / deal.product_price).toFixed(2) : 0)
+    return Math.min(
+      deal.product_price,
+      pocket ? parseFloat(pocket / deal.product_price).toFixed(2) : 0
+    )
   }
 
   computedMinCanBuy() {
-    return Math.min(parseFloat(0.01 / this.state.deal.product_price).toFixed(2), this.computedMaxCanBuy())
+    return Math.min(
+      parseFloat(0.01 / this.state.deal.product_price).toFixed(2),
+      this.computedMaxCanBuy()
+    )
   }
 
   switchTab(index) {
@@ -105,10 +125,11 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.get('cartoon_role/deal_exchange_record', {
-      deal_id: this.state.deal.id,
-      page: state.page
-    })
+    http
+      .get('cartoon_role/deal_exchange_record', {
+        deal_id: this.state.deal.id,
+        page: state.page
+      })
       .then(data => {
         this.setState({
           list: state.list.concat(data),
@@ -145,9 +166,10 @@ export default class extends Component {
     this.setState({
       submitting: true
     })
-    http.post('cartoon_role/delete_deal', {
-      id: this.state.deal.id
-    })
+    http
+      .post('cartoon_role/delete_deal', {
+        id: this.state.deal.id
+      })
       .then(() => {
         toast.info('删除成功')
         setTimeout(() => {
@@ -169,12 +191,15 @@ export default class extends Component {
       submitting: true
     })
     const { deal, buy_count } = this.state
-    const price = parseFloat(this.state.buy_count * deal.product_price).toFixed(2)
-    http.post('cartoon_role/make_deal', {
-      deal_id: deal.id,
-      buy_count: buy_count,
-      pay_price: price
-    })
+    const price = parseFloat(this.state.buy_count * deal.product_price).toFixed(
+      2
+    )
+    http
+      .post('cartoon_role/make_deal', {
+        deal_id: deal.id,
+        buy_count: buy_count,
+        pay_price: price
+      })
       .then(() => {
         toast.info('交易成功')
         this.setState({
@@ -199,14 +224,28 @@ export default class extends Component {
     })
   }
 
-  render () {
+  render() {
     if (this.state.page_loading) {
-      return (<PageState type='loading'/>)
+      return <PageState type='loading' />
     }
     if (this.state.page_error) {
-      return (<PageState type='error'/>)
+      return <PageState type='error' />
     }
-    const { deal, idol, user, current, list, noMore, loading, nothing, is_mine, openDeleteModal, openBuyDrawer, current_user, buy_count } = this.state
+    const {
+      deal,
+      idol,
+      user,
+      current,
+      list,
+      noMore,
+      loading,
+      nothing,
+      is_mine,
+      openDeleteModal,
+      openBuyDrawer,
+      current_user,
+      buy_count
+    } = this.state
     const tabList = [{ title: '交易详情' }, { title: '成交记录' }]
     const records = list.map(deal => {
       return (
@@ -234,7 +273,7 @@ export default class extends Component {
             mode='aspectFill'
             class='bg'
           />
-          <View className="shim"/>
+          <View className='shim' />
           <AtNavBar
             color='#fff'
             leftIconType='chevron-left'
@@ -244,7 +283,7 @@ export default class extends Component {
               wx.navigateBack()
             }}
           />
-          <View className="content">
+          <View className='content'>
             <navigator
               url={`/pages/idol/show/index?id=${idol.id}`}
               hover-class='none'
@@ -255,31 +294,22 @@ export default class extends Component {
                 class='avatar'
               />
             </navigator>
-            <View className="intro">
-              <View className="metas">
-                <View className="meta">
-                  <View className="count">
-                    ￥{idol.market_price}
-                  </View>
-                  <View className="name">
-                    市值
-                  </View>
+            <View className='intro'>
+              <View className='metas'>
+                <View className='meta'>
+                  <View className='count'>￥{idol.market_price}</View>
+                  <View className='name'>市值</View>
                 </View>
-                <View className="meta">
-                  <View className="count">
-                    ￥{idol.stock_price}/股
+                <View className='meta'>
+                  <View className='count'>
+                    ￥{idol.stock_price}
+                    /股
                   </View>
-                  <View className="name">
-                    股价
-                  </View>
+                  <View className='name'>股价</View>
                 </View>
-                <View className="meta">
-                  <View className="count">
-                    {idol.star_count}股
-                  </View>
-                  <View className="name">
-                    认购
-                  </View>
+                <View className='meta'>
+                  <View className='count'>{idol.star_count}股</View>
+                  <View className='name'>认购</View>
                 </View>
               </View>
               <AtButton
@@ -289,7 +319,9 @@ export default class extends Component {
                 type={is_mine ? 'secondary' : 'primary'}
                 size='small'
                 onClick={this.handleDealClick}
-              >{is_mine ? '终止交易' : '马上交易'}</AtButton>
+              >
+                {is_mine ? '终止交易' : '马上交易'}
+              </AtButton>
             </View>
           </View>
         </View>
@@ -309,28 +341,30 @@ export default class extends Component {
           title='终止交易'
           cancelText='取消'
           confirmText='确认'
-          onCancel={
-            () => {this.setState({
+          onCancel={() => {
+            this.setState({
               openDeleteModal: false
-            })}
-          }
-          onConfirm={ this.submitDeleteDeal }
+            })
+          }}
+          onConfirm={this.submitDeleteDeal}
           content='确认要终止交易吗？如果需要调整价格和销量，可前往偶像页面设置即可更新该交易。'
         />
         <AtFloatLayout
           isOpened={openBuyDrawer}
           title={`购买「${idol.name}」的股份`}
-          onClose={
-            () => {this.setState({
+          onClose={() => {
+            this.setState({
               openBuyDrawer: false
-            })}
-          }
+            })
+          }}
         >
           <AtList hasBorder={false}>
             <AtListItem
               title='钱包余额'
               extraText={`￥${parseFloat(pocket).toFixed(2)}`}
-              note={`￥${deal.product_price}/股，购买后余额:￥${parseFloat(pocket - buy_count * deal.product_price).toFixed(2)}`}
+              note={`￥${deal.product_price}/股，购买后余额:￥${parseFloat(
+                pocket - buy_count * deal.product_price
+              ).toFixed(2)}`}
             />
             <AtListItem
               title='最多购买'
@@ -357,10 +391,12 @@ export default class extends Component {
               type='primary'
               circle
               onClick={this.submitCreateDeal}
-            >达成交易</AtButton>
+            >
+              达成交易
+            </AtButton>
           </AtList>
         </AtFloatLayout>
-        <View className="hr"/>
+        <View className='hr' />
         <AtTabs
           current={current}
           tabList={tabList}
@@ -368,43 +404,64 @@ export default class extends Component {
           swipeable={false}
           scroll
         >
-          <AtTabsPane current={current} index={0} >
+          <AtTabsPane current={current} index={0}>
             <AtList hasBorder={false}>
               <AtListItem
                 title='出售份额'
                 extraText={`${deal.product_count}股`}
-                note={`占比：${parseFloat(deal.product_count / idol.market_price * 100).toFixed(2)}%`}
+                note={`占比：${parseFloat(
+                  (deal.product_count / idol.market_price) * 100
+                ).toFixed(2)}%`}
               />
               <AtListItem
                 title='出售价格'
                 extraText={`￥${deal.product_price}/股`}
-                note={deal.product_price === idol.stock_price ? '等于市场价' : deal.product_price > idol.stock_price ? '高于市场价' : '低于市场价'}
+                note={
+                  deal.product_price === idol.stock_price
+                    ? '等于市场价'
+                    : deal.product_price > idol.stock_price
+                      ? '高于市场价'
+                      : '低于市场价'
+                }
               />
               <AtListItem
                 title='股市状态'
                 extraText={idol.is_locked ? '已停牌' : '挂牌中'}
-                note={idol.is_locked ? '停牌之后高于市场价也值得买' : '挂牌中的交易低于市场价才卖得出去'}
+                note={
+                  idol.is_locked
+                    ? '停牌之后高于市场价也值得买'
+                    : '挂牌中的交易低于市场价才卖得出去'
+                }
               />
               <AtListItem
                 title='交易状态'
-                extraText={parseFloat(deal.product_count - deal.last_count).toFixed(2) === '0.00' ? '还未成交' : '有成交额'}
-                note={`成交量：￥${parseFloat(deal.product_count - deal.last_count).toFixed(2)}`}
+                extraText={
+                  parseFloat(deal.product_count - deal.last_count).toFixed(
+                    2
+                  ) === '0.00'
+                    ? '还未成交'
+                    : '有成交额'
+                }
+                note={`成交量：￥${parseFloat(
+                  deal.product_count - deal.last_count
+                ).toFixed(2)}`}
               />
             </AtList>
           </AtTabsPane>
           <AtTabsPane current={current} index={1}>
-            {
-              nothing ? <PageState/> : (
-                <View>
-                  <AtList hasBorder={false}>{records}</AtList>
-                  <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
-                </View>
-              )
-            }
+            {nothing ? (
+              <PageState />
+            ) : (
+              <View>
+                <AtList hasBorder={false}>{records}</AtList>
+                <AtLoadMore
+                  status={loading ? 'loading' : noMore ? 'noMore' : 'more'}
+                />
+              </View>
+            )}
           </AtTabsPane>
         </AtTabs>
       </View>
     )
   }
 }
-

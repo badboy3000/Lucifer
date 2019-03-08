@@ -7,22 +7,22 @@ import StarIdolBtn from '../star_btn/StarIdolBtn'
 import SaleIdolBtn from '../sale_btn/SaleIdolBtn'
 
 export default class IdolPanel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
+  render() {
     const { idol, onUpdateStar } = this.props
     return (
       <View className='idol-panel'>
@@ -35,7 +35,7 @@ export default class IdolPanel extends Component {
             mode='aspectFill'
             class='blur-bg'
           />
-          <View className="shim"/>
+          <View className='shim' />
           <AtNavBar
             color='#fff'
             leftIconType='chevron-left'
@@ -51,9 +51,9 @@ export default class IdolPanel extends Component {
               mode='aspectFill'
               class='avatar'
             />
-            <View className="controls">
-              <StarIdolBtn idol={idol} onUpdateStar={onUpdateStar}/>
-              <SaleIdolBtn idol={idol}/>
+            <View className='controls'>
+              <StarIdolBtn idol={idol} onUpdateStar={onUpdateStar} />
+              <SaleIdolBtn idol={idol} />
             </View>
           </View>
         </View>

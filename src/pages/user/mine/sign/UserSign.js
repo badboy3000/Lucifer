@@ -51,19 +51,19 @@ export default class extends Component {
       })
   }
 
-  changeAccess (value) {
+  changeAccess(value) {
     this.setState({
       access: value
     })
   }
 
-  changeSecret (value) {
+  changeSecret(value) {
     this.setState({
       secret: value
     })
   }
 
-  onSubmit () {
+  onSubmit() {
     if (this.state.loading || this.state.submitting) {
       return
     }
@@ -75,11 +75,7 @@ export default class extends Component {
     ) {
       return toast.info('请输入正确的手机号')
     }
-    if (
-      !secret ||
-      secret.length < 6 ||
-      secret.length > 16
-    ) {
+    if (!secret || secret.length < 6 || secret.length > 16) {
       return toast.info('密码错误')
     }
     this.setState({
@@ -99,12 +95,9 @@ export default class extends Component {
       <View className='user-sign'>
         <View class='form-wrap'>
           <View className='bg'>
-            <image
-              src={loginBg}
-              mode='aspectFit'
-            />
+            <image src={loginBg} mode='aspectFit' />
           </View>
-          <View className="sign-form">
+          <View className='sign-form'>
             <AtForm onSubmit={this.onSubmit}>
               <AtInput
                 name='access'
@@ -119,17 +112,19 @@ export default class extends Component {
                 title='密码'
                 type='password'
                 placeholder='密码不能少于6位数'
-                clear={true}
+                clear
                 value={this.state.secret}
                 onChange={this.changeSecret}
               />
-              <View className="btn">
+              <View className='btn'>
                 <AtButton
                   loading={this.state.loading}
                   circle
                   type='primary'
                   formType='submit'
-                >登录</AtButton>
+                >
+                  登录
+                </AtButton>
               </View>
             </AtForm>
           </View>
@@ -145,10 +140,7 @@ export default class extends Component {
             className='wechat-btn'
             onClick={this.callWechatSign}
           >
-            <image
-              src={wechatIcon}
-              mode='scaleToFill'
-            />
+            <image src={wechatIcon} mode='scaleToFill' />
           </Button>
         </View>
       </View>

@@ -4,7 +4,7 @@ import helper from '~/utils/helper'
 import './index.scss'
 
 export default class IdolItem extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
@@ -34,19 +34,26 @@ export default class IdolItem extends Component {
             class='avatar'
           />
           <View className='info'>
-            <View className="name">{idol.name}</View>
+            <View className='name'>{idol.name}</View>
             <View className='meta'>
-              ￥{ idol.stock_price }/股，{ idol.fans_count }人持股，已认购{idol.star_count}股
+              ￥{idol.stock_price}
+              /股，
+              {idol.fans_count}
+              人持股，已认购
+              {idol.star_count}股
             </View>
           </View>
         </View>
-        <View className="main">
+        <View className='main'>
           <View className='item'>
             <Text className='key'>总市值：</Text>
-            <Text className='val'>{idol.company_state ? `￥${idol.market_price}` : `差${20 - idol.fans_count}人上市`}</Text>
+            <Text className='val'>
+              {idol.company_state
+                ? `￥${idol.market_price}`
+                : `差${20 - idol.fans_count}人上市`}
+            </Text>
           </View>
-          {
-            idol.boss &&
+          {idol.boss && (
             <View className='item'>
               <Text className='key'>大股东：</Text>
               <image
@@ -55,9 +62,8 @@ export default class IdolItem extends Component {
                 class='val img'
               />
             </View>
-          }
-          {
-            idol.manager &&
+          )}
+          {idol.manager && (
             <View className='item'>
               <Text className='key'>经纪人：</Text>
               <image
@@ -66,18 +72,17 @@ export default class IdolItem extends Component {
                 class='val img'
               />
             </View>
-          }
+          )}
         </View>
         <View className='footer'>
           <Text className='meta'>
             {sort === 'user'
               ? `持有：${idol.has_star}股，占比 ${`${parseFloat(
-                (idol.has_star / idol.star_count) * 100
-              ).toFixed(2)}%`}`
+                  (idol.has_star / idol.star_count) * 100
+                ).toFixed(2)}%`}`
               : idol.ipo_at
                 ? `上市时间：${idol.ipo_at.split(' ')[0]}`
-                : `注册时间：${idol.created_at.split(' ')[0]}`
-            }
+                : `注册时间：${idol.created_at.split(' ')[0]}`}
           </Text>
           <Text className='btn'>
             {sort === 'user' ? '查看数据' : '马上入股'}

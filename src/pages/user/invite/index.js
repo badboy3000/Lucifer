@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtLoadMore } from "taro-ui"
+import { AtList, AtListItem, AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import helper from '~/utils/helper'
 import PageState from '~/components/PageState'
@@ -12,7 +12,7 @@ export default class extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       id: this.$router.params.id,
       total: 0,
@@ -21,7 +21,7 @@ export default class extends Component {
       noMore: false,
       nothing: false,
       list: []
-    };
+    }
   }
 
   componentWillMount() {}
@@ -48,11 +48,12 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.get('user/invite/users', {
-      take: 20,
-      page,
-      id
-    })
+    http
+      .get('user/invite/users', {
+        take: 20,
+        page,
+        id
+      })
       .then(data => {
         this.setState({
           list: list.concat(data.list),
@@ -93,14 +94,16 @@ export default class extends Component {
     return (
       <View className='invite-user'>
         <Text>invite code</Text>
-        {
-          nothing ? <PageState/> : (
-            <View>
-              <AtList>{records}</AtList>
-              <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
-            </View>
-          )
-        }
+        {nothing ? (
+          <PageState />
+        ) : (
+          <View>
+            <AtList>{records}</AtList>
+            <AtLoadMore
+              status={loading ? 'loading' : noMore ? 'noMore' : 'more'}
+            />
+          </View>
+        )}
       </View>
     )
   }

@@ -4,24 +4,22 @@ import PageState from '~/components/PageState'
 import './index.scss'
 
 export default class extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
-    return (
-      <PageState/>
-    )
+  render() {
+    return <PageState />
   }
 }

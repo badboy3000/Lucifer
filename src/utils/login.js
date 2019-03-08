@@ -119,9 +119,11 @@ const step_5_get_current_user = token => {
 
 const step_0_get_jwt_token_by_access = form => {
   return new Promise((resolve, reject) => {
-    http.post('door/login', form).then(token => {
-      resolve(token)
-    })
+    http
+      .post('door/login', form)
+      .then(token => {
+        resolve(token)
+      })
       .catch(reject)
   })
 }

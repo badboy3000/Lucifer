@@ -1,7 +1,7 @@
 import { format } from 'timeago.js'
 
 export default new class {
-  resize(url, options = {}){
+  resize(url, options = {}) {
     if (!url) {
       return ''
     }
@@ -15,10 +15,7 @@ export default new class {
     const format = '/format/png'
     const mode = options.mode === undefined ? 1 : options.mode
 
-    if (
-      (mode === 1 && !options.width) ||
-      (!options.width && !options.height)
-    ) {
+    if ((mode === 1 && !options.width) || (!options.width && !options.height)) {
       return `${link}?imageMogr2/auto-orient/strip${format}`
     }
 

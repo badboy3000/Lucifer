@@ -4,28 +4,25 @@ import { AtList, AtListItem } from 'taro-ui'
 import './index.scss'
 
 export default class UserTable extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
   }
 
-  componentWillMount () { }
+  componentWillMount() {}
 
-  componentDidMount () { }
+  componentDidMount() {}
 
-  componentWillUnmount () { }
+  componentWillUnmount() {}
 
-  componentDidShow () { }
+  componentDidShow() {}
 
-  componentDidHide () { }
+  componentDidHide() {}
 
-  render () {
+  render() {
     return (
       <View className='user-panel'>
         <AtList hasBorder={false}>
-          <navigator
-            url='/pages/user/transaction/index'
-            hover-class='none'
-          >
+          <navigator url='/pages/user/transaction/index' hover-class='none'>
             <AtListItem
               title='交易记录'
               arrow='right'
@@ -53,10 +50,7 @@ export default class UserTable extends Component {
               }}
             />
           </navigator>
-          <navigator
-            url='/pages/user/handbook/index'
-            hover-class='none'
-          >
+          <navigator url='/pages/user/handbook/index' hover-class='none'>
             <AtListItem
               title='帮助手册'
               arrow='right'
@@ -68,11 +62,7 @@ export default class UserTable extends Component {
               }}
             />
           </navigator>
-          <button
-            open-type='feedback'
-            class='feedback'
-            hover-class='none'
-          >
+          <button open-type='feedback' class='feedback' hover-class='none'>
             <AtListItem
               title='意见反馈'
               arrow='right'

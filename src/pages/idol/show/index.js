@@ -16,7 +16,7 @@ export default class extends Component {
     navigationStyle: 'custom'
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       page_loading: true,
@@ -28,7 +28,7 @@ export default class extends Component {
     }
   }
 
-  componentWillMount() { }
+  componentWillMount() {}
 
   componentDidMount() {
     this.getIdolInfo()
@@ -45,7 +45,8 @@ export default class extends Component {
   componentDidHide() {}
 
   getIdolInfo() {
-    http.fetch(`cartoon_role/${this.$router.params.id}/stock_show`)
+    http
+      .fetch(`cartoon_role/${this.$router.params.id}/stock_show`)
       .then(data => {
         this.setState({
           idol: data.role,
@@ -79,15 +80,15 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return (<PageState type='loading'/>)
+      return <PageState type='loading' />
     }
     if (this.state.page_error) {
-      return (<PageState type='error'/>)
+      return <PageState type='error' />
     }
     const { idol } = this.state
     return (
       <View>
-        <IdolPanel idol={idol} onUpdateStar={this.onUpdateUserHasStar}/>
+        <IdolPanel idol={idol} onUpdateStar={this.onUpdateUserHasStar} />
         <AtTabs
           current={this.state.current}
           scroll
@@ -101,16 +102,16 @@ export default class extends Component {
           onClick={this.tabSwitch}
         >
           <AtTabsPane current={this.state.current} index={0}>
-            <IdolProduct/>
+            <IdolProduct />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <IdolInfo idol={idol} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            <IdolComment/>
+            <IdolComment />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
-            <IdolOwner idol={idol}/>
+            <IdolOwner idol={idol} />
           </AtTabsPane>
         </AtTabs>
       </View>

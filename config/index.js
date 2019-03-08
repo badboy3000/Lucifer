@@ -99,21 +99,27 @@ const config = {
         }
       }
     },
-    webpackChain (chain, webpack) {
+    webpackChain(chain, webpack) {
       chain.merge({
         resolve: {
           alias: {
-            'global.scss': path.resolve(__dirname, '..', 'src/style/global.scss')
+            'global.scss': path.resolve(
+              __dirname,
+              '..',
+              'src/style/global.scss'
+            )
           }
         },
         plugin: {
           install: {
             plugin: require('webpack-bundle-analyzer').BundleAnalyzerPlugin,
-            args: [{
-              analyzerMode: 'static',
-              defaultSizes: 'gzip',
-              analyzerPort: 8888
-            }]
+            args: [
+              {
+                analyzerMode: 'static',
+                defaultSizes: 'gzip',
+                analyzerPort: 8888
+              }
+            ]
           }
         }
       })

@@ -1,6 +1,13 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtLoadMore, Swiper, SwiperItem, AtIcon } from 'taro-ui'
+import {
+  AtTabs,
+  AtTabsPane,
+  AtLoadMore,
+  Swiper,
+  SwiperItem,
+  AtIcon
+} from 'taro-ui'
 import http from '~/utils/http'
 import helper from '~/utils/helper'
 import IdolItem from '~/components/IdolItem/index'
@@ -12,7 +19,7 @@ export default class extends Component {
     enablePullDownRefresh: true
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       current: 1,
@@ -86,7 +93,7 @@ export default class extends Component {
 
   componentDidHide() {}
 
-  tabSwitch (index) {
+  tabSwitch(index) {
     this.setState({
       current: index
     })
@@ -113,11 +120,7 @@ export default class extends Component {
     }
     const data = this.state[sort]
     const field = `list_${index}`
-    if (
-      data.loading ||
-      data.nothing ||
-      (data.noMore && !refresh)
-    ) {
+    if (data.loading || data.nothing || (data.noMore && !refresh)) {
       return
     }
     if (refresh) {
@@ -139,13 +142,14 @@ export default class extends Component {
         })
       })
     }
-    http.post('cartoon_role/list/idols', {
-      type: 'trending',
-      sort,
-      take: 10,
-      state: sort === 'star_count' ? 0 : 1,
-      seenIds: refresh ? '' : this.state[field].map(_ => _.id).join(',')
-    })
+    http
+      .post('cartoon_role/list/idols', {
+        type: 'trending',
+        sort,
+        take: 10,
+        state: sort === 'star_count' ? 0 : 1,
+        seenIds: refresh ? '' : this.state[field].map(_ => _.id).join(',')
+      })
       .then(res => {
         this.setState({
           [field]: this.state[field].concat(res.list)
@@ -195,10 +199,11 @@ export default class extends Component {
         pub_deal_loading: true
       })
     }
-    http.get('cartoon_role/deal_list', {
-      seenIds: refresh ? '' : state.pub_deal_list.map(_ => _.id).join(','),
-      take: 10
-    })
+    http
+      .get('cartoon_role/deal_list', {
+        seenIds: refresh ? '' : state.pub_deal_list.map(_ => _.id).join(','),
+        take: 10
+      })
       .then(data => {
         this.setState({
           pub_deal_list: state.pub_deal_list.concat(data.list),
@@ -221,7 +226,8 @@ export default class extends Component {
   }
 
   getStockMeta() {
-    http.get('cartoon_role/stock_meta')
+    http
+      .get('cartoon_role/stock_meta')
       .then(meta => {
         this.setState({ meta })
       })
@@ -234,81 +240,138 @@ export default class extends Component {
       http.get('cartoon_role/recent_deal')
     ])
       .then(data => {
-        const buys = data[0].list.map(_ => Object.assign(_, {
-          type: 'buy'
-        }))
-        const deal = data[1].list.map(_ => Object.assign(_, {
-          type: 'deal'
-        }))
-        const recent = deal.concat(buys).sort((prev, next) => next.time - prev.time)
+        const buys = data[0].list.map(_ =>
+          Object.assign(_, {
+            type: 'buy'
+          })
+        )
+        const deal = data[1].list.map(_ =>
+          Object.assign(_, {
+            type: 'deal'
+          })
+        )
+        const recent = deal
+          .concat(buys)
+          .sort((prev, next) => next.time - prev.time)
         this.setState({ recent })
       })
       .catch(() => {})
   }
 
-  render () {
-    const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }, { title: '交易所' }]
+  render() {
+    const tabList = [
+      { title: '市值榜' },
+      { title: '活跃榜' },
+      { title: '新创榜' },
+      { title: '交易所' }
+    ]
     const { list_0, list_1, list_2, pub_deal_list, meta, recent } = this.state
-    const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
-    const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
-    const DealList = pub_deal_list.map(deal => <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal}/>)
+    const idolList_0 = list_0.map(idol => (
+      <IdolItem
+        key={String(idol.id)}
+        sort='hot'
+        taroKey={String(idol.id)}
+        idol={idol}
+      />
+    ))
+    const idolList_1 = list_1.map(idol => (
+      <IdolItem
+        key={String(idol.id)}
+        sort='active'
+        taroKey={String(idol.id)}
+        idol={idol}
+      />
+    ))
+    const idolList_2 = list_2.map(idol => (
+      <IdolItem
+        key={String(idol.id)}
+        sort='new'
+        taroKey={String(idol.id)}
+        idol={idol}
+      />
+    ))
+    const DealList = pub_deal_list.map(deal => (
+      <DealItem key={String(deal.id)} taroKey={String(deal.id)} deal={deal} />
+    ))
     const list_0_state = this.state.market_price
     const list_1_state = this.state.activity
     const list_2_state = this.state.star_count
 
-    const notice = recent.length && recent.map(item => {
-      const key = Math.random().toString(36).slice(2, -1)
-      return (
-        <SwiperItem
-          key={key}
-          taroKey={key}
-          className='swiper-item'
-        >
-          {
-            item.type === 'buy'
-              ? <View className='notice-item'>
-                  <image
-                    src={helper.resize(item.user && item.user.avatar, { width: 60 })}
-                    mode='aspectFit'
-                  />
-                  <Text class='content'>{item.user.nickname}入股了「{item.idol.name}」</Text>
-                  <Text>{helper.ago(item.time * 1000)}</Text>
-                </View>
-              : <View className='notice-item'>
-                  <image
-                    src={helper.resize(item.buyer && item.buyer.avatar, { width: 60 })}
-                    mode='aspectFit'
-                  />
-                  <Text class='content'>{item.buyer.nickname}购买了{item.dealer.nickname}的「{item.idol.name}」股</Text>
-                  <Text>{helper.ago(item.time * 1000)}</Text>
-                </View>
-          }
-        </SwiperItem>
-      )
-    })
+    const notice =
+      recent.length &&
+      recent.map(item => {
+        const key = Math.random()
+          .toString(36)
+          .slice(2, -1)
+        return (
+          <SwiperItem key={key} taroKey={key} className='swiper-item'>
+            {item.type === 'buy' ? (
+              <View className='notice-item'>
+                <image
+                  src={helper.resize(item.user && item.user.avatar, {
+                    width: 60
+                  })}
+                  mode='aspectFit'
+                />
+                <Text class='content'>
+                  {item.user.nickname}
+                  入股了「
+                  {item.idol.name}」
+                </Text>
+                <Text>{helper.ago(item.time * 1000)}</Text>
+              </View>
+            ) : (
+              <View className='notice-item'>
+                <image
+                  src={helper.resize(item.buyer && item.buyer.avatar, {
+                    width: 60
+                  })}
+                  mode='aspectFit'
+                />
+                <Text class='content'>
+                  {item.buyer.nickname}
+                  购买了
+                  {item.dealer.nickname}
+                  的「
+                  {item.idol.name}
+                  」股
+                </Text>
+                <Text>{helper.ago(item.time * 1000)}</Text>
+              </View>
+            )}
+          </SwiperItem>
+        )
+      })
 
     return (
       <View className='idol-list'>
-        <View className="intro">
+        <View className='intro'>
           <image
             src='https://image.calibur.tv/owner/image/stock-banner.jpeg?imageMogr2/auto-orient/strip|imageView2/2/h/200'
             mode='aspectFit'
           />
           <View className='list'>
-            <View className='li'>投资人数：{ meta.buyer_count }</View>
-            <View className='li'>总交易额：￥{ parseFloat(meta.money_count).toFixed(2) }</View>
-            <View className='li'>成交笔数：{ meta.deal_count }</View>
-            <View className='li'>总成交额：￥{ parseFloat(meta.exchang_money_count).toFixed(2) }</View>
+            <View className='li'>
+              投资人数：
+              {meta.buyer_count}
+            </View>
+            <View className='li'>
+              总交易额：￥
+              {parseFloat(meta.money_count).toFixed(2)}
+            </View>
+            <View className='li'>
+              成交笔数：
+              {meta.deal_count}
+            </View>
+            <View className='li'>
+              总成交额：￥
+              {parseFloat(meta.exchang_money_count).toFixed(2)}
+            </View>
           </View>
         </View>
         <View className='notice'>
-          <View className="icon">
-            <AtIcon
-              value='bell'
-              size='18'
-              color='#ff6881'
-            />
+          <View className='icon'>
+            <AtIcon value='bell' size='18' color='#ff6881' />
           </View>
           <Swiper
             className='swiper'
@@ -327,21 +390,53 @@ export default class extends Component {
           swipeable={false}
           scroll
         >
-          <AtTabsPane current={this.state.current} index={0} >
+          <AtTabsPane current={this.state.current} index={0}>
             {idolList_0}
-            <AtLoadMore status={list_0_state.loading ? 'loading' : list_0_state.noMore ? 'noMore' : 'more'}/>
+            <AtLoadMore
+              status={
+                list_0_state.loading
+                  ? 'loading'
+                  : list_0_state.noMore
+                    ? 'noMore'
+                    : 'more'
+              }
+            />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             {idolList_1}
-            <AtLoadMore status={list_1_state.loading ? 'loading' : list_1_state.noMore ? 'noMore' : 'more'}/>
+            <AtLoadMore
+              status={
+                list_1_state.loading
+                  ? 'loading'
+                  : list_1_state.noMore
+                    ? 'noMore'
+                    : 'more'
+              }
+            />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
             {idolList_2}
-            <AtLoadMore status={list_2_state.loading ? 'loading' : list_2_state.noMore ? 'noMore' : 'more'}/>
+            <AtLoadMore
+              status={
+                list_2_state.loading
+                  ? 'loading'
+                  : list_2_state.noMore
+                    ? 'noMore'
+                    : 'more'
+              }
+            />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={3}>
             {DealList}
-            <AtLoadMore status={this.state.pub_deal_loading ? 'loading' : this.state.pub_deal_noMore ? 'noMore' : 'more'}/>
+            <AtLoadMore
+              status={
+                this.state.pub_deal_loading
+                  ? 'loading'
+                  : this.state.pub_deal_noMore
+                    ? 'noMore'
+                    : 'more'
+              }
+            />
           </AtTabsPane>
         </AtTabs>
       </View>

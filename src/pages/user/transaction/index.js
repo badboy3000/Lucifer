@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtGrid, AtList, AtListItem, AtLoadMore } from "taro-ui"
+import { AtGrid, AtList, AtListItem, AtLoadMore } from 'taro-ui'
 import http from '~/utils/http'
 import PageState from '~/components/PageState'
 import './index.scss'
@@ -50,10 +50,11 @@ export default class extends Component {
     this.setState({
       loading: true
     })
-    http.get('user/transactions', {
-      page: state.page,
-      take: 20
-    })
+    http
+      .get('user/transactions', {
+        page: state.page,
+        take: 20
+      })
       .then(data => {
         if (!state.page) {
           this.setState({
@@ -103,27 +104,42 @@ export default class extends Component {
       case 4:
         return {
           title: '投食帖子',
-          desc: amount > 0 ? `${user.nickname}投食了你的帖子《${model.title}》` : `你投食了${user.nickname}的帖子《${model.title}》`
+          desc:
+            amount > 0
+              ? `${user.nickname}投食了你的帖子《${model.title}》`
+              : `你投食了${user.nickname}的帖子《${model.title}》`
         }
       case 5:
         return {
           title: '投食相册',
-          desc: amount > 0 ? `${user.nickname}投食了你的相册《${model.title}》` : `你投食了${user.nickname}的相册《${model.title}》`
+          desc:
+            amount > 0
+              ? `${user.nickname}投食了你的相册《${model.title}》`
+              : `你投食了${user.nickname}的相册《${model.title}》`
         }
       case 6:
         return {
           title: '投食漫评',
-          desc: amount > 0 ? `${user.nickname}投食了你的漫评《${model.title}》` : `你投食了${user.nickname}的漫评《${model.title}》`
+          desc:
+            amount > 0
+              ? `${user.nickname}投食了你的漫评《${model.title}》`
+              : `你投食了${user.nickname}的漫评《${model.title}》`
         }
       case 7:
         return {
           title: '投食回答',
-          desc: amount > 0 ? `${user.nickname}投食了你的回答《${model.title}》` : `你投食了${user.nickname}的回答《${model.title}》`
+          desc:
+            amount > 0
+              ? `${user.nickname}投食了你的回答《${model.title}》`
+              : `你投食了${user.nickname}的回答《${model.title}》`
         }
       case 8:
         return {
           title: '投食视频',
-          desc: amount > 0 ? `${user.nickname}投食了你的视频《${model.title}》` : `你投食了${user.nickname}的视频《${model.title}》`
+          desc:
+            amount > 0
+              ? `${user.nickname}投食了你的视频《${model.title}》`
+              : `你投食了${user.nickname}的视频《${model.title}》`
         }
       case 9:
         return {
@@ -193,7 +209,10 @@ export default class extends Component {
       case 22:
         return {
           title: '股市交易',
-          desc: amount > 0 ? `${user.nickname}购买了你发布的「${model.title}」的股份交易` : `你购买了${user.nickname}发布的「${model.title}」的股份交易`
+          desc:
+            amount > 0
+              ? `${user.nickname}购买了你发布的「${model.title}」的股份交易`
+              : `你购买了${user.nickname}发布的「${model.title}」的股份交易`
         }
       case 23:
         return {
@@ -217,7 +236,9 @@ export default class extends Component {
     const { balance, list, loading, noMore, nothing } = this.state
     const records = list.map(record => {
       const data = this.computedRecord(record)
-      const key = Math.random().toString(36).slice(2, -1)
+      const key = Math.random()
+        .toString(36)
+        .slice(2, -1)
       return (
         <AtListItem
           key={key}
@@ -234,20 +255,24 @@ export default class extends Component {
       <View className='transaction'>
         <View className='balance'>
           <View className='get'>
-            收入：￥{balance.get}
+            收入：￥
+            {balance.get}
           </View>
           <View className='set'>
-            收入：￥{balance.set}
+            收入：￥
+            {balance.set}
           </View>
         </View>
-        {
-          nothing ? <PageState/> : (
-            <View>
-              <AtList>{records}</AtList>
-              <AtLoadMore status={loading ? 'loading' : noMore ? 'noMore' : 'more'}/>
-            </View>
-          )
-        }
+        {nothing ? (
+          <PageState />
+        ) : (
+          <View>
+            <AtList>{records}</AtList>
+            <AtLoadMore
+              status={loading ? 'loading' : noMore ? 'noMore' : 'more'}
+            />
+          </View>
+        )}
       </View>
     )
   }

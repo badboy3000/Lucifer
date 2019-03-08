@@ -7,27 +7,22 @@ import error from '~/images/page_error.png'
 
 export default class PageState extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+    this.state = {}
   }
 
-  render () {
+  render() {
     const type = this.props.type || 'nothing'
-    return (
-      type === 'nothing'
-        ? <View className='page-nothing'>
-            <image
-              src={nothing}
-              mode='aspectFit'
-            />
-            <Text>这里什么都没有</Text>
-          </View>
-        : <View className='page-preload'>
-            <image
-              src={type === 'loading' ? Loading : error}
-              mode='aspectFit'
-            />
-            <Text>{type === 'loading' ? '加载中…' : '页面错误，请稍后再试'}</Text>
-          </View>
+    return type === 'nothing' ? (
+      <View className='page-nothing'>
+        <image src={nothing} mode='aspectFit' />
+        <Text>这里什么都没有</Text>
+      </View>
+    ) : (
+      <View className='page-preload'>
+        <image src={type === 'loading' ? Loading : error} mode='aspectFit' />
+        <Text>{type === 'loading' ? '加载中…' : '页面错误，请稍后再试'}</Text>
+      </View>
     )
   }
 }

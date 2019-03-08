@@ -13,13 +13,13 @@ export default class extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       page_loading: true,
       page_error: false,
       user: null,
       share_data: null
-    };
+    }
   }
 
   componentWillMount() {}
@@ -39,7 +39,8 @@ export default class extends Component {
   }
 
   getUser() {
-    http.fetch(`user/${this.$router.params.zone}/show`)
+    http
+      .fetch(`user/${this.$router.params.zone}/show`)
       .then(user => {
         this.setState({
           user,
@@ -57,16 +58,16 @@ export default class extends Component {
 
   render() {
     if (this.state.page_loading) {
-      return (<PageState type='loading'/>)
+      return <PageState type='loading' />
     }
     if (this.state.page_error) {
-      return (<PageState type='error'/>)
+      return <PageState type='error' />
     }
     const { user } = this.state
     return (
       <View className='public-user-home'>
-        <UserPanel user={user}/>
-        <UserContent user={user}/>
+        <UserPanel user={user} />
+        <UserContent user={user} />
       </View>
     )
   }

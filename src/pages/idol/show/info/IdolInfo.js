@@ -6,6 +6,7 @@ import './index.scss'
 export default class IdolInfo extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
   }
 
   render() {
@@ -75,6 +76,11 @@ export default class IdolInfo extends Component {
             title='我持有股'
             extraText={hasBuyStock ? `${idol.has_star} 股` : '未入股'}
             note={computedPercent}
+          />
+          <AtListItem
+            title='QQ应援群'
+            extraText={idol.qq_group || '106402736'}
+            note='群号由大股东指定'
           />
           <AtListItem
             title='公司支出'

@@ -307,36 +307,66 @@ export default class extends Component {
           <SwiperItem key={key} taroKey={key} className='swiper-item'>
             {item.type === 'buy' ? (
               <View className='notice-item'>
-                <image
-                  src={helper.resize(item.user && item.user.avatar, {
-                    width: 60
-                  })}
-                  mode='aspectFit'
-                />
-                <Text class='content'>
-                  {item.user.nickname}
-                  入股了「
-                  {item.idol.name}」
-                </Text>
-                <Text>{helper.ago(item.time * 1000)}</Text>
+                <Text className='tail'>{helper.ago(item.time * 1000)}</Text>
+                <View className='content'>
+                  <navigator
+                    url={`/pages/user/public/index?zone=${item.user && item.user.zone}`}
+                    hover-class='none'
+                    class='link'
+                  >
+                    <image
+                      src={helper.resize(item.user && item.user.avatar, {
+                        width: 60
+                      })}
+                      mode='aspectFit'
+                    />
+                    <Text>{item.user.nickname}</Text>
+                  </navigator>
+                  <Text>入股了</Text>
+                  <navigator
+                    url={`/pages/idol/show/index?id=${item.idol.id}`}
+                    hover-class='none'
+                    class='link'
+                  >
+                    「{item.idol.name}」
+                  </navigator>
+                </View>
               </View>
             ) : (
               <View className='notice-item'>
-                <image
-                  src={helper.resize(item.buyer && item.buyer.avatar, {
-                    width: 60
-                  })}
-                  mode='aspectFit'
-                />
-                <Text class='content'>
-                  {item.buyer.nickname}
-                  购买了
-                  {item.dealer.nickname}
-                  的「
-                  {item.idol.name}
-                  」股
-                </Text>
-                <Text>{helper.ago(item.time * 1000)}</Text>
+                <Text className='tail'>{helper.ago(item.time * 1000)}</Text>
+                <View className='content'>
+                  <navigator
+                    url={`/pages/user/public/index?zone=${item.buyer && item.buyer.zone}`}
+                    hover-class='none'
+                    class='link'
+                  >
+                    <image
+                      src={helper.resize(item.buyer && item.buyer.avatar, {
+                        width: 60
+                      })}
+                      mode='aspectFit'
+                    />
+                    <Text>{item.buyer.nickname}</Text>
+                  </navigator>
+                  <Text>购买了</Text>
+                  <navigator
+                    url={`/pages/user/public/index?zone=${item.dealer && item.dealer.zone}`}
+                    hover-class='none'
+                    class='link'
+                  >
+                    <Text>{item.dealer.nickname}</Text>
+                  </navigator>
+                  <Text>的</Text>
+                  <navigator
+                    url={`/pages/idol/show/index?id=${item.idol.id}`}
+                    hover-class='none'
+                    class='link'
+                  >
+                    「{item.idol.name}」
+                  </navigator>
+                  <Text>股</Text>
+                </View>
               </View>
             )}
           </SwiperItem>

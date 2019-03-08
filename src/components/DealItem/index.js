@@ -6,6 +6,7 @@ import './index.scss'
 export default class DealItem extends Component {
   constructor(props) {
     super(props)
+    this.state = {}
   }
 
   componentWillMount() {}

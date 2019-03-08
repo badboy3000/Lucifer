@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtListItem, AtLoadMore } from 'taro-ui'
+import { AtList, AtListItem, AtLoadMore, AtButton } from 'taro-ui'
 import http from '~/utils/http'
 import helper from '~/utils/helper'
+import toast from '~/utils/toast'
 import PageState from '~/components/PageState'
 import './index.scss'
 
@@ -71,6 +72,18 @@ export default class extends Component {
       })
   }
 
+  copyInviteLink() {
+    wx.setClipboardData({
+      data: `https://m.calibur.tv/about/invite/${this.$router.params.id}`,
+      success () {
+        toast.info('复制成功')
+      },
+      fail () {
+        toast.info('复制失败了~')
+      }
+    })
+  }
+
   render() {
     const { list, loading, noMore, nothing } = this.state
     const records = list.map(user => {
@@ -93,7 +106,15 @@ export default class extends Component {
 
     return (
       <View className='invite-user'>
-        <Text>invite code</Text>
+        <View className="copy-btn">
+          <AtButton
+            type='primary'
+            circle
+            onClick={this.copyInviteLink}
+          >
+            点击生成邀请链接
+          </AtButton>
+        </View>
         {nothing ? (
           <PageState />
         ) : (

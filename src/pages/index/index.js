@@ -40,7 +40,13 @@ export default class extends Component {
       pub_deal_noMore: false,
       pub_deal_nothing: false,
       pub_deal_total: 0,
-      pub_deal_list: []
+      pub_deal_list: [],
+      meta: {
+        buyer_count: 0,
+        money_count: 0,
+        deal_count: 0,
+        exchang_money_count: 0
+      }
     }
   }
 
@@ -48,6 +54,7 @@ export default class extends Component {
 
   componentDidMount() {
     this.getIdols(1)
+    this.getStockMeta()
   }
 
   onPullDownRefresh() {
@@ -57,6 +64,7 @@ export default class extends Component {
     } else {
       this.getIdols(index, true)
     }
+    this.getStockMeta()
   }
 
   onReachBottom() {
@@ -208,9 +216,17 @@ export default class extends Component {
       })
   }
 
+  getStockMeta() {
+    http.get('cartoon_role/stock_meta')
+      .then(meta => {
+        this.setState({ meta })
+      })
+      .catch(() => {})
+  }
+
   render () {
     const tabList = [{ title: '市值榜' }, { title: '活跃榜' }, { title: '新创榜' }, { title: '交易所' }]
-    const { list_0, list_1, list_2, pub_deal_list } = this.state
+    const { list_0, list_1, list_2, pub_deal_list, meta } = this.state
     const idolList_0 = list_0.map(idol => <IdolItem key={String(idol.id)} sort='hot' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_1 = list_1.map(idol => <IdolItem key={String(idol.id)} sort='active' taroKey={String(idol.id)} idol={idol}/>)
     const idolList_2 = list_2.map(idol => <IdolItem key={String(idol.id)} sort='new' taroKey={String(idol.id)} idol={idol}/>)
@@ -220,6 +236,18 @@ export default class extends Component {
     const list_2_state = this.state.star_count
     return (
       <View className='idol-list'>
+        <View className="intro">
+          <image
+            src='https://image.calibur.tv/owner/image/stock-banner.jpeg?imageMogr2/auto-orient/strip|imageView2/2/h/200'
+            mode='aspectFit'
+          />
+          <View className='list'>
+            <View className='li'>投资人数：{ meta.buyer_count }</View>
+            <View className='li'>总交易额：￥{ parseFloat(meta.money_count).toFixed(2) }</View>
+            <View className='li'>成交笔数：{ meta.deal_count }</View>
+            <View className='li'>总成交额：￥{ parseFloat(meta.exchang_money_count).toFixed(2) }</View>
+          </View>
+        </View>
         <AtTabs
           current={this.state.current}
           tabList={tabList}

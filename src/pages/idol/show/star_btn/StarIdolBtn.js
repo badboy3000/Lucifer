@@ -96,7 +96,7 @@ export default class StarIdolBtn extends Component {
         : idol.max_stock_count - idol.star_count
     const pocketCanBuy = this.computedPocket()
       ? this.computedPocket() / idol.stock_price
-      : '0.00'
+      : 0
     return maxCanBuy === -1 ? pocketCanBuy : Math.min(pocketCanBuy, maxCanBuy)
   }
 

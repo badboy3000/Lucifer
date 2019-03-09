@@ -76,6 +76,7 @@ export default class extends Component {
         has_star: parseFloat(+this.state.idol.has_star + +count).toFixed(2)
       })
     })
+    event.emit('buy-idol-stock')
   }
 
   render() {

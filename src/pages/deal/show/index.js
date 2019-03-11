@@ -106,10 +106,20 @@ export default class extends Component {
   }
 
   computedMinCanBuy() {
-    return Math.min(
-      parseFloat(0.01 / this.state.deal.product_price).toFixed(2),
+    const price = this.state.deal.product_price
+    let minBuyCount = Math.min(
+      parseFloat(0.01 / price).toFixed(2),
       this.computedMaxCanBuy()
     )
+    let tail = deal.product_price.toString().split('.')[1]
+    if (tail) {
+      if (tail.length === 1) {
+        minBuyCount = Math.max(minBuyCount, 0.1)
+      } else if (tail.length === 2) {
+        minBuyCount = Math.max(minBuyCount, 1)
+      }
+    }
+    return minBuyCount
   }
 
   switchTab(index) {

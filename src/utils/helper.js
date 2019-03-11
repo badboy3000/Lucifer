@@ -93,17 +93,21 @@ export default new class {
   }
 
   webview(url) {
+    let result
     const user = cache.get('USER', null)
     if (!user) {
-      return url
+      result = url
+    } else {
+      const token = cache.get('JWT-TOKEN', '')
+      const key = md5(`${parseInt(Date.now() / 1000)}${env.API_TOKEN}${user.id}`)
+      const link = /\?/.test(url) ? '&' : '?'
+      result = `${url}${link}token=${token}&key=${key}&from=wxapp`
     }
-    const token = cache.get('JWT-TOKEN', '')
-    const key = md5(`${parseInt(Date.now() / 1000)}${env.API_TOKEN}${user.id}`)
 
-    if (/\?/.test(url)) {
-      return `${url}&token=${token}&key=${key}&from=wxapp`
+    if (!/^http/.test(url)) {
+      result = `https://m.calibur.tv/${result}`
     }
 
-    return `${url}?token=${token}&key=${key}&from=wxapp`
+    return result
   }
 }()

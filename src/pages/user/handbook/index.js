@@ -7,6 +7,6 @@ export default class extends Component {
   }
 
   render() {
-    return <web-view src={helper.webview('https://m.calibur.tv/app/handbook/')} />
+    return <web-view src={helper.webview('app/handbook/')} />
   }
 }

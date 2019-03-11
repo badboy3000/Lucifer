@@ -40,7 +40,7 @@ export default class extends Component {
   }
 
   onShareAppMessage() {
-    return helper.share()
+    return helper.share(this.state.share_data)
   }
 
   getUser() {

@@ -1,4 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
+import helper from '~/utils/helper'
 
 export default class extends Component {
   config = {
@@ -6,6 +7,6 @@ export default class extends Component {
   }
 
   render() {
-    return <web-view src='https://m.calibur.tv/app/handbook/' />
+    return <web-view src={helper.webview('https://m.calibur.tv/app/handbook/')} />
   }
 }

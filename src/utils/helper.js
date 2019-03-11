@@ -1,4 +1,7 @@
 import { format } from 'timeago.js'
+import cache from '~/utils/cache'
+import md5 from 'blueimp-md5'
+import env from '~/env'
 
 export default new class {
   resize(url, options = {}) {
@@ -87,5 +90,20 @@ export default new class {
       path,
       imageUrl
     }
+  }
+
+  webview(url) {
+    const user = cache.get('USER', null)
+    if (!user) {
+      return url
+    }
+    const token = cache.get('JWT-TOKEN', '')
+    const key = md5(`${parseInt(Date.now() / 1000)}${env.API_TOKEN}${user.id}`)
+
+    if (/\?/.test(url)) {
+      return `${url}&token=${token}&key=${key}&from=wxapp`
+    }
+
+    return `${url}?token=${token}&key=${key}&from=wxapp`
   }
 }()

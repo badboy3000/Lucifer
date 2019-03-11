@@ -34,6 +34,9 @@ export default class IdolOwner extends Component {
       this.fetchData(0)
     })
     event.on('buy-idol-stock', () => {
+      if (!this.state.list_0_data.length && !this.state.list_1_data.length) {
+        return
+      }
       this.setState({
         current: 0,
         list_0_loading: false,

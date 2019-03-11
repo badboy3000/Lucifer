@@ -9,6 +9,7 @@ import IdolProduct from './product/IdolProduct'
 import IdolComment from './comment/IdolComment'
 import PageState from '~/components/PageState'
 import event from '~/utils/event'
+import helper from '~/utils/helper'
 import './index.scss'
 
 export default class extends Component {
@@ -32,6 +33,10 @@ export default class extends Component {
 
   componentDidMount() {
     this.getIdolInfo()
+  }
+
+  onShareAppMessage() {
+    return helper.share(this.state.share_data)
   }
 
   componentWillUnmount() {}

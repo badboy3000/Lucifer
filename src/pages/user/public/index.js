@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import http from '~/utils/http'
 import event from '~/utils/event'
+import helper from '~/utils/helper'
 import PageState from '~/components/PageState'
 import UserPanel from './panel/UserPanel'
 import UserContent from './content/UserContent'
@@ -36,6 +37,10 @@ export default class extends Component {
 
   onReachBottom() {
     event.emit('on-reach-bottom')
+  }
+
+  onShareAppMessage() {
+    return helper.share()
   }
 
   getUser() {

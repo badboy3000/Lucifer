@@ -87,6 +87,10 @@ export default class extends Component {
     }
   }
 
+  onShareAppMessage() {
+    return helper.share()
+  }
+
   componentWillUnmount() {}
 
   componentDidShow() {}

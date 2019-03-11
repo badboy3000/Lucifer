@@ -53,6 +53,10 @@ export default class extends Component {
     this.getDealInfo()
   }
 
+  onShareAppMessage() {
+    return helper.share()
+  }
+
   componentWillUnmount() {}
 
   componentDidShow() {}

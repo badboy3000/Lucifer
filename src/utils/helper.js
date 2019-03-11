@@ -56,4 +56,36 @@ export default new class {
   ago(time) {
     return format(time, 'zh_CN')
   }
+
+  share({ title, desc, link, image } = {}) {
+    const getQueryString = (url, params = {}) => {
+      const arr = []
+      Object.keys(params).forEach((key) => {
+        arr.push(`${key}=${params[key]}`)
+      })
+      return arr.length > 0 ? `${url}?${arr.join('&')}` : url
+    }
+
+    const pages = getCurrentPages()
+    const page = pages[pages.length - 1]
+    let path = getQueryString(page.route, page.options)
+    if (link && /\?/.test(link)) {
+      const tail = link.split('?')[1]
+      if (/\?/.test(path)) {
+        path = `${path}&${tail}`
+      } else {
+        path = `${path}?${tail}`
+      }
+    }
+
+    const imageUrl = image
+      ? image.replace('share120jpg', 'sharewxapp')
+      : 'https://image.calibur.tv/owner/image/icon-1024.png-sharewxapp'
+
+    return {
+      title: title || '二次元股市',
+      path,
+      imageUrl
+    }
+  }
 }()

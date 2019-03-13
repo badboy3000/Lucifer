@@ -1,7 +1,5 @@
 import { format } from 'timeago.js'
 import cache from '~/utils/cache'
-import md5 from 'blueimp-md5'
-import env from '~/env'
 
 export default new class {
   resize(url, options = {}) {
@@ -95,15 +93,9 @@ export default new class {
   webview(url) {
     let result
     const user = cache.get('USER', null)
-    if (!user) {
-      result = url
-    } else {
-      const token = cache.get('JWT-TOKEN', '')
-      const time = parseInt(Date.now() / 1000)
-      const key = md5(`${time}${env.API_TOKEN}${user.id}`)
-      const link = /\?/.test(url) ? '&' : '?'
-      result = `${url}${link}s=${time}&t=${token}&k=${key}&u=${user.id}&f=wxapp`
-    }
+    const token = !user ? '' : cache.get('JWT-TOKEN', '')
+    const link = /\?/.test(url) ? '&' : '?'
+    result = `${url}${link}token=${token}&from=wxapp`
     const isProd = process.env.NODE_ENV === 'production'
 
     if (!/^http/.test(url)) {

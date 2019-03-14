@@ -4,9 +4,9 @@ import { AtTabs, AtTabsPane, AtList, AtListItem } from 'taro-ui'
 import http from '~/utils/http'
 import IdolInfo from './info/IdolInfo'
 import IdolPanel from './panel/IdolPanel'
+import IdolLabel from './label/IdolLabel'
 import IdolOwner from './owner/IdolOwner'
 import IdolProduct from './product/IdolProduct'
-import IdolComment from './comment/IdolComment'
 import PageState from '~/components/PageState'
 import event from '~/utils/event'
 import helper from '~/utils/helper'
@@ -95,13 +95,13 @@ export default class extends Component {
     return (
       <View>
         <IdolPanel idol={idol} onUpdateStar={this.onUpdateUserHasStar} />
+        <IdolLabel idol={idol} />
         <AtTabs
           current={this.state.current}
           scroll
           tabList={[
             { title: '产品区' },
             { title: '信息表' },
-            { title: '留言板' },
             { title: '董事会' }
           ]}
           swipeable={false}
@@ -114,9 +114,6 @@ export default class extends Component {
             <IdolInfo idol={idol} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={2}>
-            <IdolComment />
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={3}>
             <IdolOwner idol={idol} />
           </AtTabsPane>
         </AtTabs>

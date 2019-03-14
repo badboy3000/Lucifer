@@ -61,7 +61,7 @@ export default new class {
   share({ title, desc, link, image } = {}) {
     const getQueryString = (url, params = {}) => {
       const arr = []
-      Object.keys(params).forEach((key) => {
+      Object.keys(params).forEach(key => {
         arr.push(`${key}=${params[key]}`)
       })
       return arr.length > 0 ? `${url}?${arr.join('&')}` : url
@@ -99,7 +99,9 @@ export default new class {
     const isProd = process.env.NODE_ENV === 'production'
 
     if (!/^http/.test(url)) {
-      result = `${isProd ? 'https://m.calibur.tv' : 'http://localhost:3001'}/${result}`
+      result = `${
+        isProd ? 'https://m.calibur.tv' : 'http://localhost:3001'
+      }/${result}`
     }
 
     return result

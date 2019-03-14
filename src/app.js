@@ -17,6 +17,7 @@ class App extends Component {
       'pages/idol/create/index',
       'pages/idol/edit/index',
       'pages/idol/show/index',
+      'pages/idol/link/index',
       'pages/deal/show/index',
       'pages/user/mine/index',
       'pages/user/handbook/index',
@@ -27,7 +28,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '二次元股市',
+      navigationBarTitleText: '萌市',
       navigationBarTextStyle: 'black',
       enablePullDownRefresh: false
     },

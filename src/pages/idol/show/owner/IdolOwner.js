@@ -27,7 +27,7 @@ export default class IdolOwner extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    event.on(`idol-${this.props.idol.id}-tab-switch-3`, () => {
+    event.on(`idol-${this.props.idol.id}-tab-switch-2`, () => {
       if (this.state.list_0_data.length || this.state.list_0_noMore) {
         return
       }
@@ -37,26 +37,29 @@ export default class IdolOwner extends Component {
       if (!this.state.list_0_data.length && !this.state.list_1_data.length) {
         return
       }
-      this.setState({
-        current: 0,
-        list_0_loading: false,
-        list_1_loading: false,
-        list_0_nothing: false,
-        list_1_nothing: false,
-        list_0_noMore: false,
-        list_1_noMore: false,
-        list_0_total: 0,
-        list_1_total: 0,
-        list_0_data: [],
-        list_1_data: []
-      }, () => {
-        this.fetchData(0)
-      })
+      this.setState(
+        {
+          current: 0,
+          list_0_loading: false,
+          list_1_loading: false,
+          list_0_nothing: false,
+          list_1_nothing: false,
+          list_0_noMore: false,
+          list_1_noMore: false,
+          list_0_total: 0,
+          list_1_total: 0,
+          list_0_data: [],
+          list_1_data: []
+        },
+        () => {
+          this.fetchData(0)
+        }
+      )
     })
   }
 
   componentWillUnmount() {
-    event.off(`idol-${this.props.idol.id}-tab-switch-3`)
+    event.off(`idol-${this.props.idol.id}-tab-switch-2`)
     event.off('buy-idol-stock')
   }
 

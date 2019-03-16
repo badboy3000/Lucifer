@@ -29,9 +29,11 @@ export default class extends Component {
     this.state = {
       page_loading: true,
       page_error: false,
-      deal: null,
-      user: null,
-      idol: null,
+      deal: {
+        product_price: 0
+      },
+      user: {},
+      idol: {},
       is_mine: false,
       current: 0,
       page: 0,
@@ -111,13 +113,16 @@ export default class extends Component {
       parseFloat(0.01 / price).toFixed(2),
       this.computedMaxCanBuy()
     )
-    let tail = deal.product_price.toString().split('.')[1]
+    let tail = this.state.deal.product_price.toString().split('.')[1]
     if (tail) {
       if (tail.length === 1) {
         minBuyCount = Math.max(minBuyCount, 0.1)
       } else if (tail.length === 2) {
         minBuyCount = Math.max(minBuyCount, 1)
       }
+    }
+    if (this.state.deal.last_count < minBuyCount) {
+      minBuyCount = this.state.deal.last_count
     }
     return minBuyCount
   }

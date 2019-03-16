@@ -259,7 +259,7 @@ export default class extends Component {
             {balance.get}
           </View>
           <View className='set'>
-            收入：￥
+            支出：￥
             {balance.set}
           </View>
         </View>
